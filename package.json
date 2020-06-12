@@ -1,0 +1,25 @@
+{
+    "name": "intens-lang",
+    "displayName": "INTENS Language",
+    "description": "Unofficial syntax definition for the INTENS language",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.45.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "intens",
+            "aliases": ["INTENS", "intens"],
+            "extensions": [".des", ".inc", ".des.in", ".inc.in"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "intens",
+            "scopeName": "source.intens",
+            "path": "./syntaxes/intens.tmLanguage.json"
+        }]
+    }
+}

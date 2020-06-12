@@ -1,0 +1,242 @@
+{
+	"name": "INTENS",
+	"scopeName": "source.intens",
+	"uuid": "e951a14d-24c9-4260-9068-5628fe553513",
+	"patterns": [
+		{ "include": "#high_level_commands" },
+		{ "include": "#string" },
+		{ "include": "#comment" },
+		{ "include": "#float_number" },
+		{ "include": "#datapool_block" },
+		{ "include": "#streamer_block" },
+		{ "include": "#operator_block" },
+		{ "include": "#functions_block" },
+		{ "include": "#ui_manager_block" },
+		{ "include": "#end_of_propram" },
+		{
+			"match": ";",
+			"name": "punctuation.terminator.statement.intens"
+		},
+		{
+			"match": ",",
+			"name": "punctuation.separator.delimiter.intens"
+		}
+	],
+	"repository": {
+		"high_level_commands": {
+			"patterns": [{
+				"name": "keyword.control.intens",
+				"match": "\\b(DESCRIPTION|HELPFILE|OPEN_URL)\\b"
+			}]
+		},
+		"string": {
+			"name": "string.quoted.double.intens",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.intens",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comment": {
+			"name": "comment.line.double-slash.intens",
+			"match": "//.*\n"
+		},
+		"float_number": {
+			"name": "constant.numeric.intens",
+			"match": "\\b([0-9][0-9_]*)(\\.|(\\.([0-9][0-9_]*))?([eE][+\\-]?([0-9][0-9_]*))?\\b)"
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "constant.language.intens",
+					"match": "\\b(EOLN|FALSE|HIGH|INDEX|INFO|INVALID|NONE|TRUE|OLDVALUE)\\b"
+				},
+				{
+					"name": "constant.other.intens",
+					"match": "\\b(REASON_ACTIVATE|REASON_CLEAR|REASON_CLOSE|REASON_CONNECTION|REASON_DROP|REASON_DUPLICATE|REASON_INPUT|REASON_INSERT|REASON_MOVE|REASON_OPEN|REASON_PACK|REASON_REMOVE|REASON_REMOVE_CONNECTION|REASON_REMOVE_ELEMENT|REASON_SELECT|REASON_SELECT_POINT|REASON_SELECT_RECTANGLE|REASON_UNSELECT)\\b"
+				}
+			]
+		},
+		"illegal_name": {
+			"name": "invalid.illegal.name.intens",
+			"match": "\\b(ABORT|COMPLEX|ELSE|END|EXIT|FUNC|IF|INTEGER|NONE|REAL|RETURN|STRING|STRUCT|WHILE)\\b"
+		},
+		"statements": {
+			"patterns": [
+				{ "include": "#string" },
+				{ "include": "#comment" }
+			]
+		},
+		"builtin_functions": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.intens",
+					"match": "\\b(ABORT|ABS|ALLOW|ASSIGN_CORR|ATAN|CLEAR|COMPOSE|CONFIRM|COS|DATASET_TEXT|DIRNAME|DISABLE|DISALLOW|ENABLE|FILENAME|LABEL|LOG|MAP|MESSAGEBOX|NODE|OPEN|OPEN_URL|PACK|PARENT|PRINT|QUIT|RANGE|ROUND|RUN|SCALE|SAVE|SERIALIZE_FORM|SET|SET_INDEX|SET_REASON|SET_THIS|SIN|SIZE|SQRT|START|STOP|STRETCH|THUMBNAIL|UNIT|UNMAP|UNSET|UPDATE_FORMS|VALID|VAR)\\b"
+				},
+				{
+					"name": "support.function.builtin.intens",
+					"match": "\\b(SEND)\\b"
+				}
+			]
+		},
+		"datapool_block": {
+			"contentName": "meta.namespace.intens",
+			"begin": "\\b(DATAPOOL)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#statements" },
+				{ "include": "#variable_definition" },
+				{ "include": "#constants" }
+			],
+			"end": "\\b(END)\\b\\s+\\b(DATAPOOL)\\b",
+			"endCaptures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"streamer_block": {
+			"contentName": "meta.namespace.intens",
+			"begin": "\\b(STREAMER)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#statements" }
+			],
+			"end": "\\b(END)\\b\\s+\\b(STREAMER)\\b",
+			"endCaptures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"operator_block": {
+			"contentName": "meta.namespace.intens",
+			"begin": "\\b(OPERATOR)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#statements" }
+			],
+			"end": "\\b(END)\\b\\s+\\b(OPERATOR)\\b",
+			"endCaptures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"functions_block": {
+			"contentName": "meta.namespace.intens",
+			"begin": "\\b(FUNCTIONS)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#statements" },
+				{ "include": "#builtin_functions" },
+				{ "include": "#constants" }
+			],
+			"end": "\\b(END)\\b\\s+\\b(FUNCTIONS)\\b",
+			"endCaptures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"ui_manager_block": {
+			"contentName": "meta.namespace.intens",
+			"begin": "\\b(UI_MANAGER)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#statements" }
+			],
+			"end": "\\b(END)\\b\\s+\\b(UI_MANAGER)\\b",
+			"endCaptures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"end_of_propram": {
+			"match": "\\b(END)\\b\\s*(.)",
+			"captures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "punctuation.terminator.semafor-intens"}
+			}
+		},
+		"variable_definition": {
+			"begin": "\\b(?:COLOR|COMPLEX|INTEGER|REAL|STRING)\\b",
+			"beginCaptures": {
+				"0": {"name": "storage.type.intens"}
+			},
+			"patterns": [
+				{ "include": "#parameter_block" },
+				{ "include": "#comment" }
+			],
+			"end": "(?=;)"
+		},
+		"parameter_block": {
+			"begin": "{",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.block.begin.intens"}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.end.begin.intens"}
+			},
+			"contentName": "meta.block.intens",
+			"patterns": [
+				{
+					"name": "storage.modifier.intens",
+					"match": "\\b(EDITABLE|OMIT_TTRAIL|OPTIONAL)\\b"
+				},
+				{ "include": "#comment" },
+				{ "include": "#string" },
+				{ "include": "#func_parameter" },
+				{ "include": "#set_parameter" }
+			]
+		},
+		"func_parameter": {
+			"begin": "\\b(FUNC|ON_EOS|ON_VIEW_ACTION)\\b",
+			"beginCaptures": {
+				"0": {"name": "variable.parameter.intens"}
+			},
+			"patterns": [
+				{
+					"match": "=",
+					"name": "keyword.operator.assignment.augmented.intens"
+				},
+				{ "include": "#comment" },
+				{ "include": "#illegal_name" }
+			],
+			"end": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
+			"comment": "Consider: , ) }",
+			"endCaptures": {
+				"0": {"name": "variable.function.intens"}
+			}
+		},
+		"set_parameter": {
+			"begin": "\\b(SET)\\b",
+			"beginCaptures": {
+				"0": {"name": "variable.parameter.intens"}
+			},
+			"patterns": [
+				{
+					"match": "=",
+					"name": "keyword.operator.assignment.augmented.intens"
+				},
+				{ "include": "#comment" },
+				{ "include": "#illegal_name" }
+			],
+			"end": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
+			"comment": "Consider: , ) }",
+			"endCaptures": {
+				"0": {"name": "storage.type.enum.intens"}
+			}
+		}
+	}
+}
