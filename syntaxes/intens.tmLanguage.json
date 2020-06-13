@@ -207,17 +207,23 @@
 			},
 			"patterns": [
 				{
-					"match": "=",
-					"name": "keyword.operator.assignment.augmented.intens"
+					"begin": "=",
+					"beginCaptures": {
+						"0": {"name": "keyword.operator.assignment.augmented.intens"}
+					},
+					"patterns": [
+						{
+							"name": "variable.function.intens",
+							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+						},
+						{ "include": "#comment" }
+					],
+					"end": "(?=[,)}])"
 				},
 				{ "include": "#comment" },
 				{ "include": "#illegal_name" }
 			],
-			"end": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
-			"comment": "Consider: , ) }",
-			"endCaptures": {
-				"0": {"name": "variable.function.intens"}
-			}
+			"end": "(?=[,)}])"
 		},
 		"set_parameter": {
 			"begin": "\\b(SET)\\b",
@@ -226,17 +232,23 @@
 			},
 			"patterns": [
 				{
-					"match": "=",
-					"name": "keyword.operator.assignment.augmented.intens"
+					"begin": "=",
+					"beginCaptures": {
+						"0": {"name": "keyword.operator.assignment.augmented.intens"}
+					},
+					"patterns": [
+						{
+							"name": "storage.type.enum.intens",
+							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+						},
+						{ "include": "#comment" }
+					],
+					"end": "(?=[,)}])"
 				},
 				{ "include": "#comment" },
 				{ "include": "#illegal_name" }
 			],
-			"end": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
-			"comment": "Consider: , ) }",
-			"endCaptures": {
-				"0": {"name": "storage.type.enum.intens"}
-			}
+			"end": "(?=[,)}])"
 		}
 	}
 }
