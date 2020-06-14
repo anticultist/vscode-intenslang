@@ -12,6 +12,7 @@
 		{ "include": "#operator_block" },
 		{ "include": "#functions_block" },
 		{ "include": "#ui_manager_block" },
+		{ "include": "#db_manager_block" },
 		{ "include": "#end_of_propram" },
 		{
 			"match": ";",
@@ -52,7 +53,7 @@
 			"patterns": [
 				{
 					"name": "constant.language.intens",
-					"match": "\\b(EOLN|FALSE|HIGH|INDEX|INFO|INVALID|NONE|TRUE|OLDVALUE)\\b"
+					"match": "\\b(EOLN|FALSE|HIGH|INDEX|INFO|INVALID|JSON|NONE|OLDVALUE|TRUE|TSEP|XML)\\b"
 				},
 				{
 					"name": "constant.other.intens",
@@ -74,11 +75,11 @@
 			"patterns": [
 				{
 					"name": "support.function.builtin.intens",
-					"match": "\\b(ABORT|ABS|ALLOW|ASSIGN_CORR|ATAN|CLEAR|COMPOSE|CONFIRM|COS|DATASET_TEXT|DIRNAME|DISABLE|DISALLOW|ENABLE|FILENAME|LABEL|LOG|MAP|MESSAGEBOX|NODE|OPEN|OPEN_URL|PACK|PARENT|PRINT|QUIT|RANGE|ROUND|RUN|SCALE|SAVE|SERIALIZE_FORM|SET|SET_INDEX|SET_REASON|SET_THIS|SIN|SIZE|SQRT|START|STOP|STRETCH|THUMBNAIL|UNIT|UNMAP|UNSET|UPDATE_FORMS|VALID|VAR)\\b"
+					"match": "\\b(ABORT|ABORTTRANSACTION|ABS|ACOS|ALLOW|ARG|ASIN|ASSIGN_CORR|ATAN|ATAN2|ATTRS|BASENAME|BEGINTRANSACTION|CHANGED|CLASSNAME|CLEAR|CLEAR_SELECTION|CLEARCYCLE|COMMITTRANSACTION|COMPARE|COMPLEX|COMPOSE|CONFIRM|CONFIRM_CANCEL|COPY|COS|DATASET_TEXT|DELETE|DELETECYCLE|DIRNAME|DISABLE|DISALLOW|ENABLE|FILENAME|FIRSTCYCLE|GET|GET_SELECTION|GOCYCLE|IMAG|LABEL|LASTCYCLE|LENGTH|LOAD|LOG|LOG10|MAP|MESSAGEBOX|MODIFIED|NEWCYCLE|NEXTCYCLE|NODE|OPEN|OPEN_URL|PACK|PARENT|PASTE|PREVIEW|PRINT|PRINT_LOG|PUBLISH|PUT|QUIT|RANGE|REAL|REPORT|RESET_ERROR|REST_LOGOFF|REST_LOGON|ROUND|ROUND10|ROUND5|RUN|SAVE|SCALE|SELECT_LIST|SERIALIZE|SERIALIZE_FORM|SET|SET_DB_TIMESTAMP|SET_ERROR|SET_INDEX|SET_MQ_HOST|SET_MSG|SET_REASON|SET_RESOURCE|SET_THIS|SIN|SIZE|SORTORDER|SQRT|START|STOP|STRETCH|STRING_DATE|STRING_DATETIME|STRING_TIME|STRING_VALUE|STYLESHEET|TAN|THUMBNAIL|TIMESTAMP|TOUCH|UNIT|UNMAP|UNSET|UPDATE_FORMS|VALID|VAR|VISIBLE|WRITE_SETTINGS)\\b"
 				},
 				{
 					"name": "support.function.builtin.intens",
-					"match": "\\b(SEND)\\b"
+					"match": "\\b(REQUEST|SEND|SUBSCRIBE)\\b"
 				}
 			]
 		},
@@ -161,6 +162,21 @@
 				"2": {"name": "keyword.other.intens"}
 			}
 		},
+		"db_manager_block": {
+			"contentName": "meta.namespace.intens",
+			"begin": "\\b(DB_MANAGER)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#statements" }
+			],
+			"end": "\\b(END)\\b\\s+\\b(DB_MANAGER)\\b",
+			"endCaptures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "keyword.other.intens"}
+			}
+		},
 		"end_of_propram": {
 			"match": "\\b(END)\\b\\s*(.)",
 			"captures": {
@@ -169,7 +185,7 @@
 			}
 		},
 		"variable_definition": {
-			"begin": "\\b(?:COLOR|COMPLEX|INTEGER|REAL|STRING)\\b",
+			"begin": "\\b(?:CDATA|COLOR|COMPLEX|INTEGER|REAL|STRING)\\b",
 			"beginCaptures": {
 				"0": {"name": "storage.type.intens"}
 			},
@@ -192,7 +208,7 @@
 			"patterns": [
 				{
 					"name": "storage.modifier.intens",
-					"match": "\\b(EDITABLE|OMIT_TTRAIL|OPTIONAL)\\b"
+					"match": "\\b(CELL|EDITABLE|GLOBAL|LOCKABLE|MATRIX|NO_DEPENDENCIES|OMIT_TTRAIL|OPTIONAL|SCALAR)\\b"
 				},
 				{ "include": "#comment" },
 				{ "include": "#string" },
