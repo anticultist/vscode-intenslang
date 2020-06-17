@@ -83,6 +83,10 @@
 				}
 			]
 		},
+		"predefined_variables": {
+			"name": "variable.language.intens",
+			"match": "\\b(BASE|COLORBIT|CURRENT_DATETIME|CURRENT_DATE|CURRENT_TIME|INPUT|SOURCE|SOURCE2|THIS)\\b"
+		},
 		"datapool_block": {
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(DATAPOOL)\\b",
@@ -137,9 +141,7 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#statements" },
-				{ "include": "#builtin_functions" },
-				{ "include": "#constants" }
+				{ "include": "#function_statements" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(FUNCTIONS)\\b",
 			"endCaptures": {
@@ -265,6 +267,97 @@
 				{ "include": "#illegal_name" }
 			],
 			"end": "(?=[,)}])"
+		},
+		"function_statements": {
+			"patterns": [
+				{ "include": "#anonymous_block" },
+				{ "include": "#anonymous_group" },
+				{ "include": "#builtin_functions" },
+				{ "include": "#comment" },
+				{ "include": "#constants" },
+				{ "include": "#else_part" },
+				{ "include": "#float_number" },
+				{ "include": "#if_statement" },
+				{ "include": "#predefined_variables" },
+				{ "include": "#string" },
+				{
+					"match": "\\b(ABORT|EXIT|RETURN)\\b\\s*(;)",
+					"captures": {
+						"1": {"name": "keyword.control.intens"},
+						"2": {"name": "punctuation.terminator.intens"}
+					}
+				}
+			]
+		},
+		"if_statement": {
+			"begin": "\\b(IF)\\b",
+			"beginCaptures": {
+				"0": {"name": "keyword.control.intens"}
+			},
+			"patterns": [
+				{ "include": "#comment" },
+				{
+					"begin": "(\\()",
+					"beginCaptures": {
+						"0": {"name": "punctuation.parenthesis.open.intens"}
+					},
+					"patterns": [
+						{ "include": "#anonymous_group" },
+						{ "include": "#builtin_functions" },
+						{ "include": "#comment" },
+						{ "include": "#constants" },
+						{ "include": "#float_number" },
+						{ "include": "#predefined_variables" },
+						{ "include": "#string" }
+					],
+					"end": "(\\))",
+					"endCaptures": {
+						"0": {"name": "punctuation.parenthesis.close.intens"}
+					}
+				}
+			],
+			"end": "(?=[;{}])"
+		},
+		"else_part": {
+			"begin": "\\b(ELSE)\\b",
+			"beginCaptures": {
+				"0": {"name": "keyword.control.intens"}
+			},
+			"patterns": [
+				{ "include": "#function_statements" }
+			],
+			"end": ""
+		},
+		"anonymous_block": {
+			"begin": "(\\{)",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.block.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#function_statements" }
+			],
+			"end": "(\\})",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.intens"}
+			}
+		},
+		"anonymous_group": {
+			"begin": "(\\()",
+			"beginCaptures": {
+				"0": {"name": "punctuation.parenthesis.open.intens"}
+			},
+			"patterns": [
+				{ "include": "#anonymous_group" },
+				{ "include": "#comment" },
+				{ "include": "#constants" },
+				{ "include": "#float_number" },
+				{ "include": "#predefined_variables" },
+				{ "include": "#string" }
+			],
+			"end": "(\\))",
+			"endCaptures": {
+				"0": {"name": "punctuation.parenthesis.close.intens"}
+			}
 		}
 	}
 }
