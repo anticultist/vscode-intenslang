@@ -193,7 +193,8 @@
 			},
 			"patterns": [
 				{ "include": "#parameter_block" },
-				{ "include": "#comment" }
+				{ "include": "#comment" },
+				{ "include": "#string" }
 			],
 			"end": "(?=;)"
 		},
@@ -215,7 +216,8 @@
 				{ "include": "#comment" },
 				{ "include": "#string" },
 				{ "include": "#func_parameter" },
-				{ "include": "#set_parameter" }
+				{ "include": "#set_parameter" },
+				{ "include": "#other_parameter" }
 			]
 		},
 		"func_parameter": {
@@ -236,12 +238,12 @@
 						},
 						{ "include": "#comment" }
 					],
-					"end": "(?=[,)}])"
+					"end": "(?=[\",)}])"
 				},
 				{ "include": "#comment" },
 				{ "include": "#illegal_name" }
 			],
-			"end": "(?=[,)}])"
+			"end": "(?=[\",)}])"
 		},
 		"set_parameter": {
 			"begin": "\\b(SET)\\b",
@@ -261,12 +263,19 @@
 						},
 						{ "include": "#comment" }
 					],
-					"end": "(?=[,)}])"
+					"end": "(?=[\",)}])"
 				},
 				{ "include": "#comment" },
 				{ "include": "#illegal_name" }
 			],
-			"end": "(?=[,)}])"
+			"end": "(?=[\",)}])"
+		},
+		"other_parameter": {
+			"begin": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
+			"beginCaptures": {
+				"0": {"name": "variable.parameter.intens"}
+			},
+			"end": "(?=[\",)}])"
 		},
 		"function_statements": {
 			"patterns": [
@@ -296,6 +305,7 @@
 			},
 			"patterns": [
 				{ "include": "#comment" },
+				{ "include": "#string" },
 				{
 					"begin": "(\\()",
 					"beginCaptures": {
