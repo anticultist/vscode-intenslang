@@ -13,6 +13,7 @@
 		{ "include": "#functions_block" },
 		{ "include": "#ui_manager_block" },
 		{ "include": "#db_manager_block" },
+		{ "include": "#language_block" },
 		{ "include": "#end_of_propram" },
 		{
 			"match": ";",
@@ -179,6 +180,21 @@
 				"2": {"name": "keyword.other.intens"}
 			}
 		},
+		"language_block": {
+			"contentName": "meta.namespace.intens",
+			"begin": "\\b(LANGUAGE)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#statements" }
+			],
+			"end": "\\b(END)\\b\\s+\\b(LANGUAGE)\\b",
+			"endCaptures": {
+				"1": {"name": "keyword.other.intens"},
+				"2": {"name": "keyword.other.intens"}
+			}
+		},
 		"end_of_propram": {
 			"match": "\\b(END)\\b\\s*(.)",
 			"captures": {
@@ -275,6 +291,21 @@
 			"beginCaptures": {
 				"0": {"name": "variable.parameter.intens"}
 			},
+			"patterns": [
+				{
+					"begin": "=",
+					"beginCaptures": {
+						"0": {"name": "keyword.operator.assignment.augmented.intens"}
+					},
+					"patterns": [
+						{ "include": "#constants" },
+						{ "include": "#comment" },
+						{ "include": "#float_number" }
+					],
+					"end": "(?=[\",)}])"
+				},
+				{ "include": "#comment" }
+			],
 			"end": "(?=[\",)}])"
 		},
 		"function_statements": {
