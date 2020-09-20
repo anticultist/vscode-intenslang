@@ -39,6 +39,22 @@
 				{
 					"name": "constant.character.escape.intens",
 					"match": "\\\\."
+				},
+				{
+					"name": "keyword.other.DML.html",
+					"match": "(<(/)?b>|<br(/)?>|<(/)?h[1-6]>|<(/)?html>|<(/)?i>|</table>|<(/)?td>|<(/)?th>|<(/)?tr>|<(/)?u>)"
+				},
+				{
+					"name": "constant.character.format.placeholder.other.intens",
+					"match": "%([1-9]|1[0-5])\\b"
+				},
+				{
+					"name": "constant.other.color.rgb-value.hex.intens",
+					"match": "(#)(\\h{3}|\\h{6})\\b"
+				},
+				{
+					"name": "keyword.other.fontname.intens",
+					"match": "@[a-zA-Z]+@"
 				}
 			]
 		},
