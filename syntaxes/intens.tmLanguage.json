@@ -333,7 +333,7 @@
 				{ "include": "#constants" },
 				{ "include": "#else_part" },
 				{ "include": "#float_number" },
-				{ "include": "#if_statement" },
+				{ "include": "#if_or_while_statement" },
 				{ "include": "#predefined_variables" },
 				{ "include": "#string" },
 				{
@@ -342,11 +342,14 @@
 						"1": {"name": "keyword.control.intens"},
 						"2": {"name": "punctuation.terminator.intens"}
 					}
+				},
+				{  "name": "punctuation.terminator.intens",
+				   "match": ";"
 				}
 			]
 		},
-		"if_statement": {
-			"begin": "\\b(IF)\\b",
+		"if_or_while_statement": {
+			"begin": "\\b(IF|WHILE)\\b",
 			"beginCaptures": {
 				"0": {"name": "keyword.control.intens"}
 			},
