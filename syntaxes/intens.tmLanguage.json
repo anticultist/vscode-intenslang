@@ -7,6 +7,7 @@
 		{ "include": "#string" },
 		{ "include": "#comment" },
 		{ "include": "#float_number" },
+		{ "include": "#include_statement" },
 		{ "include": "#datapool_block" },
 		{ "include": "#streamer_block" },
 		{ "include": "#operator_block" },
@@ -26,10 +27,16 @@
 	],
 	"repository": {
 		"high_level_commands": {
-			"patterns": [{
-				"name": "keyword.control.intens",
-				"match": "\\b(DESCRIPTION|HELPFILE|OPEN_URL)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.intens",
+					"match": "\\b(DESCRIPTION|HELPFILE|OPEN_URL)\\b"
+				},
+				{
+					"name": "storage.type.other.intens",
+					"match": "\\b(USERGROUPS)\\b"
+				}
+			]
 		},
 		"string": {
 			"name": "string.quoted.double.intens",
@@ -103,6 +110,10 @@
 		"predefined_variables": {
 			"name": "variable.language.intens",
 			"match": "\\b(BASE|COLORBIT|CURRENT_DATETIME|CURRENT_DATE|CURRENT_TIME|INPUT|SOURCE|SOURCE2|THIS)\\b"
+		},
+		"include_statement": {
+			"name": "keyword.control.import.intens",
+			"match": "^\\s*(INCLUDE)\\b"
 		},
 		"datapool_block": {
 			"contentName": "meta.namespace.intens",
