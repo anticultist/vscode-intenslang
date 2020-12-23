@@ -16,14 +16,8 @@
 		{ "include": "#db_manager_block" },
 		{ "include": "#language_block" },
 		{ "include": "#end_of_propram" },
-		{
-			"match": ";",
-			"name": "punctuation.terminator.statement.intens"
-		},
-		{
-			"match": ",",
-			"name": "punctuation.separator.delimiter.intens"
-		}
+		{ "include": "#semicolon" },
+		{ "include": "#comma" }
 	],
 	"repository": {
 		"high_level_commands": {
@@ -71,7 +65,7 @@
 		},
 		"float_number": {
 			"name": "constant.numeric.intens",
-			"match": "\\b([0-9][0-9_]*)(\\.|(\\.([0-9][0-9_]*))?([eE][+\\-]?([0-9][0-9_]*))?\\b)"
+			"match": "\\b([0-9][0-9_]*)(\\.|(\\.([0-9][0-9_]*))?([eE][+-]?([0-9][0-9_]*))?\\b)"
 		},
 		"constants": {
 			"patterns": [
@@ -88,6 +82,14 @@
 		"illegal_name": {
 			"name": "invalid.illegal.name.intens",
 			"match": "\\b(ABORT|COMPLEX|ELSE|END|EXIT|FUNC|IF|INTEGER|NONE|REAL|RETURN|STRING|STRUCT|WHILE)\\b"
+		},
+		"semicolon": {
+			"match": ";",
+			"name": "punctuation.terminator.statement.intens"
+		},
+		"comma": {
+			"match": ",",
+			"name": "punctuation.separator.delimiter.intens"
 		},
 		"statements": {
 			"patterns": [
@@ -235,11 +237,43 @@
 				"0": {"name": "storage.type.intens"}
 			},
 			"patterns": [
-				{ "include": "#parameter_block" },
 				{ "include": "#comment" },
-				{ "include": "#string" }
+				{ "include": "#string" },
+				{ "include": "#parameter_block" },
+				{ "include": "#illegal_name" },
+				{ "include": "#variables_definition_name" },
+				{ "include": "#variable_conditional_states" },
+				{ "include": "#comma" }
 			],
 			"end": "(?=;)"
+		},
+		"variables_definition_name": {
+			"name": "punctuation.definition.variable.intens",
+			"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+		},
+		"variable_conditional_states": {
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.group.begin.intens"}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.group.end.intens"}
+			},
+			"patterns": [
+				{
+					"match": "\\b(ELSE|INVALID)\\b\\s*(=)",
+					"captures": {
+						"1": {"name": "variable.parameter.intens"},
+						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+					}
+				},
+				{ "include": "#comment" },
+				{ "include": "#string" },
+				{ "include": "#float_number" },
+				{ "include": "#anonymous_group" },
+				{ "include": "#comma" }
+			]
 		},
 		"parameter_block": {
 			"begin": "{",
@@ -248,7 +282,7 @@
 			},
 			"end": "}",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.end.begin.intens"}
+				"0": {"name": "punctuation.section.block.end.intens"}
 			},
 			"contentName": "meta.block.intens",
 			"patterns": [
