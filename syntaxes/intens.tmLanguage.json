@@ -114,6 +114,7 @@
 			"patterns": [
 				{ "include": "#statements" },
 				{ "include": "#variable_definition" },
+				{ "include": "#set_definition" },
 				{ "include": "#constants" },
 				{ "include": "#end_of_statement" }
 			],
@@ -265,6 +266,26 @@
 				{ "include": "#comma" },
 				{ "include": "#function_call" }
 			]
+		},
+		"set_definition": {
+			"begin": "\\b(?:SET)\\b",
+			"beginCaptures": {
+				"0": {"name": "storage.type.enum.intens"}
+			},
+			"patterns": [
+				{ "include": "#comment" },
+				{ "include": "#string" },
+				{ "include": "#parameter_block" },
+				{ "include": "#illegal_name" },
+				{ "include": "#set_definition_name" },
+				{ "include": "#anonymous_group" },
+				{ "include": "#comma" }
+			],
+			"end": "(?=;)"
+		},
+		"set_definition_name": {
+			"name": "entity.name.enum.intens",
+			"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 		},
 		"parameter_block": {
 			"begin": "{",
@@ -442,7 +463,7 @@
 		"anonymous_group": {
 			"begin": "(\\()",
 			"beginCaptures": {
-				"0": {"name": "punctuation.parenthesis.open.intens"}
+				"0": {"name": "punctuation.section.group.begin.intens"}
 			},
 			"patterns": [
 				{ "include": "#anonymous_group" },
@@ -458,7 +479,7 @@
 			],
 			"end": "(\\))",
 			"endCaptures": {
-				"0": {"name": "punctuation.parenthesis.close.intens"}
+				"0": {"name": "punctuation.section.group.end.intens"}
 			}
 		},
 		"function_call": {
