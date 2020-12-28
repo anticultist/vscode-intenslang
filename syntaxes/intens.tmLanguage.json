@@ -3,10 +3,8 @@
 	"scopeName": "source.intens",
 	"uuid": "e951a14d-24c9-4260-9068-5628fe553513",
 	"patterns": [
+		{ "include": "#prototype" },
 		{ "include": "#high_level_commands" },
-		{ "include": "#string" },
-		{ "include": "#comment" },
-		{ "include": "#float_number" },
 		{ "include": "#include_statement" },
 		{ "include": "#datapool_block" },
 		{ "include": "#streamer_block" },
@@ -30,6 +28,16 @@
 					"name": "storage.type.other.intens",
 					"match": "\\b(USERGROUPS)\\b"
 				}
+			]
+		},
+		"prototype": {
+			"patterns": [
+				{ "include": "#comment" },
+				{ "include": "#string" },
+				{ "include": "#float_number" },
+				{ "include": "#constants" },
+				{ "include": "#predefined_variables" },
+				{ "include": "#operators" }
 			]
 		},
 		"string": {
@@ -79,6 +87,35 @@
 				}
 			]
 		},
+		"assignments": {
+			"patterns": [
+				{
+					"name": "keyword.operator.assignment.augmented.intens",
+					"match": "\\+=|-=|\\*=|/=|//=|%=|@=|&=|\\|=|\\^=|>>=|<<=|\\*\\*="
+				},
+				{ "include": "#simple_assignments" }
+			]
+		},
+		"simple_assignments" : {
+			"name": "keyword.operator.assignment.intens",
+			"match": "=(?!=)"
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.comparison.intens",
+					"match": "<\\=|>\\=|\\=\\=|<|>|\\!\\="
+				},
+				{
+					"name": "keyword.operator.arithmetic.intens",
+					"match": "\\+|\\-|\\*|\\*\\*|/|//|%|<<|>>|&|\\||\\^|~"
+				},
+				{
+					"name": "keyword.operator.logical.intens",
+					"match": "\\!"
+				}
+			]
+		},
 		"illegal_name": {
 			"name": "invalid.illegal.name.intens",
 			"match": "\\b(ABORT|COMPLEX|ELSE|END|EXIT|FUNC|IF|INTEGER|NONE|REAL|RETURN|STRING|STRUCT|WHILE)\\b"
@@ -90,12 +127,6 @@
 		"comma": {
 			"match": ",",
 			"name": "punctuation.separator.delimiter.intens"
-		},
-		"statements": {
-			"patterns": [
-				{ "include": "#string" },
-				{ "include": "#comment" }
-			]
 		},
 		"predefined_variables": {
 			"name": "variable.language.intens",
@@ -112,10 +143,9 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#statements" },
+				{ "include": "#prototype" },
 				{ "include": "#variable_definition" },
 				{ "include": "#set_definition" },
-				{ "include": "#constants" },
 				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(DATAPOOL)\\b",
@@ -131,7 +161,7 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#statements" }
+				{ "include": "#prototype" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(STREAMER)\\b",
 			"endCaptures": {
@@ -146,7 +176,7 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#statements" }
+				{ "include": "#prototype" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(OPERATOR)\\b",
 			"endCaptures": {
@@ -176,7 +206,7 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#statements" }
+				{ "include": "#prototype" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(UI_MANAGER)\\b",
 			"endCaptures": {
@@ -191,7 +221,7 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#statements" }
+				{ "include": "#prototype" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(DB_MANAGER)\\b",
 			"endCaptures": {
@@ -206,7 +236,7 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#statements" }
+				{ "include": "#prototype" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(LANGUAGE)\\b",
 			"endCaptures": {
@@ -227,8 +257,7 @@
 				"0": {"name": "storage.type.intens"}
 			},
 			"patterns": [
-				{ "include": "#comment" },
-				{ "include": "#string" },
+				{ "include": "#prototype" },
 				{ "include": "#parameter_block" },
 				{ "include": "#illegal_name" },
 				{ "include": "#variables_definition_name" },
@@ -259,9 +288,8 @@
 						"2": {"name": "keyword.operator.assignment.augmented.intens"}
 					}
 				},
-				{ "include": "#comment" },
-				{ "include": "#string" },
-				{ "include": "#float_number" },
+				{ "include": "#prototype" },
+				{ "include": "#simple_assignments" },
 				{ "include": "#anonymous_group" },
 				{ "include": "#comma" },
 				{ "include": "#function_call" }
@@ -273,8 +301,7 @@
 				"0": {"name": "storage.type.enum.intens"}
 			},
 			"patterns": [
-				{ "include": "#comment" },
-				{ "include": "#string" },
+				{ "include": "#prototype" },
 				{ "include": "#parameter_block" },
 				{ "include": "#illegal_name" },
 				{ "include": "#set_definition_name" },
@@ -302,9 +329,7 @@
 					"name": "storage.modifier.intens",
 					"match": "\\b(CELL|EDITABLE|GLOBAL|LOCKABLE|MATRIX|NO_DEPENDENCIES|OMIT_TTRAIL|OPTIONAL|SCALAR)\\b"
 				},
-				{ "include": "#comment" },
-				{ "include": "#string" },
-				{ "include": "#float_number" },
+				{ "include": "#prototype" },
 				{ "include": "#comma" },
 				{ "include": "#func_parameter" },
 				{ "include": "#set_parameter" },
@@ -323,16 +348,15 @@
 						"0": {"name": "keyword.operator.assignment.augmented.intens"}
 					},
 					"patterns": [
+						{ "include": "#prototype" },
 						{
 							"name": "variable.function.intens",
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
-						},
-						{ "include": "#comment" },
-						{ "include": "#float_number" }
+						}
 					],
 					"end": "(?=[\",)}])"
 				},
-				{ "include": "#comment" },
+				{ "include": "#prototype" },
 				{ "include": "#illegal_name" }
 			],
 			"end": "(?=[\",)}])"
@@ -353,11 +377,11 @@
 							"name": "storage.type.enum.intens",
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 						},
-						{ "include": "#comment" }
+						{ "include": "#prototype" }
 					],
 					"end": "(?=[\",)}])"
 				},
-				{ "include": "#comment" },
+				{ "include": "#prototype" },
 				{ "include": "#illegal_name" }
 			],
 			"end": "(?=[\",)}])"
@@ -374,27 +398,23 @@
 						"0": {"name": "keyword.operator.assignment.augmented.intens"}
 					},
 					"patterns": [
-						{ "include": "#constants" },
-						{ "include": "#comment" },
-						{ "include": "#float_number" }
+						{ "include": "#prototype" }
 					],
 					"end": "(?=[\",)}])"
 				},
-				{ "include": "#comment" }
+				{ "include": "#prototype" }
 			],
 			"end": "(?=[\",(){}])"
 		},
 		"function_statements": {
 			"patterns": [
+				{ "include": "#prototype" },
 				{ "include": "#anonymous_block" },
 				{ "include": "#anonymous_group" },
-				{ "include": "#comment" },
-				{ "include": "#constants" },
+				{ "include": "#assignments" },
 				{ "include": "#else_part" },
-				{ "include": "#float_number" },
 				{ "include": "#if_or_while_statement" },
 				{ "include": "#predefined_variables" },
-				{ "include": "#string" },
 				{ "include": "#variable_definition" },
 				{
 					"match": "\\b(ABORT|EXIT|RETURN)\\b\\s*(;)",
@@ -413,21 +433,17 @@
 				"0": {"name": "keyword.control.intens"}
 			},
 			"patterns": [
-				{ "include": "#comment" },
-				{ "include": "#string" },
+				{ "include": "#prototype" },
 				{
 					"begin": "(\\()",
 					"beginCaptures": {
 						"0": {"name": "punctuation.section.group.begin.intens"}
 					},
 					"patterns": [
+						{ "include": "#prototype" },
 						{ "include": "#anonymous_group" },
 						{ "include": "#function_call" },
-						{ "include": "#comment" },
-						{ "include": "#constants" },
-						{ "include": "#float_number" },
-						{ "include": "#predefined_variables" },
-						{ "include": "#string" }
+						{ "include": "#predefined_variables" }
 					],
 					"end": "(\\))",
 					"endCaptures": {
@@ -466,12 +482,10 @@
 				"0": {"name": "punctuation.section.group.begin.intens"}
 			},
 			"patterns": [
+				{ "include": "#prototype" },
 				{ "include": "#anonymous_group" },
-				{ "include": "#comment" },
-				{ "include": "#constants" },
-				{ "include": "#float_number" },
 				{ "include": "#predefined_variables" },
-				{ "include": "#string" },
+				{ "include": "#simple_assignments" },
 				{
 					"name": "support.function.builtin.intens",
 					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b"
@@ -495,12 +509,14 @@
 				"0": {"name": "support.function.builtin.intens"}
 			},
 			"patterns": [
+				{ "include": "#prototype" },
 				{
 					"begin": "(\\()",
 					"beginCaptures": {
 						"0": {"name": "punctuation.section.group.begin.intens"}
 					},
 					"patterns": [
+						{ "include": "#prototype" },
 						{
 							"name": "variable.function.intens",
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
@@ -524,13 +540,14 @@
 				"0": {"name": "support.function.builtin.intens"}
 			},
 			"patterns": [
+				{ "include": "#prototype" },
 				{
 					"begin": "(\\()",
 					"beginCaptures": {
 						"0": {"name": "punctuation.parenthesis.open.intens"}
 					},
 					"patterns": [
-						{ "include": "#comment" },
+						{ "include": "#prototype" },
 						{ "include": "#comma" },
 						{ "include": "#func_parameter" },
 						{ "include": "#anonymous_group" },
