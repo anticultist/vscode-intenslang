@@ -16,7 +16,7 @@
 		{ "include": "#db_manager_block" },
 		{ "include": "#language_block" },
 		{ "include": "#end_of_propram" },
-		{ "include": "#semicolon" },
+		{ "include": "#end_of_statement" },
 		{ "include": "#comma" }
 	],
 	"repository": {
@@ -83,7 +83,7 @@
 			"name": "invalid.illegal.name.intens",
 			"match": "\\b(ABORT|COMPLEX|ELSE|END|EXIT|FUNC|IF|INTEGER|NONE|REAL|RETURN|STRING|STRUCT|WHILE)\\b"
 		},
-		"semicolon": {
+		"end_of_statement": {
 			"match": ";",
 			"name": "punctuation.terminator.statement.intens"
 		},
@@ -114,7 +114,8 @@
 			"patterns": [
 				{ "include": "#statements" },
 				{ "include": "#variable_definition" },
-				{ "include": "#constants" }
+				{ "include": "#constants" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(DATAPOOL)\\b",
 			"endCaptures": {
@@ -216,7 +217,7 @@
 			"match": "\\b(END)\\b\\s*(.)",
 			"captures": {
 				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "punctuation.terminator.semafor-intens"}
+				"2": {"name": "punctuation.terminator.propram.intens"}
 			}
 		},
 		"variable_definition": {
@@ -231,7 +232,8 @@
 				{ "include": "#illegal_name" },
 				{ "include": "#variables_definition_name" },
 				{ "include": "#variable_conditional_states" },
-				{ "include": "#comma" }
+				{ "include": "#comma" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "(?=;)"
 		},
@@ -281,6 +283,8 @@
 				},
 				{ "include": "#comment" },
 				{ "include": "#string" },
+				{ "include": "#float_number" },
+				{ "include": "#comma" },
 				{ "include": "#func_parameter" },
 				{ "include": "#set_parameter" },
 				{ "include": "#other_parameter" }
@@ -302,7 +306,8 @@
 							"name": "variable.function.intens",
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 						},
-						{ "include": "#comment" }
+						{ "include": "#comment" },
+						{ "include": "#float_number" }
 					],
 					"end": "(?=[\",)}])"
 				},
@@ -356,7 +361,7 @@
 				},
 				{ "include": "#comment" }
 			],
-			"end": "(?=[\",)}])"
+			"end": "(?=[\",(){}])"
 		},
 		"function_statements": {
 			"patterns": [
@@ -374,13 +379,11 @@
 					"match": "\\b(ABORT|EXIT|RETURN)\\b\\s*(;)",
 					"captures": {
 						"1": {"name": "keyword.control.intens"},
-						"2": {"name": "punctuation.terminator.intens"}
+						"2": {"name": "punctuation.terminator.statement.intens"}
 					}
 				},
 				{ "include": "#function_call" },
-				{  "name": "punctuation.terminator.intens",
-				   "match": ";"
-				}
+				{ "include": "#end_of_statement" }
 			]
 		},
 		"if_or_while_statement": {
@@ -394,7 +397,7 @@
 				{
 					"begin": "(\\()",
 					"beginCaptures": {
-						"0": {"name": "punctuation.parenthesis.open.intens"}
+						"0": {"name": "punctuation.section.group.begin.intens"}
 					},
 					"patterns": [
 						{ "include": "#anonymous_group" },
@@ -407,7 +410,7 @@
 					],
 					"end": "(\\))",
 					"endCaptures": {
-						"0": {"name": "punctuation.parenthesis.close.intens"}
+						"0": {"name": "punctuation.section.group.end.intens"}
 					}
 				}
 			],
@@ -506,8 +509,11 @@
 						"0": {"name": "punctuation.parenthesis.open.intens"}
 					},
 					"patterns": [
+						{ "include": "#comment" },
+						{ "include": "#comma" },
 						{ "include": "#func_parameter" },
-						{ "include": "#anonymous_group" }
+						{ "include": "#anonymous_group" },
+						{ "include": "#other_parameter" }
 					],
 					"end": "(\\))",
 					"endCaptures": {
