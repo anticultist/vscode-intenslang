@@ -191,12 +191,48 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#function_statements" }
+				{ "include": "#function_statements" },
+				{ "include": "#function_definition" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(FUNCTIONS)\\b",
 			"endCaptures": {
 				"1": {"name": "keyword.other.intens"},
 				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"function_definition": {
+			"contentName": "meta.function.intens",
+			"begin": "\\b(FUNC)\\b",
+			"beginCaptures": {
+				"1": {"name": "storage.type.function.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#illegal_name" },
+				{
+					"name": "entity.name.function.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
+				{ "include": "#comma" },
+				{ "include": "#function_body" }
+			],
+			"end": ";",
+			"endCaptures": {
+				"0": {"name": "punctuation.terminator.statement.intens"}
+			}
+		},
+		"function_body": {
+			"begin": "{",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.group.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#function_statements" }
+			],
+			"end": "}",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.intens"}
 			}
 		},
 		"ui_manager_block": {
@@ -326,6 +362,13 @@
 			"contentName": "meta.block.intens",
 			"patterns": [
 				{
+					"match": "\\b(INVALID)\\b\\s*(=)",
+					"captures": {
+						"1": {"name": "variable.parameter.intens"},
+						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+					}
+				},
+				{
 					"name": "storage.modifier.intens",
 					"match": "\\b(CELL|EDITABLE|GLOBAL|LOCKABLE|MATRIX|NO_DEPENDENCIES|OMIT_TTRAIL|OPTIONAL|SCALAR)\\b"
 				},
@@ -342,6 +385,7 @@
 				"0": {"name": "variable.parameter.intens"}
 			},
 			"patterns": [
+				{ "include": "#prototype" },
 				{
 					"begin": "=",
 					"beginCaptures": {
@@ -356,7 +400,6 @@
 					],
 					"end": "(?=[\",)}])"
 				},
-				{ "include": "#prototype" },
 				{ "include": "#illegal_name" }
 			],
 			"end": "(?=[\",)}])"
@@ -367,21 +410,21 @@
 				"0": {"name": "variable.parameter.intens"}
 			},
 			"patterns": [
+				{ "include": "#prototype" },
 				{
 					"begin": "=",
 					"beginCaptures": {
 						"0": {"name": "keyword.operator.assignment.augmented.intens"}
 					},
 					"patterns": [
+						{ "include": "#prototype" },
 						{
 							"name": "storage.type.enum.intens",
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
-						},
-						{ "include": "#prototype" }
+						}
 					],
 					"end": "(?=[\",)}])"
 				},
-				{ "include": "#prototype" },
 				{ "include": "#illegal_name" }
 			],
 			"end": "(?=[\",)}])"
@@ -392,6 +435,7 @@
 				"0": {"name": "variable.parameter.intens"}
 			},
 			"patterns": [
+				{ "include": "#prototype" },
 				{
 					"begin": "=",
 					"beginCaptures": {
@@ -401,8 +445,7 @@
 						{ "include": "#prototype" }
 					],
 					"end": "(?=[\",)}])"
-				},
-				{ "include": "#prototype" }
+				}
 			],
 			"end": "(?=[\",(){}])"
 		},
