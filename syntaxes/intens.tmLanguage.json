@@ -482,6 +482,7 @@
 		"structure_inherit_from": {
 			"begin": ":",
 			"patterns": [
+				{ "include": "#prototype" },
 				{ "include": "#illegal_name" },
 				{
 					"name": "entity.other.inherited-class.intens",
@@ -496,23 +497,20 @@
 				"0": {"name": "punctuation.section.block.begin.intens"}
 			},
 			"patterns": [
+				{ "include": "#prototype" },
 				{ "include": "#variable_definition" }
 			],
-			"end": "(\\})",
+			"end": "(\\})|(?=;)",
 			"endCaptures": {
 				"0": {"name": "punctuation.section.block.end.intens"}
 			}
 		},
 		"parameter_block": {
+			"contentName": "meta.block.intens",
 			"begin": "{",
 			"beginCaptures": {
 				"0": {"name": "punctuation.section.block.begin.intens"}
 			},
-			"end": "}",
-			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
-			},
-			"contentName": "meta.block.intens",
 			"patterns": [
 				{
 					"match": "\\b(INVALID)\\b\\s*(=)",
@@ -522,15 +520,28 @@
 					}
 				},
 				{
+					"name": "support.function.builtin.intens",
+					"match": "\\b(MARGIN|MARKER|RANGE|SCALE|SIZE|THUMBNAIL)\\b"
+				},
+				{
+					"name": "support.function.builtin.intens",
+					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b"
+				},
+				{
 					"name": "storage.modifier.intens",
 					"match": "\\b(CELL|EDITABLE|GLOBAL|LOCKABLE|MATRIX|NO_DEPENDENCIES|OMIT_TTRAIL|OPTIONAL|SCALAR)\\b"
 				},
 				{ "include": "#prototype" },
+				{ "include": "#anonymous_group" },
 				{ "include": "#comma" },
 				{ "include": "#func_parameter" },
 				{ "include": "#set_parameter" },
 				{ "include": "#other_parameter" }
-			]
+			],
+			"end": "}",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.intens"}
+			}
 		},
 		"func_parameter": {
 			"begin": "\\b(FUNC|ON_EOS|ON_VIEW_ACTION)\\b",
@@ -595,9 +606,19 @@
 						"0": {"name": "keyword.operator.assignment.augmented.intens"}
 					},
 					"patterns": [
-						{ "include": "#prototype" }
+						{ "include": "#prototype" },
+						{
+							"name": "constant.language.intens",
+							"match": "\\b(HIDDEN|HIGH|HORIZONTAL|NONE|VERTICAL)\\b"
+						},
+						{
+							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b\\s*(?=\\()",
+							"captures": {
+								"1": {"name": "support.function.builtin.intens"}
+							}
+						}
 					],
-					"end": "(?=[\",)}])"
+					"end": "(?=[\",(){}])"
 				}
 			],
 			"end": "(?=[\",(){}])"
