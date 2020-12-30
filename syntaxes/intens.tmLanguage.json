@@ -168,7 +168,9 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#prototype" }
+				{ "include": "#prototype" },
+				{ "include": "#anonymous_group" },
+				{ "include": "#parameter_block" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(STREAMER)\\b",
 			"endCaptures": {
@@ -183,12 +185,73 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#prototype" }
+				{ "include": "#prototype" },
+				{
+					"name": "storage.type.other.intens",
+					"match": "\\b(BATCH|LATEXREPORT|MATHEMATICA|MENU|PROCESS|PYTHON|REPORTSTREAM)\\b"
+				},
+				{ "include": "#task_definition" },
+				{ "include": "#operator_definition" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(OPERATOR)\\b",
 			"endCaptures": {
 				"1": {"name": "keyword.other.intens"},
 				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"task_definition": {
+			"begin": "\\b(TASK)\\b",
+			"beginCaptures": {
+				"1": {"name": "storage.type.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#illegal_name" },
+				{
+					"name": "punctuation.definition.variable.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
+				{ "include": "#comma" },
+				{ "include": "#task_body" }
+			],
+			"end": ";",
+			"endCaptures": {
+				"0": {"name": "punctuation.terminator.statement.intens"}
+			}
+		},
+		"task_body": {
+			"begin": "{",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.group.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#function_statements" }
+			],
+			"end": "}",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.intens"}
+			}
+		},
+		"operator_definition": {
+			"begin": "\\b(MESSAGE_QUEUE|PROCESSGROUP|SOCKET|TIMER)\\b",
+			"beginCaptures": {
+				"1": {"name": "storage.type.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#illegal_name" },
+				{
+					"name": "punctuation.definition.variable.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
+				{ "include": "#comma" },
+				{ "include": "#parameter_block" },
+				{ "include": "#anonymous_group" }
+			],
+			"end": ";",
+			"endCaptures": {
+				"0": {"name": "punctuation.terminator.statement.intens"}
 			}
 		},
 		"functions_block": {
@@ -249,12 +312,54 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#prototype" }
+				{ "include": "#prototype" },
+				{ "include": "#ui_structure_definition" },
+				{
+					"name": "punctuation.definition.variable.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
+				{ "include": "#comma" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(UI_MANAGER)\\b",
 			"endCaptures": {
 				"1": {"name": "keyword.other.intens"},
 				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"ui_structure_definition": {
+			"begin": "\\b(FIELDGROUP|FOLDER|FORM|IMAGE|LINEPLOT|NAVIGATOR|PLOT2D|PSPLOT|TABLE|THERMO|UNIPLOT|XRT3DPLOT)\\b",
+			"beginCaptures": {
+				"1": {"name": "storage.type.other.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#illegal_name" },
+				{ "include": "#parameter_block" },
+				{ "include": "#ui_structure_body" }
+			],
+			"end": ";",
+			"endCaptures": {
+				"0": {"name": "punctuation.terminator.statement.intens"}
+			}
+		},
+		"ui_structure_body": {
+			"begin": "(\\()",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.group.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#ui_structure_body" },
+				{
+					"name": "support.function.builtin.intens",
+					"match": "\\b(LABEL|LEFT|LOG_WINDOW|PIXMAP|SEPARATOR|STD_WINDOW|STRETCH|TABLE|TOP|UNIT|VOID)\\b"
+				},
+				{ "include": "#square_bracket" },
+				{ "include": "#parameter_block" }
+			],
+			"end": "(\\))",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.group.end.intens"}
 			}
 		},
 		"db_manager_block": {
@@ -570,6 +675,7 @@
 				{ "include": "#anonymous_group" },
 				{ "include": "#predefined_variables" },
 				{ "include": "#simple_assignments" },
+				{ "include": "#square_bracket" },
 				{
 					"name": "support.function.builtin.intens",
 					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b"
@@ -578,6 +684,26 @@
 			"end": "(\\))",
 			"endCaptures": {
 				"0": {"name": "punctuation.section.group.end.intens"}
+			}
+		},
+		"square_bracket": {
+			"begin": "(\\[)",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.brackets.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{
+					"name": "keyword.other.intens",
+					"match": "#([A-Z])?"
+				},
+				{ "include": "#func_parameter" },
+				{ "include": "#anonymous_group" },
+				{ "include": "#function_call" }
+			],
+			"end": "(\\])",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.brackets.end.intens"}
 			}
 		},
 		"function_call": {
