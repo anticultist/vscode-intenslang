@@ -2,6 +2,12 @@
 	"name": "INTENS",
 	"scopeName": "source.intens",
 	"uuid": "e951a14d-24c9-4260-9068-5628fe553513",
+	"fileTypes": [
+		"des",
+		"inc",
+		"des.in",
+		"inc.in"
+	],
 	"patterns": [
 		{ "include": "#prototype" },
 		{ "include": "#high_level_commands" },
@@ -146,6 +152,7 @@
 				{ "include": "#prototype" },
 				{ "include": "#variable_definition" },
 				{ "include": "#set_definition" },
+				{ "include": "#structure_definition" },
 				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(DATAPOOL)\\b",
@@ -296,16 +303,15 @@
 				{ "include": "#prototype" },
 				{ "include": "#parameter_block" },
 				{ "include": "#illegal_name" },
-				{ "include": "#variables_definition_name" },
+				{
+					"name": "punctuation.definition.variable.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
 				{ "include": "#variable_conditional_states" },
 				{ "include": "#comma" },
 				{ "include": "#end_of_statement" }
 			],
 			"end": "(?=;)"
-		},
-		"variables_definition_name": {
-			"name": "punctuation.definition.variable.intens",
-			"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 		},
 		"variable_conditional_states": {
 			"begin": "\\(",
@@ -340,15 +346,57 @@
 				{ "include": "#prototype" },
 				{ "include": "#parameter_block" },
 				{ "include": "#illegal_name" },
-				{ "include": "#set_definition_name" },
+				{
+					"name": "entity.name.enum.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
 				{ "include": "#anonymous_group" },
 				{ "include": "#comma" }
 			],
 			"end": "(?=;)"
 		},
-		"set_definition_name": {
-			"name": "entity.name.enum.intens",
-			"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+		"structure_definition": {
+			"contentName": "meta.struct.intens",
+			"begin": "\\b(?:STRUCT)\\b",
+			"beginCaptures": {
+				"0": {"name": "storage.type.struct.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#structure_inherit_from" },
+				{ "include": "#illegal_name" },
+				{
+					"name": "entity.name.struct.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
+				{ "include": "#structure_body" },
+				{ "include": "#comma" }
+			],
+			"end": "(?=;)"
+		},
+		"structure_inherit_from": {
+			"begin": ":",
+			"patterns": [
+				{ "include": "#illegal_name" },
+				{
+					"name": "entity.other.inherited-class.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				}
+			],
+			"end": "(?=[\",(){}])"
+		},
+		"structure_body": {
+			"begin": "(\\{)",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.block.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#variable_definition" }
+			],
+			"end": "(\\})",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.intens"}
+			}
 		},
 		"parameter_block": {
 			"begin": "{",
@@ -471,16 +519,11 @@
 			]
 		},
 		"if_or_while_statement": {
-			"begin": "\\b(IF|WHILE)\\b",
-			"beginCaptures": {
-				"0": {"name": "keyword.control.intens"}
-			},
 			"patterns": [
-				{ "include": "#prototype" },
 				{
-					"begin": "(\\()",
+					"begin": "\\b(IF|WHILE)\\b\\s*\\(",
 					"beginCaptures": {
-						"0": {"name": "punctuation.section.group.begin.intens"}
+						"0": {"name": "keyword.control.intens"}
 					},
 					"patterns": [
 						{ "include": "#prototype" },
@@ -492,19 +535,17 @@
 					"endCaptures": {
 						"0": {"name": "punctuation.section.group.end.intens"}
 					}
+				},
+				{
+					"name": "keyword.control.intens",
+					"match": "\\b(IF|WHILE)\\b"
 				}
-			],
-			"end": "(?=[;{}])"
+			]
+
 		},
 		"else_part": {
-			"begin": "\\b(ELSE)\\b",
-			"beginCaptures": {
-				"0": {"name": "keyword.control.intens"}
-			},
-			"patterns": [
-				{ "include": "#function_statements" }
-			],
-			"end": ""
+			"name": "keyword.control.intens",
+			"match": "\\b(ELSE)\\b"
 		},
 		"anonymous_block": {
 			"begin": "(\\{)",
