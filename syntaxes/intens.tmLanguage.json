@@ -191,7 +191,8 @@
 					"match": "\\b(BATCH|LATEXREPORT|MATHEMATICA|MENU|PROCESS|PYTHON|REPORTSTREAM)\\b"
 				},
 				{ "include": "#task_definition" },
-				{ "include": "#operator_definition" }
+				{ "include": "#operator_definition" },
+				{ "include": "#parameter_block" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(OPERATOR)\\b",
 			"endCaptures": {
@@ -416,7 +417,10 @@
 				{ "include": "#comma" },
 				{ "include": "#end_of_statement" }
 			],
-			"end": "(?=;)"
+			"end": ";",
+			"endCaptures": {
+				"0": {"name": "punctuation.terminator.statement.intens"}
+			}
 		},
 		"variable_conditional_states": {
 			"begin": "\\(",
@@ -481,6 +485,9 @@
 		},
 		"structure_inherit_from": {
 			"begin": ":",
+			"beginCaptures": {
+				"0": {"name": "punctuation.separator.intens"}
+			},
 			"patterns": [
 				{ "include": "#prototype" },
 				{ "include": "#illegal_name" },
@@ -519,6 +526,7 @@
 						"2": {"name": "keyword.operator.assignment.augmented.intens"}
 					}
 				},
+				{ "include": "#function_call" },
 				{
 					"name": "support.function.builtin.intens",
 					"match": "\\b(MARGIN|MARKER|RANGE|SCALE|SIZE|THUMBNAIL)\\b"
@@ -532,8 +540,8 @@
 					"match": "\\b(CELL|EDITABLE|GLOBAL|LOCKABLE|MATRIX|NO_DEPENDENCIES|OMIT_TTRAIL|OPTIONAL|SCALAR)\\b"
 				},
 				{ "include": "#prototype" },
-				{ "include": "#anonymous_group" },
 				{ "include": "#comma" },
+				{ "include": "#parameter_group" },
 				{ "include": "#func_parameter" },
 				{ "include": "#set_parameter" },
 				{ "include": "#other_parameter" }
@@ -541,6 +549,22 @@
 			"end": "}",
 			"endCaptures": {
 				"0": {"name": "punctuation.section.block.end.intens"}
+			}
+		},
+		"parameter_group": {
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.group.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#comma" },
+				{ "include": "#func_parameter" },
+				{ "include": "#other_parameter" }
+			],
+			"end": "\\)",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.group.end.intens"}
 			}
 		},
 		"func_parameter": {
@@ -647,9 +671,10 @@
 		"if_or_while_statement": {
 			"patterns": [
 				{
-					"begin": "\\b(IF|WHILE)\\b\\s*\\(",
+					"begin": "\\b(IF|WHILE)\\b\\s*(\\()",
 					"beginCaptures": {
-						"0": {"name": "keyword.control.intens"}
+						"1": {"name": "keyword.control.intens"},
+						"2": {"name": "punctuation.section.group.begin.intens"}
 					},
 					"patterns": [
 						{ "include": "#prototype" },
