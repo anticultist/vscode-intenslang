@@ -170,7 +170,8 @@
 			"patterns": [
 				{ "include": "#prototype" },
 				{ "include": "#anonymous_group" },
-				{ "include": "#parameter_block" }
+				{ "include": "#parameter_block" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(STREAMER)\\b",
 			"endCaptures": {
@@ -192,7 +193,8 @@
 				},
 				{ "include": "#task_definition" },
 				{ "include": "#operator_definition" },
-				{ "include": "#parameter_block" }
+				{ "include": "#parameter_block" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(OPERATOR)\\b",
 			"endCaptures": {
@@ -299,12 +301,22 @@
 			},
 			"patterns": [
 				{ "include": "#prototype" },
-				{ "include": "#function_statements" }
+				{ "include": "#function_statements" },
+				{ "include": "#function_properties" }
 			],
 			"end": "}",
 			"endCaptures": {
 				"0": {"name": "punctuation.section.block.end.intens"}
 			}
+		},
+		"function_properties": {
+			"patterns": [
+				{ "include": "#comma" },
+				{
+					"name": "variable.parameter.intens",
+					"match": "\\b(DEADLY_SILENT|PRIORITY|UPDATE_FORMS)\\b"
+				}
+			]
 		},
 		"ui_manager_block": {
 			"contentName": "meta.namespace.intens",
@@ -319,7 +331,8 @@
 					"name": "punctuation.definition.variable.intens",
 					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 				},
-				{ "include": "#comma" }
+				{ "include": "#comma" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(UI_MANAGER)\\b",
 			"endCaptures": {
@@ -336,7 +349,8 @@
 				{ "include": "#prototype" },
 				{ "include": "#illegal_name" },
 				{ "include": "#parameter_block" },
-				{ "include": "#ui_structure_body" }
+				{ "include": "#ui_structure_body" },
+				{ "include": "#comma" }
 			],
 			"end": ";",
 			"endCaptures": {
@@ -356,7 +370,9 @@
 					"match": "\\b(LABEL|LEFT|LOG_WINDOW|PIXMAP|SEPARATOR|STD_WINDOW|STRETCH|TABLE|TOP|UNIT|VOID)\\b"
 				},
 				{ "include": "#square_bracket" },
-				{ "include": "#parameter_block" }
+				{ "include": "#parameter_block" },
+				{ "include": "#comma" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "(\\))",
 			"endCaptures": {
@@ -427,10 +443,6 @@
 			"beginCaptures": {
 				"0": {"name": "punctuation.section.group.begin.intens"}
 			},
-			"end": "\\)",
-			"endCaptures": {
-				"0": {"name": "punctuation.section.group.end.intens"}
-			},
 			"patterns": [
 				{
 					"match": "\\b(ELSE|INVALID)\\b\\s*(=)",
@@ -444,7 +456,11 @@
 				{ "include": "#anonymous_group" },
 				{ "include": "#comma" },
 				{ "include": "#function_call" }
-			]
+			],
+			"end": "\\)",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.group.end.intens"}
+			}
 		},
 		"set_definition": {
 			"begin": "\\b(?:SET)\\b",
@@ -496,7 +512,7 @@
 					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 				}
 			],
-			"end": "(?=[\",(){}])"
+			"end": "(?=[\",(){}\\[\\]])"
 		},
 		"structure_body": {
 			"begin": "(\\{)",
@@ -529,11 +545,11 @@
 				{ "include": "#function_call" },
 				{
 					"name": "support.function.builtin.intens",
-					"match": "\\b(MARGIN|MARKER|RANGE|SCALE|SIZE|THUMBNAIL)\\b"
+					"match": "\\b(MARGIN|MARKER|RANGE|SCALE|SIZE|THUMBNAIL)\\b(?!\\s*=)"
 				},
 				{
 					"name": "support.function.builtin.intens",
-					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b"
+					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
 				},
 				{
 					"name": "storage.modifier.intens",
@@ -560,6 +576,7 @@
 				{ "include": "#prototype" },
 				{ "include": "#comma" },
 				{ "include": "#func_parameter" },
+				{ "include": "#function_call" },
 				{ "include": "#other_parameter" }
 			],
 			"end": "\\)",
@@ -586,11 +603,11 @@
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 						}
 					],
-					"end": "(?=[\",)}])"
+					"end": "(?=[\",)}\\]])"
 				},
 				{ "include": "#illegal_name" }
 			],
-			"end": "(?=[\",)}])"
+			"end": "(?=[\",)}\\]])"
 		},
 		"set_parameter": {
 			"begin": "\\b(SET)\\b",
@@ -611,11 +628,11 @@
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 						}
 					],
-					"end": "(?=[\",)}])"
+					"end": "(?=[\",)}\\]])"
 				},
 				{ "include": "#illegal_name" }
 			],
-			"end": "(?=[\",)}])"
+			"end": "(?=[\",)}\\]])"
 		},
 		"other_parameter": {
 			"begin": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
@@ -642,10 +659,10 @@
 							}
 						}
 					],
-					"end": "(?=[\",(){}])"
+					"end": "(?=[\",(){}\\[\\]])"
 				}
 			],
-			"end": "(?=[\",(){}])"
+			"end": "(?=[\",(){}\\[\\]])"
 		},
 		"function_statements": {
 			"patterns": [
@@ -724,8 +741,9 @@
 				{ "include": "#square_bracket" },
 				{
 					"name": "support.function.builtin.intens",
-					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b"
-				}
+					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
+				},
+				{ "include": "#comma" }
 			],
 			"end": "(\\))",
 			"endCaptures": {
@@ -788,7 +806,7 @@
 					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 				}
 			],
-			"end": "(?=[\",;)}])"
+			"end": "(?=[\",;)}\\]])"
 		},
 		"builtin_functions_with_args": {
 			"begin": "\\b(REQUEST|SEND|SUBSCRIBE)\\b",
@@ -815,11 +833,11 @@
 					}
 				}
 			],
-			"end": "(?=[\",;)}])"
+			"end": "(?=[\",;)}\\]])"
 		},
 		"builtin_functions_without_args": {
 			"name": "support.function.builtin.intens",
-			"match": "\\b(ABORT|ABORTTRANSACTION|ABS|ACOS|ALLOW|ARG|ASIN|ASSIGN_CORR|ATAN|ATAN2|ATTRS|BASENAME|BEGINTRANSACTION|CHANGED|CLASSNAME|CLEAR|CLEAR_SELECTION|CLEARCYCLE|COMMITTRANSACTION|COMPARE|COMPLEX|COMPOSE|COMPOSE_STRING|CONFIRM|CONFIRM_CANCEL|COPY|COS|DATASET_TEXT|DELETE|DELETECYCLE|DIRNAME|DISABLE|DISALLOW|ENABLE|FILENAME|FIRSTCYCLE|GET|GET_SELECTION|GOCYCLE|HELPKEY|ICON|IMAG|LABEL|LASTCYCLE|LENGTH|LOAD|LOG|LOG10|MAP|MESSAGEBOX|MODIFIED|NEWCYCLE|NEXTCYCLE|NODE|OPEN|OPEN_FILE|OPEN_URL|PACK|PARENT|PASTE|PREVIEW|PRINT|PRINT_LOG|PUBLISH|PUT|QUIT|RANGE|REAL|REPORT|RESET_ERROR|REST_LOGOFF|REST_LOGON|ROUND|ROUND10|ROUND5|RUN|SAVE|SCALE|SELECT_LIST|SERIALIZE|SERIALIZE_FORM|SET|SET_DB_TIMESTAMP|SET_ERROR|SET_INDEX|SET_MQ_HOST|SET_MSG|SET_REASON|SET_RESOURCE|SET_THIS|SIN|SIZE|SORTORDER|SQRT|START|STOP|STRETCH|STRING_DATE|STRING_DATETIME|STRING_TIME|STRING_VALUE|STYLESHEET|TAN|THUMBNAIL|TIMESTAMP|TOUCH|UNIT|UNMAP|UNSET|UPDATE_FORMS|VALID|VAR|VISIBLE|WRITE_SETTINGS)\\b"
+			"match": "\\b(ABORT|ABORTTRANSACTION|ABS|ACOS|ALLOW|ARG|ASIN|ASSIGN_CORR|ATAN|ATAN2|ATTRS|BASENAME|BEGINTRANSACTION|CHANGED|CLASSNAME|CLEAR|CLEAR_SELECTION|CLEARCYCLE|COMMITTRANSACTION|COMPARE|COMPLEX|COMPOSE|COMPOSE_STRING|CONFIRM|CONFIRM_CANCEL|COPY|COS|DATASET_TEXT|DELETE|DELETECYCLE|DIRNAME|DISABLE|DISALLOW|ENABLE|FILENAME|FIRSTCYCLE|GET|GET_SELECTION|GOCYCLE|HELPKEY|ICON|IMAG|LABEL|LASTCYCLE|LENGTH|LOAD|LOG|LOG10|MAP|MESSAGEBOX|MODIFIED|NEWCYCLE|NEXTCYCLE|NODE|OPEN|OPEN_FILE|OPEN_URL|PACK|PARENT|PASTE|PREVIEW|PRINT|PRINT_LOG|PUBLISH|PUT|QUIT|RANGE|REAL|REPORT|RESET_ERROR|REST_LOGOFF|REST_LOGON|ROUND|ROUND10|ROUND5|RUN|SAVE|SCALE|SELECT_LIST|SERIALIZE|SERIALIZE_FORM|SET|SET_DB_TIMESTAMP|SET_ERROR|SET_INDEX|SET_MQ_HOST|SET_MSG|SET_REASON|SET_RESOURCE|SET_THIS|SIN|SIZE|SORTORDER|SQRT|START|STOP|STRETCH|STRING_DATE|STRING_DATETIME|STRING_TIME|STRING_VALUE|STYLESHEET|TAN|THUMBNAIL|TIMESTAMP|TOUCH|UNIT|UNMAP|UNSET|UPDATE_FORMS|VALID|VAR|VISIBLE|WRITE_SETTINGS)\\b(?!\\s*=)"
 		}
 	}
 }
