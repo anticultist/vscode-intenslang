@@ -2,7 +2,12 @@
     "name": "intens-lang",
     "displayName": "INTENS Language",
     "description": "Unofficial syntax definition for the INTENS language",
+    "license": "ISC",
     "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/anticultist/vscode-intenslang"
+    },
     "engines": {
         "vscode": "^1.45.0"
     },
