@@ -1,0 +1,9 @@
+============
+line comment
+============
+
+// just a comment
+
+---
+(source_file
+  (comment))
