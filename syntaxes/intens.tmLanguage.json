@@ -473,6 +473,7 @@
 					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
 				},
 				{ "include": "#variable_conditional_states" },
+				{ "include": "#square_bracket" },
 				{ "include": "#comma" },
 				{ "include": "#end_of_statement" }
 			],
@@ -553,9 +554,10 @@
 				{
 					"name": "entity.other.inherited-class.intens",
 					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
-				}
+				},
+				{ "include": "#comma" }
 			],
-			"end": "(?=[\",(){}\\[\\]])"
+			"end": "(?=[\"(){}\\[\\]])"
 		},
 		"structure_body": {
 			"begin": "(\\{)",
@@ -786,7 +788,15 @@
 					"name": "support.function.builtin.intens",
 					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
 				},
-				{ "include": "#comma" }
+				{ "include": "#comma" },
+				{
+					"name": "punctuation.separator.slice.intens",
+					"match": ":"
+				},
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
+				}
 			],
 			"end": "(\\))",
 			"endCaptures": {
@@ -802,11 +812,16 @@
 				{ "include": "#prototype" },
 				{
 					"name": "keyword.other.intens",
-					"match": "#([A-Z])?"
+					"match": "#([A-Za-z0-9])*"
 				},
 				{ "include": "#func_parameter" },
 				{ "include": "#anonymous_group" },
-				{ "include": "#function_call" }
+				{ "include": "#function_call" },
+				{ "include": "#comma" },
+				{
+					"name": "punctuation.separator.slice.intens",
+					"match": ":"
+				}
 			],
 			"end": "(\\])",
 			"endCaptures": {
@@ -836,7 +851,7 @@
 						{ "include": "#prototype" },
 						{
 							"name": "variable.function.intens",
-							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+							"match": "(?<!\\.)\\b([A-Za-z_][A-Za-z_0-9]*)\\b(?!\\.)"
 						}
 					],
 					"end": "(\\))",
