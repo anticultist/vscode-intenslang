@@ -371,6 +371,10 @@
 					"name": "support.function.builtin.intens",
 					"match": "\\b(LABEL|LEFT|LOG_WINDOW|PIXMAP|SEPARATOR|STD_WINDOW|STRETCH|TABLE|TOP|UNIT|VOID)\\b"
 				},
+				{
+					"name": "punctuation.separator.slice.intens",
+					"match": ":"
+				},
 				{ "include": "#square_bracket" },
 				{ "include": "#parameter_block" },
 				{ "include": "#comma" },
@@ -389,7 +393,8 @@
 			"patterns": [
 				{ "include": "#prototype" },
 				{ "include": "#parameter_block" },
-				{ "include": "#menu_parameter" }
+				{ "include": "#menu_parameter" },
+				{ "include": "#comma" }
 			],
 			"end": ";",
 			"endCaptures": {
@@ -405,7 +410,7 @@
 				{ "include": "#prototype" },
 				{
 					"name": "variable.parameter.intens",
-					"match": "\\b(FORM|SEPARATOR|TRANSACTION)\\b"
+					"match": "\\b(FORM|MENU|PROCESS|SEPARATOR|TRANSACTION)\\b"
 				},
 				{
 					"match": "\\b(FUNC)\\b\\s*\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
@@ -415,7 +420,8 @@
 					}
 				},
 				{ "include": "#comma" },
-				{ "include": "#simple_assignments" }
+				{ "include": "#simple_assignments" },
+				{ "include": "#menu_parameter" }
 			],
 			"end": "(\\))",
 			"endCaptures": {
@@ -444,7 +450,9 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#prototype" }
+				{ "include": "#prototype" },
+				{ "include": "#simple_assignments" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(LANGUAGE)\\b",
 			"endCaptures": {
@@ -605,7 +613,11 @@
 				{ "include": "#parameter_group" },
 				{ "include": "#func_parameter" },
 				{ "include": "#set_parameter" },
-				{ "include": "#other_parameter" }
+				{ "include": "#other_parameter" },
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
+				}
 			],
 			"end": "}",
 			"endCaptures": {
@@ -622,7 +634,11 @@
 				{ "include": "#comma" },
 				{ "include": "#func_parameter" },
 				{ "include": "#function_call" },
-				{ "include": "#other_parameter" }
+				{ "include": "#other_parameter" },
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
+				}
 			],
 			"end": "\\)",
 			"endCaptures": {
@@ -725,6 +741,10 @@
 						"1": {"name": "keyword.control.intens"},
 						"2": {"name": "punctuation.terminator.statement.intens"}
 					}
+				},
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
 				},
 				{ "include": "#function_call" },
 				{ "include": "#end_of_statement" }
@@ -852,6 +872,10 @@
 						{
 							"name": "variable.function.intens",
 							"match": "(?<!\\.)\\b([A-Za-z_][A-Za-z_0-9]*)\\b(?!\\.)"
+						},
+						{
+							"name": "punctuation.accessor.dot.intens",
+							"match": "\\."
 						}
 					],
 					"end": "(\\))",
@@ -867,7 +891,7 @@
 			"end": "(?=[\",;)}\\]])"
 		},
 		"builtin_functions_with_args": {
-			"begin": "\\b(REQUEST|SEND|SUBSCRIBE)\\b",
+			"begin": "\\b(REQUEST|SEND|SUBSCRIBE)\\b(?!\\s*=)",
 			"beginCaptures": {
 				"0": {"name": "support.function.builtin.intens"}
 			},
