@@ -136,7 +136,7 @@
 		},
 		"predefined_variables": {
 			"name": "variable.language.intens",
-			"match": "\\b(BASE|COLORBIT|CURRENT_DATETIME|CURRENT_DATE|CURRENT_TIME|INPUT|SOURCE|SOURCE2|THIS)\\b"
+			"match": "\\b(BASE|COLORBIT|CURRENT_DATETIME|CURRENT_DATE|CURRENT_TIME|INPUT|LOCK|SOURCE|SOURCE2|THIS)\\b"
 		},
 		"include_statement": {
 			"name": "keyword.control.import.intens",
@@ -636,7 +636,7 @@
 			},
 			"patterns": [
 				{
-					"match": "\\b(INVALID)\\b\\s*(=)",
+					"match": "\\b(INDEX|INVALID)\\b\\s*(=)",
 					"captures": {
 						"1": {"name": "variable.parameter.intens"},
 						"2": {"name": "keyword.operator.assignment.augmented.intens"}
@@ -849,9 +849,10 @@
 			"patterns": [
 				{ "include": "#prototype" },
 				{ "include": "#anonymous_group" },
+				{ "include": "#square_bracket" },
+				{ "include": "#parameter_block"},
 				{ "include": "#predefined_variables" },
 				{ "include": "#simple_assignments" },
-				{ "include": "#square_bracket" },
 				{
 					"name": "support.function.builtin.intens",
 					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
@@ -939,29 +940,14 @@
 			"end": "(?=[\",;)}\\]])"
 		},
 		"builtin_functions_with_args": {
-			"begin": "\\b(REQUEST|SEND|SUBSCRIBE)\\b(?!\\s*=)",
+			"begin": "\\b(DIRNAME|REQUEST|SEND|SUBSCRIBE)\\b(?!\\s*=)",
 			"beginCaptures": {
 				"0": {"name": "support.function.builtin.intens"}
 			},
 			"patterns": [
 				{ "include": "#prototype" },
-				{
-					"begin": "(\\()",
-					"beginCaptures": {
-						"0": {"name": "punctuation.parenthesis.open.intens"}
-					},
-					"patterns": [
-						{ "include": "#prototype" },
-						{ "include": "#comma" },
-						{ "include": "#func_parameter" },
-						{ "include": "#anonymous_group" },
-						{ "include": "#other_parameter" }
-					],
-					"end": "(\\))",
-					"endCaptures": {
-						"0": {"name": "punctuation.parenthesis.close.intens"}
-					}
-				}
+				{ "include": "#parameter_group" },
+				{ "include": "#parameter_block" }
 			],
 			"end": "(?=[\",;)}\\]])"
 		},
