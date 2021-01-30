@@ -482,12 +482,46 @@
 				"1": {"name": "keyword.other.intens"}
 			},
 			"patterns": [
-				{ "include": "#prototype" }
+				{ "include": "#prototype" },
+				{
+					"name": "storage.type.other.intens",
+					"match": "\\b(FILTER|MODIFY|TRANSACTION)\\b"
+				},
+				{ "include": "#menu_definition" },
+				{ "include": "#anonymous_group" },
+				{ "include": "#square_bracket" },
+				{ "include": "#sql_block" },
+				{ "include": "#simple_assignments" },
+				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(DB_MANAGER)\\b",
 			"endCaptures": {
 				"1": {"name": "keyword.other.intens"},
 				"2": {"name": "keyword.other.intens"}
+			}
+		},
+		"sql_block": {
+			"contentName": "meta.block.intens",
+			"begin": "{",
+			"beginCaptures": {
+				"0": {"name": "punctuation.section.block.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#comma" },
+				{ "include": "#end_of_statement" },
+				{
+					"name": "keyword.other.DML.sql",
+					"match": "(?i:\\b(from|select|where)\\b)"
+				},
+				{
+					"name": "keyword.operator.logical.sql",
+					"match": "(?i:\\b(and|or|like|having|exists|between|in)\\b)"
+				}
+			],
+			"end": "}",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.intens"}
 			}
 		},
 		"language_block": {
