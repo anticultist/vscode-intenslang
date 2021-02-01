@@ -153,6 +153,7 @@
 				{ "include": "#variable_definition" },
 				{ "include": "#set_definition" },
 				{ "include": "#structure_definition" },
+				{ "include": "#custom_variable_type_definition" },
 				{ "include": "#end_of_statement" }
 			],
 			"end": "\\b(END)\\b\\s+\\b(DATAPOOL)\\b",
@@ -563,8 +564,7 @@
 				},
 				{ "include": "#variable_conditional_states" },
 				{ "include": "#square_bracket" },
-				{ "include": "#comma" },
-				{ "include": "#end_of_statement" }
+				{ "include": "#comma" }
 			],
 			"end": ";",
 			"endCaptures": {
@@ -588,11 +588,37 @@
 				{ "include": "#simple_assignments" },
 				{ "include": "#anonymous_group" },
 				{ "include": "#comma" },
-				{ "include": "#function_call" }
+				{ "include": "#function_call" },
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
+				}
 			],
 			"end": "\\)",
 			"endCaptures": {
 				"0": {"name": "punctuation.section.group.end.intens"}
+			}
+		},
+		"custom_variable_type_definition": {
+			"begin": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
+			"beginCaptures": {
+				"0": {"name": "storage.type.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#parameter_block" },
+				{ "include": "#illegal_name" },
+				{
+					"name": "punctuation.definition.variable.intens",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b"
+				},
+				{ "include": "#variable_conditional_states" },
+				{ "include": "#square_bracket" },
+				{ "include": "#comma" }
+			],
+			"end": ";",
+			"endCaptures": {
+				"0": {"name": "punctuation.terminator.statement.intens"}
 			}
 		},
 		"set_definition": {
@@ -655,7 +681,8 @@
 			},
 			"patterns": [
 				{ "include": "#prototype" },
-				{ "include": "#variable_definition" }
+				{ "include": "#variable_definition" },
+				{ "include": "#custom_variable_type_definition" }
 			],
 			"end": "(\\})|(?=;)",
 			"endCaptures": {
@@ -889,7 +916,7 @@
 				{ "include": "#simple_assignments" },
 				{
 					"name": "support.function.builtin.intens",
-					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
+					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|DATASET_TEXT|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
 				},
 				{ "include": "#comma" },
 				{
