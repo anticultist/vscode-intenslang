@@ -719,6 +719,7 @@
 				{ "include": "#prototype" },
 				{ "include": "#comma" },
 				{ "include": "#parameter_group" },
+				{ "include": "#parameter_block" },
 				{ "include": "#func_parameter" },
 				{ "include": "#set_parameter" },
 				{ "include": "#other_parameter" },
@@ -827,6 +828,10 @@
 							"captures": {
 								"1": {"name": "support.function.builtin.intens"}
 							}
+						},
+						{
+							"name": "punctuation.accessor.dot.intens",
+							"match": "\\."
 						}
 					],
 					"end": "(?=[\",(){}\\[\\]])"
@@ -839,6 +844,7 @@
 				{ "include": "#prototype" },
 				{ "include": "#anonymous_block" },
 				{ "include": "#anonymous_group" },
+				{ "include": "#square_bracket" },
 				{ "include": "#assignments" },
 				{ "include": "#else_part" },
 				{ "include": "#if_or_while_statement" },
@@ -871,7 +877,11 @@
 						{ "include": "#prototype" },
 						{ "include": "#anonymous_group" },
 						{ "include": "#function_call" },
-						{ "include": "#predefined_variables" }
+						{ "include": "#predefined_variables" },
+						{
+							"name": "punctuation.accessor.dot.intens",
+							"match": "\\."
+						}
 					],
 					"end": "(\\))",
 					"endCaptures": {
@@ -917,6 +927,10 @@
 				{
 					"name": "support.function.builtin.intens",
 					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|DATASET_TEXT|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
+				},
+				{
+					"name": "variable.parameter.intens",
+					"match": "\\b(DATAPOOL)\\b"
 				},
 				{ "include": "#comma" },
 				{
