@@ -806,7 +806,7 @@
 			"end": "(?=[\",)}\\]])"
 		},
 		"other_parameter": {
-			"begin": "(?<!\\.)\\b([A-Za-z_][A-Za-z_0-9]*)\\b(?!\\.)",
+			"begin": "(?<!\\.)\\b([A-Za-z_][A-Za-z_0-9]*)\\b(?![\\.\\[])",
 			"beginCaptures": {
 				"0": {"name": "variable.parameter.intens"}
 			},
@@ -962,6 +962,10 @@
 					"name": "keyword.other.intens",
 					"match": "#([A-Za-z0-9])*"
 				},
+				{
+					"name": "variable.parameter.intens",
+					"match": "\\b(FRAME|JUSTIFY|SB)\\b"
+				},
 				{ "include": "#func_parameter" },
 				{ "include": "#anonymous_group" },
 				{ "include": "#function_call" },
@@ -969,6 +973,10 @@
 				{
 					"name": "punctuation.separator.slice.intens",
 					"match": ":"
+				},
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
 				}
 			],
 			"end": "(\\])",
