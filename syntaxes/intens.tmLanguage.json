@@ -60,6 +60,13 @@
 					"match": "(<(/)?b>|<br(/)?>|<(/)?h[1-6]>|<(/)?html>|<(/)?i>|</table>|<(/)?td>|<(/)?th>|<(/)?tr>|<(/)?u>)"
 				},
 				{
+					"match": "(<table).*(>)",
+					"captures": {
+						"1": {"name": "keyword.other.DML.html"},
+						"2": {"name": "keyword.other.DML.html"}
+					}
+				},
+				{
 					"name": "constant.character.format.placeholder.other.intens",
 					"match": "%([1-9]|1[0-5])\\b"
 				},
@@ -930,7 +937,7 @@
 				{ "include": "#simple_assignments" },
 				{
 					"name": "support.function.builtin.intens",
-					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|DATASET_TEXT|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
+					"match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COMPOSE|COS|DATASET_TEXT|HORIZONTAL|LABEL|LOG|LOG10|RANGE|ROUND|ROUND10|ROUND5|SIN|TAN|THUMBNAIL|UNIT|VALID|VAR|VERTICAL)\\b(?!\\s*=)"
 				},
 				{
 					"name": "variable.parameter.intens",
