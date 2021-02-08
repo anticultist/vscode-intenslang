@@ -143,7 +143,7 @@
 		},
 		"predefined_variables": {
 			"name": "variable.language.intens",
-			"match": "\\b(BASE|COLORBIT|CURRENT_DATETIME|CURRENT_DATE|CURRENT_TIME|INPUT|LOCK|SOURCE|SOURCE2|THIS)\\b"
+			"match": "\\b(BASE|INPUT|SOURCE|SOURCE2|THIS)\\b"
 		},
 		"include_statement": {
 			"name": "keyword.control.import.intens",
@@ -932,7 +932,7 @@
 				{ "include": "#prototype" },
 				{ "include": "#anonymous_group" },
 				{ "include": "#square_bracket" },
-				{ "include": "#parameter_block"},
+				{ "include": "#parameter_block" },
 				{ "include": "#predefined_variables" },
 				{ "include": "#simple_assignments" },
 				{
@@ -994,8 +994,9 @@
 		"function_call": {
 			"patterns": [
 				{ "include": "#run_function" },
-				{ "include": "#builtin_functions_with_args" },
-				{ "include": "#builtin_functions_without_args" }
+				{ "include": "#function_call_with_round_brackets" },
+				{ "include": "#function_call_with_curly_bracket" },
+				{ "include": "#function_call_without_arguments" }
 			]
 		},
 		"run_function": {
@@ -1033,21 +1034,71 @@
 			],
 			"end": "(?=[\",;)}\\]])"
 		},
-		"builtin_functions_with_args": {
-			"begin": "\\b(DIRNAME|REQUEST|SEND|SUBSCRIBE)\\b(?!\\s*=)",
+		"function_call_with_round_brackets": {
+			"begin": "\\b([A-Z][A-Z0-9_]*)\\b\\s*(\\()",
 			"beginCaptures": {
-				"0": {"name": "support.function.builtin.intens"}
+				"1": {"name": "support.function.builtin.intens"},
+				"2": {"name": "punctuation.section.group.begin.intens"}
 			},
 			"patterns": [
 				{ "include": "#prototype" },
-				{ "include": "#parameter_group" },
-				{ "include": "#parameter_block" }
+				{ "include": "#comma" },
+				{ "include": "#square_bracket" },
+				{ "include": "#function_call_with_round_brackets" },
+				{ "include": "#parameter_block" },
+				{ "include": "#func_parameter" },
+				{
+					"name": "variable.parameter.intens",
+					"match": "\\b(COLORBIT|LOCK)\\b"
+				},
+				{
+					"match": "\\b([A-Z][A-Z0-9_]*)\\b\\s*(=)(?!=)",
+					"captures": {
+						"1": {"name": "variable.parameter.intens"},
+						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+					}
+				},
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
+				}
 			],
-			"end": "(?=[\",;)}\\]])"
+			"end": "(\\))",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.group.end.intens"}
+			}
 		},
-		"builtin_functions_without_args": {
+		"function_call_with_curly_bracket": {
+			"begin": "\\b(DIRNAME|FILENAME)\\b\\s*(\\{)",
+			"beginCaptures": {
+				"1": {"name": "support.function.builtin.intens"},
+				"2": {"name": "punctuation.section.block.begin.intens"}
+			},
+			"patterns": [
+				{ "include": "#prototype" },
+				{ "include": "#comma" },
+				{ "include": "#square_bracket" },
+				{ "include": "#function_call_with_round_brackets" },
+				{
+					"match": "\\b([A-Z][A-Z0-9_]*)\\b\\s*(=)(?!=)",
+					"captures": {
+						"1": {"name": "variable.parameter.intens"},
+						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+					}
+				},
+				{
+					"name": "punctuation.accessor.dot.intens",
+					"match": "\\."
+				}
+			],
+			"end": "(\\})",
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.intens"}
+			}
+		},
+		"function_call_without_arguments": {
 			"name": "support.function.builtin.intens",
-			"match": "\\b(ABORT|ABORTTRANSACTION|ABS|ACOS|ALLOW|ARG|ASIN|ASSIGN_CORR|ATAN|ATAN2|ATTRS|BASENAME|BEGINTRANSACTION|CHANGED|CLASSNAME|CLEAR|CLEAR_SELECTION|CLEARCYCLE|COMMITTRANSACTION|COMPARE|COMPLEX|COMPOSE|COMPOSE_STRING|CONFIRM|CONFIRM_CANCEL|COPY|COS|DATASET_TEXT|DELETE|DELETECYCLE|DIRNAME|DISABLE|DISALLOW|ENABLE|FILENAME|FIRSTCYCLE|GET|GET_SELECTION|GOCYCLE|HELPKEY|ICON|IMAG|LABEL|LASTCYCLE|LENGTH|LOAD|LOG|LOG10|MAP|MESSAGEBOX|MODIFIED|NEWCYCLE|NEXTCYCLE|NODE|OPEN|OPEN_FILE|OPEN_URL|PACK|PARENT|PASTE|PREVIEW|PRINT|PRINT_LOG|PUBLISH|PUT|QUIT|RANGE|REAL|REPORT|RESET_ERROR|REST_LOGOFF|REST_LOGON|ROUND|ROUND10|ROUND5|RUN|SAVE|SCALE|SELECT_LIST|SERIALIZE|SERIALIZE_FORM|SET|SET_DB_TIMESTAMP|SET_ERROR|SET_INDEX|SET_MQ_HOST|SET_MSG|SET_REASON|SET_RESOURCE|SET_THIS|SIN|SIZE|SORTORDER|SQRT|START|STOP|STRETCH|STRING_DATE|STRING_DATETIME|STRING_TIME|STRING_VALUE|STYLESHEET|TAN|THUMBNAIL|TIMESTAMP|TOUCH|UNIT|UNMAP|UNSET|UPDATE_FORMS|VALID|VAR|VISIBLE|WRITE_SETTINGS)\\b(?!\\s*=)"
+			"match": "\\b(ABORTTRANSACTION|BEGINTRANSACTION|CLEARCYCLE|COMMITTRANSACTION|COPY|CURRENT_DATETIME|CURRENT_DATE|CURRENT_TIME|DELETECYCLE|FIRSTCYCLE|LASTCYCLE|NEWCYCLE|NEXTCYCLE|PASTE|PRINT_LOG|RESET_ERROR|REST_LOGOFF|SERIALIZE_FORM|SET_ERROR|UPDATE_FORMS|WRITE_SETTINGS)\\b(?!\\s*=)"
 		}
 	}
 }
