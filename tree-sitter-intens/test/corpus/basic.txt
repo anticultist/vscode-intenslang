@@ -7,3 +7,14 @@ line comment
 ---
 (source_file
   (comment))
+
+========================
+simple multi-line string
+========================
+
+"Lorem ipsum
+dolor sit amet"
+
+---
+(source_file
+  (string))

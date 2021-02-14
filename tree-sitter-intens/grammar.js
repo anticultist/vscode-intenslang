@@ -5,9 +5,18 @@ module.exports = grammar({
     source_file: $ => repeat($._high_level_blocks),
 
     _high_level_blocks: $ => choice(
-      $.comment
+      $.comment,
+      $.string
     ),
 
     comment: $ => token(seq('//', /.*/)),
+
+    string: $ => seq(
+      '"',
+      repeat(choice(
+        /[^"\\\n]+|\\\r?\n/
+      )),
+      '"'
+    ),
   }
 });
