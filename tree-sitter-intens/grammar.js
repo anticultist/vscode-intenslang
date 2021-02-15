@@ -6,7 +6,8 @@ module.exports = grammar({
 
     _high_level_blocks: $ => choice(
       $.comment,
-      $.string
+      $.string,
+      $.number
     ),
 
     comment: $ => token(seq('//', /.*/)),
@@ -17,6 +18,15 @@ module.exports = grammar({
         /[^"\\\n]+|\\\r?\n/
       )),
       '"'
+    ),
+
+    number: $ => token(
+      seq(
+        optional(/[+-]/),
+        /[0-9][0-9_]*/,
+        optional(seq('.', optional(/[0-9][0-9_]*/))),
+        optional(/[eE][+-]?([0-9][0-9_]*)/)
+      )
     ),
   }
 });

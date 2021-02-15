@@ -18,3 +18,83 @@ dolor sit amet"
 ---
 (source_file
   (string))
+
+==============
+integer number
+==============
+
+123
+
+---
+(source_file
+  (number))
+
+============
+simple float
+============
+
+123.456
+
+---
+(source_file
+  (number))
+
+============================================
+float without digits after the decimal point
+============================================
+
+0.
+
+---
+(source_file
+  (number))
+
+===============================
+float in exponential notation 1
+===============================
+
+1e3
+
+---
+(source_file
+  (number))
+
+===============================
+float in exponential notation 2
+===============================
+
+1e-3
+
+---
+(source_file
+  (number))
+
+===============================
+float in exponential notation 3
+===============================
+
+60E9
+
+---
+(source_file
+  (number))
+
+===============================
+float in exponential notation 4
+===============================
+
+-7.9e-05
+
+---
+(source_file
+  (number))
+
+===============================
+float in exponential notation 5
+===============================
+
+1e+009
+
+---
+(source_file
+  (number))
