@@ -1,8 +1,12 @@
 module.exports = grammar({
   name: 'intens',
 
+  word: $ => $.identifier,
+
   rules: {
     source_file: $ => repeat($._high_level_blocks),
+
+    identifier: $ => /[a-zA-Z][a-zA-Z_0-9#]*/,
 
     _high_level_blocks: $ => choice(
       $._expression,
@@ -69,7 +73,7 @@ module.exports = grammar({
 
     datapool_block: $ => seq(
       'DATAPOOL',
-      optional($._datapool_block_expression),
+      repeat($._datapool_block_expression),
       'END',
       'DATAPOOL',
       ';'

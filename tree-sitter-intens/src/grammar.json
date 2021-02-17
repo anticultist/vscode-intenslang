@@ -1,5 +1,6 @@
 {
   "name": "intens",
+  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -7,6 +8,10 @@
         "type": "SYMBOL",
         "name": "_high_level_blocks"
       }
+    },
+    "identifier": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z][a-zA-Z_0-9#]*"
     },
     "_high_level_blocks": {
       "type": "CHOICE",
@@ -273,16 +278,11 @@
           "value": "DATAPOOL"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_datapool_block_expression"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_datapool_block_expression"
+          }
         },
         {
           "type": "STRING",
