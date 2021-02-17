@@ -13,6 +13,19 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "datapool_block"
+        }
+      ]
+    },
+    "_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
           "name": "comment"
         },
         {
@@ -22,6 +35,30 @@
         {
           "type": "SYMBOL",
           "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "true"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "false"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "eoln"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "invalid"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "none"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "reason"
         }
       ]
     },
@@ -130,6 +167,145 @@
           }
         ]
       }
+    },
+    "true": {
+      "type": "STRING",
+      "value": "TRUE"
+    },
+    "false": {
+      "type": "STRING",
+      "value": "FALSE"
+    },
+    "eoln": {
+      "type": "STRING",
+      "value": "EOLN"
+    },
+    "invalid": {
+      "type": "STRING",
+      "value": "INVALID"
+    },
+    "none": {
+      "type": "STRING",
+      "value": "NONE"
+    },
+    "reason": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "REASON_ACTIVATE"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_CLEAR"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_CLOSE"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_CONNECTION"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_DROP"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_DUPLICATE"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_INPUT"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_INSERT"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_MOVE"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_OPEN"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_PACK"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_REMOVE"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_REMOVE_CONNECTION"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_REMOVE_ELEMENT"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_SELECT"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_SELECT_POINT"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_SELECT_RECTANGLE"
+        },
+        {
+          "type": "STRING",
+          "value": "REASON_UNSELECT"
+        }
+      ]
+    },
+    "datapool_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "DATAPOOL"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_datapool_block_expression"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "END"
+        },
+        {
+          "type": "STRING",
+          "value": "DATAPOOL"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "_datapool_block_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        }
+      ]
     }
   },
   "extras": [

@@ -1,5 +1,57 @@
 [
   {
+    "type": "datapool_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "invalid",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "reason",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "true",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "reason",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -12,11 +64,39 @@
           "named": true
         },
         {
+          "type": "datapool_block",
+          "named": true
+        },
+        {
+          "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "invalid",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },
         {
+          "type": "reason",
+          "named": true
+        },
+        {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "true",
           "named": true
         }
       ]
@@ -32,11 +112,115 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
+    "type": "DATAPOOL",
+    "named": false
+  },
+  {
+    "type": "END",
+    "named": false
+  },
+  {
+    "type": "REASON_ACTIVATE",
+    "named": false
+  },
+  {
+    "type": "REASON_CLEAR",
+    "named": false
+  },
+  {
+    "type": "REASON_CLOSE",
+    "named": false
+  },
+  {
+    "type": "REASON_CONNECTION",
+    "named": false
+  },
+  {
+    "type": "REASON_DROP",
+    "named": false
+  },
+  {
+    "type": "REASON_DUPLICATE",
+    "named": false
+  },
+  {
+    "type": "REASON_INPUT",
+    "named": false
+  },
+  {
+    "type": "REASON_INSERT",
+    "named": false
+  },
+  {
+    "type": "REASON_MOVE",
+    "named": false
+  },
+  {
+    "type": "REASON_OPEN",
+    "named": false
+  },
+  {
+    "type": "REASON_PACK",
+    "named": false
+  },
+  {
+    "type": "REASON_REMOVE",
+    "named": false
+  },
+  {
+    "type": "REASON_REMOVE_CONNECTION",
+    "named": false
+  },
+  {
+    "type": "REASON_REMOVE_ELEMENT",
+    "named": false
+  },
+  {
+    "type": "REASON_SELECT",
+    "named": false
+  },
+  {
+    "type": "REASON_SELECT_POINT",
+    "named": false
+  },
+  {
+    "type": "REASON_SELECT_RECTANGLE",
+    "named": false
+  },
+  {
+    "type": "REASON_UNSELECT",
+    "named": false
+  },
+  {
     "type": "comment",
     "named": true
   },
   {
+    "type": "eoln",
+    "named": true
+  },
+  {
+    "type": "false",
+    "named": true
+  },
+  {
+    "type": "invalid",
+    "named": true
+  },
+  {
+    "type": "none",
+    "named": true
+  },
+  {
     "type": "number",
+    "named": true
+  },
+  {
+    "type": "true",
     "named": true
   }
 ]

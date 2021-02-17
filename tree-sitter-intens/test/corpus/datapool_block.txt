@@ -1,0 +1,10 @@
+====================
+empty datapool block
+====================
+
+DATAPOOL
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block))
