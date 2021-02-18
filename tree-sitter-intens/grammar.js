@@ -22,7 +22,8 @@ module.exports = grammar({
       $.eoln,
       $.invalid,
       $.none,
-      $.reason
+      $.reason,
+      ';'
     ),
 
     comment: $ => token(seq('//', /.*/)),
@@ -49,6 +50,23 @@ module.exports = grammar({
     eoln: $ => 'EOLN',
     invalid: $ => 'INVALID',
     none: $ => 'NONE',
+
+    variable_definition: $ => seq(
+      field('type', $.primitive_type),
+      commaSep(field('name', $._variable_identifier)),
+      ';'
+    ),
+
+    _variable_identifier: $ => alias($.identifier, $.variable_identifier),
+
+    primitive_type: $ => token(choice(
+      'CDATA',
+      'COLOR',
+      'COMPLEX',
+      'INTEGER',
+      'REAL',
+      'STRING'
+    )),
 
     reason: $ => choice(
       'REASON_ACTIVATE',
@@ -80,7 +98,12 @@ module.exports = grammar({
     ),
 
     _datapool_block_expression: $ => choice(
-      $._expression
+      $._expression,
+      $.variable_definition
     ),
   }
 });
+
+function commaSep(rule) {
+  return seq(rule, repeat(seq(',', rule)));
+}

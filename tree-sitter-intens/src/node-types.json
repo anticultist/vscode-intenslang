@@ -42,6 +42,10 @@
         {
           "type": "true",
           "named": true
+        },
+        {
+          "type": "variable_definition",
+          "named": true
         }
       ]
     }
@@ -108,7 +112,37 @@
     "fields": {}
   },
   {
+    "type": "variable_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "variable_identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primitive_type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "\"",
+    "named": false
+  },
+  {
+    "type": ",",
     "named": false
   },
   {
@@ -220,7 +254,15 @@
     "named": true
   },
   {
+    "type": "primitive_type",
+    "named": true
+  },
+  {
     "type": "true",
+    "named": true
+  },
+  {
+    "type": "variable_identifier",
     "named": true
   }
 ]

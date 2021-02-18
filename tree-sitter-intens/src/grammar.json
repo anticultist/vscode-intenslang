@@ -64,6 +64,10 @@
         {
           "type": "SYMBOL",
           "name": "reason"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -193,6 +197,97 @@
       "type": "STRING",
       "value": "NONE"
     },
+    "variable_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "primitive_type"
+          }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_variable_identifier"
+              }
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "name",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_variable_identifier"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "_variable_identifier": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "identifier"
+      },
+      "named": true,
+      "value": "variable_identifier"
+    },
+    "primitive_type": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "CDATA"
+          },
+          {
+            "type": "STRING",
+            "value": "COLOR"
+          },
+          {
+            "type": "STRING",
+            "value": "COMPLEX"
+          },
+          {
+            "type": "STRING",
+            "value": "INTEGER"
+          },
+          {
+            "type": "STRING",
+            "value": "REAL"
+          },
+          {
+            "type": "STRING",
+            "value": "STRING"
+          }
+        ]
+      }
+    },
     "reason": {
       "type": "CHOICE",
       "members": [
@@ -304,6 +399,10 @@
         {
           "type": "SYMBOL",
           "name": "_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "variable_definition"
         }
       ]
     }

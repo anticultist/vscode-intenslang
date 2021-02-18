@@ -8,3 +8,41 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block))
+
+=========================
+primitive type definition
+=========================
+
+DATAPOOL
+  CDATA a;
+  COLOR b;
+  COMPLEX c;
+  INTEGER d;
+  REAL e;
+  STRING f;
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (variable_definition (primitive_type) (variable_identifier))
+    (variable_definition (primitive_type) (variable_identifier))
+    (variable_definition (primitive_type) (variable_identifier))
+    (variable_definition (primitive_type) (variable_identifier))
+    (variable_definition (primitive_type) (variable_identifier))
+    (variable_definition (primitive_type) (variable_identifier))))
+
+============================
+multiple variable definition
+============================
+
+DATAPOOL
+  INTEGER a, b, c;
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (variable_definition
+      (primitive_type)
+        (variable_identifier) (variable_identifier) (variable_identifier))))
