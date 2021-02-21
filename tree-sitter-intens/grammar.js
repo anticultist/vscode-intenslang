@@ -51,14 +51,6 @@ module.exports = grammar({
     invalid: $ => 'INVALID',
     none: $ => 'NONE',
 
-    variable_definition: $ => seq(
-      field('type', $.primitive_type),
-      commaSep(field('name', $._variable_identifier)),
-      ';'
-    ),
-
-    _variable_identifier: $ => alias($.identifier, $.variable_identifier),
-
     primitive_type: $ => token(choice(
       'CDATA',
       'COLOR',
@@ -87,6 +79,23 @@ module.exports = grammar({
       'REASON_SELECT_POINT',
       'REASON_SELECT_RECTANGLE',
       'REASON_UNSELECT'
+    ),
+
+    variable_definition: $ => seq(
+      field('type', $.primitive_type),
+      optional($.parameter_block),
+      commaSep(seq(
+        field('name', alias($.identifier, $.variable_identifier)),
+        optional($.parameter_block))),
+      ';'
+    ),
+
+    parameter_block: $ => seq(
+      '{',
+      commaSep(choice(
+        alias(/[A-Za-z_][A-Za-z_0-9]*/, $.parameter)
+      )),
+      '}'
     ),
 
     datapool_block: $ => seq(

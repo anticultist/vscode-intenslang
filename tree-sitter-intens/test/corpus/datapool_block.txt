@@ -46,3 +46,22 @@ END DATAPOOL;
     (variable_definition
       (primitive_type)
         (variable_identifier) (variable_identifier) (variable_identifier))))
+
+====================================
+variable definitions with parameters
+====================================
+
+DATAPOOL
+  INTEGER {EDITABLE}
+    foo {TOGGLE, BUTTON},
+    bar {RADIO};
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (variable_definition
+      (primitive_type)
+        (parameter_block (parameter))
+        (variable_identifier) (parameter_block (parameter) (parameter))
+        (variable_identifier) (parameter_block (parameter)))))
