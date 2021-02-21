@@ -1,0 +1,10 @@
+======================
+empty ui-manager block
+======================
+
+UI_MANAGER
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block))

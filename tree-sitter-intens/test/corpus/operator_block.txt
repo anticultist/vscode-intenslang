@@ -1,0 +1,10 @@
+====================
+empty operator block
+====================
+
+OPERATOR
+END OPERATOR;
+
+---
+(source_file
+  (operator_block))

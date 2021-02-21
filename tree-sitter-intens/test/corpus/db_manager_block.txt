@@ -1,0 +1,10 @@
+======================
+empty db-manager block
+======================
+
+DB_MANAGER
+END DB_MANAGER;
+
+---
+(source_file
+  (db_manager_block))

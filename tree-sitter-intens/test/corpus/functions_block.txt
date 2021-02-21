@@ -1,0 +1,10 @@
+=====================
+empty functions block
+=====================
+
+FUNCTIONS
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block))

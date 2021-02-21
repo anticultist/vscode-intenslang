@@ -10,7 +10,13 @@ module.exports = grammar({
 
     _high_level_blocks: $ => choice(
       $._expression,
-      $.datapool_block
+      $.language_block,
+      $.datapool_block,
+      $.streamer_block,
+      $.operator_block,
+      $.functions_block,
+      $.ui_manager_block,
+      $.db_manager_block
     ),
 
     _expression: $ => choice(
@@ -98,6 +104,18 @@ module.exports = grammar({
       '}'
     ),
 
+    language_block: $ => seq(
+      'LANGUAGE',
+      repeat($._language_block_expression),
+      'END',
+      'LANGUAGE',
+      ';'
+    ),
+
+    _language_block_expression: $ => choice(
+      $._expression
+    ),
+
     datapool_block: $ => seq(
       'DATAPOOL',
       repeat($._datapool_block_expression),
@@ -109,6 +127,66 @@ module.exports = grammar({
     _datapool_block_expression: $ => choice(
       $._expression,
       $.variable_definition
+    ),
+
+    streamer_block: $ => seq(
+      'STREAMER',
+      repeat($._streamer_block_expression),
+      'END',
+      'STREAMER',
+      ';'
+    ),
+
+    _streamer_block_expression: $ => choice(
+      $._expression
+    ),
+
+    operator_block: $ => seq(
+      'OPERATOR',
+      repeat($._operator_block_expression),
+      'END',
+      'OPERATOR',
+      ';'
+    ),
+
+    _operator_block_expression: $ => choice(
+      $._expression
+    ),
+
+    functions_block: $ => seq(
+      'FUNCTIONS',
+      repeat($._functions_block_expression),
+      'END',
+      'FUNCTIONS',
+      ';'
+    ),
+
+    _functions_block_expression: $ => choice(
+      $._expression
+    ),
+
+    ui_manager_block: $ => seq(
+      'UI_MANAGER',
+      repeat($._ui_manager_block_expression),
+      'END',
+      'UI_MANAGER',
+      ';'
+    ),
+
+    _ui_manager_block_expression: $ => choice(
+      $._expression
+    ),
+
+    db_manager_block: $ => seq(
+      'DB_MANAGER',
+      repeat($._db_manager_block_expression),
+      'END',
+      'DB_MANAGER',
+      ';'
+    ),
+
+    _db_manager_block_expression: $ => choice(
+      $._expression
     ),
   }
 });

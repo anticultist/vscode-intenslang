@@ -1,0 +1,10 @@
+====================
+empty streamer block
+====================
+
+STREAMER
+END STREAMER;
+
+---
+(source_file
+  (streamer_block))

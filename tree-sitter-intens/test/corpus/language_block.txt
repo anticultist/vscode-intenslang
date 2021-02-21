@@ -1,0 +1,10 @@
+====================
+empty language block
+====================
+
+LANGUAGE
+END LANGUAGE;
+
+---
+(source_file
+  (language_block))
