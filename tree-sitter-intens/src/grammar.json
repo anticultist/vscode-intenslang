@@ -22,6 +22,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "include"
+        },
+        {
+          "type": "SYMBOL",
           "name": "description"
         },
         {
@@ -331,6 +335,24 @@
         {
           "type": "STRING",
           "value": "REASON_UNSELECT"
+        }
+      ]
+    },
+    "include": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "INCLUDE"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[A-Za-z_0-9\\.]+"
+          },
+          "named": true,
+          "value": "file_name"
         }
       ]
     },

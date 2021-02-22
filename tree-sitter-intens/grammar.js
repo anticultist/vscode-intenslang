@@ -10,6 +10,7 @@ module.exports = grammar({
 
     _high_level_blocks: $ => choice(
       $._expression,
+      $.include,
       $.description,
       $.language_block,
       $.datapool_block,
@@ -86,6 +87,11 @@ module.exports = grammar({
       'REASON_SELECT_POINT',
       'REASON_SELECT_RECTANGLE',
       'REASON_UNSELECT'
+    ),
+
+    include: $ => seq(
+      'INCLUDE',
+      alias(/[A-Za-z_0-9\.]+/, $.file_name)
     ),
 
     description: $ => seq(

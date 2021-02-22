@@ -108,3 +108,13 @@ DESCRIPTION "My Description";
 ---
 (source_file
   (description (string)))
+
+=======
+include
+=======
+
+INCLUDE external_file.inc
+
+---
+(source_file
+  (include (file_name)))

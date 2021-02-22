@@ -161,6 +161,21 @@
     }
   },
   {
+    "type": "include",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "file_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "language_block",
     "named": true,
     "fields": {},
@@ -308,6 +323,10 @@
         },
         {
           "type": "functions_block",
+          "named": true
+        },
+        {
+          "type": "include",
           "named": true
         },
         {
@@ -521,6 +540,10 @@
     "named": false
   },
   {
+    "type": "INCLUDE",
+    "named": false
+  },
+  {
     "type": "LANGUAGE",
     "named": false
   },
@@ -618,6 +641,10 @@
   },
   {
     "type": "false",
+    "named": true
+  },
+  {
+    "type": "file_name",
     "named": true
   },
   {
