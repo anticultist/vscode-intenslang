@@ -10,6 +10,7 @@ module.exports = grammar({
 
     _high_level_blocks: $ => choice(
       $._expression,
+      $.description,
       $.language_block,
       $.datapool_block,
       $.streamer_block,
@@ -87,12 +88,9 @@ module.exports = grammar({
       'REASON_UNSELECT'
     ),
 
-    variable_definition: $ => seq(
-      field('type', $.primitive_type),
-      optional($.parameter_block),
-      commaSep(seq(
-        field('name', alias($.identifier, $.variable_identifier)),
-        optional($.parameter_block))),
+    description: $ => seq(
+      'DESCRIPTION',
+      field('description_text', $.string),
       ';'
     ),
 
@@ -127,6 +125,15 @@ module.exports = grammar({
     _datapool_block_expression: $ => choice(
       $._expression,
       $.variable_definition
+    ),
+
+    variable_definition: $ => seq(
+      field('type', $.primitive_type),
+      optional($.parameter_block),
+      commaSep(seq(
+        field('name', alias($.identifier, $.variable_identifier)),
+        optional($.parameter_block))),
+      ';'
     ),
 
     streamer_block: $ => seq(

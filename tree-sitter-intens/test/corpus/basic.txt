@@ -98,3 +98,13 @@ float in exponential notation 5
 ---
 (source_file
   (number))
+
+===========
+description
+===========
+
+DESCRIPTION "My Description";
+
+---
+(source_file
+  (description (string)))

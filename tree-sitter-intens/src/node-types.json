@@ -98,6 +98,22 @@
     }
   },
   {
+    "type": "description",
+    "named": true,
+    "fields": {
+      "description_text": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "functions_block",
     "named": true,
     "fields": {},
@@ -276,6 +292,10 @@
         },
         {
           "type": "db_manager_block",
+          "named": true
+        },
+        {
+          "type": "description",
           "named": true
         },
         {
@@ -486,6 +506,10 @@
   },
   {
     "type": "DB_MANAGER",
+    "named": false
+  },
+  {
+    "type": "DESCRIPTION",
     "named": false
   },
   {
