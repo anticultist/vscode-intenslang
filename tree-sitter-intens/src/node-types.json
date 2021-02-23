@@ -36,6 +36,10 @@
           "named": true
         },
         {
+          "type": "set_definition",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
@@ -290,6 +294,22 @@
     "fields": {}
   },
   {
+    "type": "set_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "set_identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -512,6 +532,14 @@
     "named": false
   },
   {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
     "type": ",",
     "named": false
   },
@@ -624,6 +652,10 @@
     "named": false
   },
   {
+    "type": "SET",
+    "named": false
+  },
+  {
     "type": "STREAMER",
     "named": false
   },
@@ -665,6 +697,10 @@
   },
   {
     "type": "primitive_type",
+    "named": true
+  },
+  {
+    "type": "set_identifier",
     "named": true
   },
   {

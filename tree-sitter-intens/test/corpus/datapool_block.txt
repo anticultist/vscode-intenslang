@@ -65,3 +65,17 @@ END DATAPOOL;
         (parameter_block (parameter))
         (variable_identifier) (parameter_block (parameter) (parameter))
         (variable_identifier) (parameter_block (parameter)))))
+
+====================
+empty set definition
+====================
+
+DATAPOOL
+  SET myset ();
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (set_definition
+      (set_identifier))))
