@@ -139,8 +139,15 @@ module.exports = grammar({
       optional($.parameter_block),
       commaSep(seq(
         field('name', alias($.identifier, $.variable_identifier)),
+        optional($.dimension),
         optional($.parameter_block))),
       ';'
+    ),
+
+    dimension: $ => seq(
+      '[',
+      commaSep($.number),
+      ']'
     ),
 
     set_definition: $ => seq(

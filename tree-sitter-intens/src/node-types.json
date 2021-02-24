@@ -118,6 +118,21 @@
     }
   },
   {
+    "type": "dimension",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "functions_block",
     "named": true,
     "fields": {},
@@ -521,6 +536,10 @@
       "required": false,
       "types": [
         {
+          "type": "dimension",
+          "named": true
+        },
+        {
           "type": "parameter_block",
           "named": true
         }
@@ -661,6 +680,14 @@
   },
   {
     "type": "UI_MANAGER",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {

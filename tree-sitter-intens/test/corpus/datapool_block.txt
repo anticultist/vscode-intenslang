@@ -66,6 +66,38 @@ END DATAPOOL;
         (variable_identifier) (parameter_block (parameter) (parameter))
         (variable_identifier) (parameter_block (parameter)))))
 
+=======================
+variable with dimension
+=======================
+
+DATAPOOL
+  INTEGER foo[3];
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (variable_definition
+      (primitive_type)
+        (variable_identifier) (dimension (number)))))
+
+=======================================
+variable with dimensions and parameters
+=======================================
+
+DATAPOOL
+  INTEGER foo[3, 4] {TOGGLE};
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (variable_definition
+      (primitive_type)
+      (variable_identifier)
+        (dimension (number) (number))
+        (parameter_block (parameter)))))
+
 ====================
 empty set definition
 ====================
