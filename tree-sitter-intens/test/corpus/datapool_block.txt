@@ -9,9 +9,9 @@ END DATAPOOL;
 (source_file
   (datapool_block))
 
-=========================
-primitive type definition
-=========================
+==========================
+primitive type declaration
+==========================
 
 DATAPOOL
   CDATA a;
@@ -25,16 +25,16 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_definition (primitive_type) (variable_identifier))
-    (variable_definition (primitive_type) (variable_identifier))
-    (variable_definition (primitive_type) (variable_identifier))
-    (variable_definition (primitive_type) (variable_identifier))
-    (variable_definition (primitive_type) (variable_identifier))
-    (variable_definition (primitive_type) (variable_identifier))))
+    (variable_declaration (primitive_type) (variable_identifier))
+    (variable_declaration (primitive_type) (variable_identifier))
+    (variable_declaration (primitive_type) (variable_identifier))
+    (variable_declaration (primitive_type) (variable_identifier))
+    (variable_declaration (primitive_type) (variable_identifier))
+    (variable_declaration (primitive_type) (variable_identifier))))
 
-============================
-multiple variable definition
-============================
+=============================
+multiple variable declaration
+=============================
 
 DATAPOOL
   INTEGER a, b, c;
@@ -43,13 +43,13 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_definition
+    (variable_declaration
       (primitive_type)
         (variable_identifier) (variable_identifier) (variable_identifier))))
 
-====================================
-variable definitions with parameters
-====================================
+=====================================
+variable declarations with parameters
+=====================================
 
 DATAPOOL
   INTEGER {EDITABLE}
@@ -60,7 +60,7 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_definition
+    (variable_declaration
       (primitive_type)
         (parameter_block (parameter))
         (variable_identifier) (parameter_block (parameter) (parameter))
@@ -77,7 +77,7 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_definition
+    (variable_declaration
       (primitive_type)
         (variable_identifier) (dimension (number)))))
 
@@ -92,15 +92,15 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_definition
+    (variable_declaration
       (primitive_type)
       (variable_identifier)
         (dimension (number) (number))
         (parameter_block (parameter)))))
 
-================
-set definition 1
-================
+=================
+set declaration 1
+=================
 
 DATAPOOL
   SET myset1 ("1", "2"),
@@ -110,21 +110,21 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (sets_definition
-      (set_definition (set_identifier) (set_item (string)) (set_item (string)))
-      (set_definition (set_identifier) (set_item (string)) (set_item (string))))))
+    (sets_declaration
+      (set_declaration (set_identifier) (set_item (string)) (set_item (string)))
+      (set_declaration (set_identifier) (set_item (string)) (set_item (string))))))
 
-================
-set definition 2
-================
+=================
+set declaration 2
+=================
 
 DATAPOOL
   SET myset ("A" = 1, "B" = 2);
 END DATAPOOL;
 
-================
-set definition 3
-================
+=================
+set declaration 3
+=================
 
 DATAPOOL
   SET myset ("A" = "a", "B" = "b");

@@ -509,15 +509,15 @@
         },
         {
           "type": "SYMBOL",
-          "name": "variable_definition"
+          "name": "variable_declaration"
         },
         {
           "type": "SYMBOL",
-          "name": "sets_definition"
+          "name": "sets_declaration"
         }
       ]
     },
-    "variable_definition": {
+    "variable_declaration": {
       "type": "SEQ",
       "members": [
         {
@@ -685,7 +685,7 @@
         }
       ]
     },
-    "sets_definition": {
+    "sets_declaration": {
       "type": "SEQ",
       "members": [
         {
@@ -709,7 +709,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "set_definition"
+              "name": "set_declaration"
             },
             {
               "type": "REPEAT",
@@ -722,7 +722,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "set_definition"
+                    "name": "set_declaration"
                   }
                 ]
               }
@@ -735,7 +735,7 @@
         }
       ]
     },
-    "set_definition": {
+    "set_declaration": {
       "type": "SEQ",
       "members": [
         {

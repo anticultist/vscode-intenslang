@@ -36,7 +36,7 @@
           "named": true
         },
         {
-          "type": "sets_definition",
+          "type": "sets_declaration",
           "named": true
         },
         {
@@ -48,7 +48,7 @@
           "named": true
         },
         {
-          "type": "variable_definition",
+          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -309,7 +309,7 @@
     "fields": {}
   },
   {
-    "type": "set_definition",
+    "type": "set_declaration",
     "named": true,
     "fields": {
       "name": {
@@ -350,7 +350,7 @@
     }
   },
   {
-    "type": "sets_definition",
+    "type": "sets_declaration",
     "named": true,
     "fields": {},
     "children": {
@@ -362,7 +362,7 @@
           "named": true
         },
         {
-          "type": "set_definition",
+          "type": "set_declaration",
           "named": true
         }
       ]
@@ -551,7 +551,7 @@
     }
   },
   {
-    "type": "variable_definition",
+    "type": "variable_declaration",
     "named": true,
     "fields": {
       "name": {

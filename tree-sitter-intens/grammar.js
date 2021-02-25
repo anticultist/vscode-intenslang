@@ -130,11 +130,11 @@ module.exports = grammar({
 
     _datapool_block_expression: $ => choice(
       $._expression,
-      $.variable_definition,
-      $.sets_definition,
+      $.variable_declaration,
+      $.sets_declaration,
     ),
 
-    variable_definition: $ => seq(
+    variable_declaration: $ => seq(
       field('type', $.primitive_type),
       optional($.parameter_block),
       commaSep(seq(
@@ -150,14 +150,14 @@ module.exports = grammar({
       ']'
     ),
 
-    sets_definition: $ => seq(
+    sets_declaration: $ => seq(
       'SET',
       optional($.parameter_block),
-      commaSep($.set_definition),
+      commaSep($.set_declaration),
       ';'
     ),
 
-    set_definition: $ => seq(
+    set_declaration: $ => seq(
       field('name', alias($.identifier, $.set_identifier)),
       '(',
       commaSep($.set_item),
