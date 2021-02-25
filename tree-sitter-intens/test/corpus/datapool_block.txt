@@ -98,16 +98,34 @@ END DATAPOOL;
         (dimension (number) (number))
         (parameter_block (parameter)))))
 
-====================
-empty set definition
-====================
+================
+set definition 1
+================
 
 DATAPOOL
-  SET myset ();
+  SET myset1 ("1", "2"),
+      myset2 ("3", "4");
 END DATAPOOL;
 
 ---
 (source_file
   (datapool_block
-    (set_definition
-      (set_identifier))))
+    (sets_definition
+      (set_definition (set_identifier) (set_item (string)) (set_item (string)))
+      (set_definition (set_identifier) (set_item (string)) (set_item (string))))))
+
+================
+set definition 2
+================
+
+DATAPOOL
+  SET myset ("A" = 1, "B" = 2);
+END DATAPOOL;
+
+================
+set definition 3
+================
+
+DATAPOOL
+  SET myset ("A" = "a", "B" = "b");
+END DATAPOOL;

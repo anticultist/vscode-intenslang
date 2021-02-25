@@ -36,7 +36,7 @@
           "named": true
         },
         {
-          "type": "set_definition",
+          "type": "sets_definition",
           "named": true
         },
         {
@@ -313,7 +313,7 @@
     "named": true,
     "fields": {
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
@@ -322,6 +322,50 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "set_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "set_item",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "sets_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "parameter_block",
+          "named": true
+        },
+        {
+          "type": "set_definition",
+          "named": true
+        }
+      ]
     }
   },
   {
