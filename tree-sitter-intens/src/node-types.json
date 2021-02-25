@@ -48,7 +48,7 @@
           "named": true
         },
         {
-          "type": "variable_declaration",
+          "type": "variables_declaration",
           "named": true
         }
       ]
@@ -555,21 +555,11 @@
     "named": true,
     "fields": {
       "name": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "variable_identifier",
-            "named": true
-          }
-        ]
-      },
-      "type": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "primitive_type",
+            "type": "variable_identifier",
             "named": true
           }
         ]
@@ -585,6 +575,36 @@
         },
         {
           "type": "parameter_block",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "variables_declaration",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primitive_type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "parameter_block",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]

@@ -130,18 +130,21 @@ module.exports = grammar({
 
     _datapool_block_expression: $ => choice(
       $._expression,
-      $.variable_declaration,
+      $.variables_declaration,
       $.sets_declaration,
     ),
 
-    variable_declaration: $ => seq(
+    variables_declaration: $ => seq(
       field('type', $.primitive_type),
       optional($.parameter_block),
-      commaSep(seq(
-        field('name', alias($.identifier, $.variable_identifier)),
-        optional($.dimension),
-        optional($.parameter_block))),
+      commaSep($.variable_declaration),
       ';'
+    ),
+
+    variable_declaration: $ => seq(
+      field('name', alias($.identifier, $.variable_identifier)),
+      optional($.dimension),
+      optional($.parameter_block)
     ),
 
     dimension: $ => seq(

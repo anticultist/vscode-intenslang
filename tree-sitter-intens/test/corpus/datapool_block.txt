@@ -25,12 +25,12 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_declaration (primitive_type) (variable_identifier))
-    (variable_declaration (primitive_type) (variable_identifier))
-    (variable_declaration (primitive_type) (variable_identifier))
-    (variable_declaration (primitive_type) (variable_identifier))
-    (variable_declaration (primitive_type) (variable_identifier))
-    (variable_declaration (primitive_type) (variable_identifier))))
+    (variables_declaration (primitive_type) (variable_declaration (variable_identifier)))
+    (variables_declaration (primitive_type) (variable_declaration (variable_identifier)))
+    (variables_declaration (primitive_type) (variable_declaration (variable_identifier)))
+    (variables_declaration (primitive_type) (variable_declaration (variable_identifier)))
+    (variables_declaration (primitive_type) (variable_declaration (variable_identifier)))
+    (variables_declaration (primitive_type) (variable_declaration (variable_identifier)))))
 
 =============================
 multiple variable declaration
@@ -43,9 +43,11 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_declaration
+    (variables_declaration
       (primitive_type)
-        (variable_identifier) (variable_identifier) (variable_identifier))))
+        (variable_declaration (variable_identifier))
+        (variable_declaration (variable_identifier))
+        (variable_declaration (variable_identifier)))))
 
 =====================================
 variable declarations with parameters
@@ -60,11 +62,11 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_declaration
+    (variables_declaration
       (primitive_type)
         (parameter_block (parameter))
-        (variable_identifier) (parameter_block (parameter) (parameter))
-        (variable_identifier) (parameter_block (parameter)))))
+        (variable_declaration (variable_identifier) (parameter_block (parameter) (parameter)))
+        (variable_declaration (variable_identifier) (parameter_block (parameter))))))
 
 =======================
 variable with dimension
@@ -77,9 +79,9 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_declaration
+    (variables_declaration
       (primitive_type)
-        (variable_identifier) (dimension (number)))))
+        (variable_declaration (variable_identifier) (dimension (number))))))
 
 =======================================
 variable with dimensions and parameters
@@ -92,11 +94,12 @@ END DATAPOOL;
 ---
 (source_file
   (datapool_block
-    (variable_declaration
+    (variables_declaration
       (primitive_type)
-      (variable_identifier)
+      (variable_declaration
+        (variable_identifier)
         (dimension (number) (number))
-        (parameter_block (parameter)))))
+        (parameter_block (parameter))))))
 
 =================
 set declaration 1
