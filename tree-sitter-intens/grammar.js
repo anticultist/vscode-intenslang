@@ -61,7 +61,6 @@ module.exports = grammar({
 
     primitive_type: $ => token(choice(
       'CDATA',
-      'COLOR',
       'COMPLEX',
       'INTEGER',
       'REAL',
@@ -130,8 +129,9 @@ module.exports = grammar({
 
     _datapool_block_expression: $ => choice(
       $._expression,
-      $.variables_declaration,
       $.sets_declaration,
+      $.colors_declaration,
+      $.variables_declaration,
     ),
 
     variables_declaration: $ => seq(
@@ -153,15 +153,27 @@ module.exports = grammar({
       ']'
     ),
 
+    colors_declaration: $ => seq(
+      'COLOR',
+      commaSep($.color_declaration),
+      ';'
+    ),
+
+    color_declaration: $ => seq(
+      field('name', alias($.identifier, $.color_identifier)),
+      '(',
+      ')'
+    ),
+
     sets_declaration: $ => seq(
       'SET',
-      optional($.parameter_block),
       commaSep($.set_declaration),
       ';'
     ),
 
     set_declaration: $ => seq(
       field('name', alias($.identifier, $.set_identifier)),
+      optional($.parameter_block),
       '(',
       commaSep($.set_item),
       ')'

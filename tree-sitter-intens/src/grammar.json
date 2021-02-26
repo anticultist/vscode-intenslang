@@ -240,10 +240,6 @@
           },
           {
             "type": "STRING",
-            "value": "COLOR"
-          },
-          {
-            "type": "STRING",
             "value": "COMPLEX"
           },
           {
@@ -509,11 +505,15 @@
         },
         {
           "type": "SYMBOL",
-          "name": "variables_declaration"
+          "name": "sets_declaration"
         },
         {
           "type": "SYMBOL",
-          "name": "sets_declaration"
+          "name": "colors_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "variables_declaration"
         }
       ]
     },
@@ -651,24 +651,76 @@
         }
       ]
     },
+    "colors_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "COLOR"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "color_declaration"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "color_declaration"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "color_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            "named": true,
+            "value": "color_identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "sets_declaration": {
       "type": "SEQ",
       "members": [
         {
           "type": "STRING",
           "value": "SET"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "parameter_block"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
         },
         {
           "type": "SEQ",
@@ -716,6 +768,18 @@
             "named": true,
             "value": "set_identifier"
           }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "parameter_block"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",
