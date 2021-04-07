@@ -82,7 +82,14 @@
 		},
 		"comment": {
 			"name": "comment.line.double-slash.intens",
-			"match": "//.*\n"
+			"begin": "//",
+			"end": "$",
+			"patterns": [
+				{
+					"name": "keyword.codetag.notation.intens",
+					"match": "\\b(NOTE|TODO|XXX)\\b"
+				}
+			]
 		},
 		"float_number": {
 			"name": "constant.numeric.intens",
