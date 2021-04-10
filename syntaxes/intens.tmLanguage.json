@@ -21,7 +21,11 @@
 		{ "include": "#language_block" },
 		{ "include": "#end_of_propram" },
 		{ "include": "#end_of_statement" },
-		{ "include": "#comma" }
+		{ "include": "#comma" },
+		{ "include": "#structure_definition" },
+		{ "include": "#set_definition" },
+		{ "include": "#function_statements" },
+		{ "include": "#function_definition" }
 	],
 	"repository": {
 		"high_level_commands": {
@@ -87,7 +91,7 @@
 			"patterns": [
 				{
 					"name": "keyword.codetag.notation.intens",
-					"match": "\\b(NOTE|TODO|XXX)\\b"
+					"match": "\\b(HACK|NOTE|TODO|XXX)\\b"
 				}
 			]
 		},
@@ -1056,7 +1060,7 @@
 				{ "include": "#func_parameter" },
 				{
 					"name": "variable.parameter.intens",
-					"match": "\\b(COLORBIT|LOCK)\\b"
+					"match": "\\b(COLOR|COLORBIT|LOCK)\\b"
 				},
 				{
 					"match": "\\b([A-Z][A-Z0-9_]*)\\b\\s*(=)(?!=)",
