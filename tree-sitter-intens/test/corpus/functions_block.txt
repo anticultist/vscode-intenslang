@@ -8,3 +8,73 @@ END FUNCTIONS;
 ---
 (source_file
   (functions_block))
+
+===================================
+single function forward declaration
+===================================
+
+FUNCTIONS
+  FUNC myfunc;
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)))))
+
+======================================
+multiple function forward declarations
+======================================
+
+FUNCTIONS
+  FUNC myfunc, myfunc2, myfunc3;
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier))
+      (function_declaration
+        (function_identifier))
+      (function_declaration
+        (function_identifier)))))
+
+==============================================
+single function declaration with an empty body
+==============================================
+
+FUNCTIONS
+  FUNC myfunc {};
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier) (function_body)))))
+
+===================================================
+functions with forward declarations or empty bodies
+===================================================
+
+FUNCTIONS
+  FUNC myfunc{}, myfunc2, myfunc3{}, myfunc4;
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier) (function_body))
+      (function_declaration
+        (function_identifier))
+      (function_declaration
+        (function_identifier) (function_body))
+      (function_declaration
+        (function_identifier)))))

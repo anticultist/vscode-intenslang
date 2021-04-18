@@ -90,7 +90,7 @@ module.exports = grammar({
 
     include: $ => seq(
       'INCLUDE',
-      alias(/[A-Za-z_0-9\.]+/, $.file_name)
+      alias(/[A-Za-z_0-9\./]+/, $.file_name)
     ),
 
     description: $ => seq(
@@ -216,6 +216,28 @@ module.exports = grammar({
     ),
 
     _functions_block_expression: $ => choice(
+      $._expression,
+      $.functions_declaration
+    ),
+
+    functions_declaration: $ => seq(
+      'FUNC',
+      commaSep($.function_declaration),
+      ';'
+    ),
+
+    function_declaration: $ => seq(
+      field('name', alias($.identifier, $.function_identifier)),
+      optional($.function_body)
+    ),
+
+    function_body: $ => seq(
+      '{',
+      repeat($._function_expression),
+      '}'
+    ),
+
+    _function_expression: $ => choice(
       $._expression
     ),
 

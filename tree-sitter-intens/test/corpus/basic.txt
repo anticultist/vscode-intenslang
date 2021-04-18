@@ -114,7 +114,9 @@ include
 =======
 
 INCLUDE external_file.inc
+INCLUDE ../etc/other.inc
 
 ---
 (source_file
+  (include (file_name))
   (include (file_name)))
