@@ -91,7 +91,7 @@
 			"patterns": [
 				{
 					"name": "keyword.codetag.notation.intens",
-					"match": "\\b(HACK|NOTE|TODO|XXX)\\b"
+					"match": "\\b(BUG|HACK|NOTE|TODO|XXX)\\b"
 				}
 			]
 		},
