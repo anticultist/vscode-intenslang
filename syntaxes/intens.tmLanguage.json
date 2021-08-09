@@ -25,7 +25,9 @@
 		{ "include": "#structure_definition" },
 		{ "include": "#set_definition" },
 		{ "include": "#function_statements" },
-		{ "include": "#function_definition" }
+		{ "include": "#function_definition" },
+		{ "include": "#ui_structure_definition" },
+		{ "include": "#menu_definition" }
 	],
 	"repository": {
 		"high_level_commands": {
@@ -47,13 +49,20 @@
 				{ "include": "#float_number" },
 				{ "include": "#constants" },
 				{ "include": "#predefined_variables" },
-				{ "include": "#operators" }
+				{ "include": "#operators" },
+				{ "include": "#preprocessor_statement" }
 			]
 		},
 		"string": {
 			"name": "string.quoted.double.intens",
-			"begin": "\"",
-			"end": "\"",
+			"begin": "(\")",
+			"beginCaptures": {
+				"1": {"name": "punctuation.definition.string.begin.intens"}
+			},
+			"end": "(\")",
+			"endCaptures": {
+				"1": {"name": "punctuation.definition.string.end.intens"}
+			},
 			"patterns": [
 				{
 					"name": "constant.character.escape.intens",
@@ -91,7 +100,7 @@
 			"patterns": [
 				{
 					"name": "keyword.codetag.notation.intens",
-					"match": "\\b(BUG|HACK|NOTE|TODO|XXX)\\b"
+					"match": "\\b(BUG|FIXME|HACK|NOTE|TODO|XXX|XXXTODO)\\b"
 				}
 			]
 		},
@@ -159,6 +168,28 @@
 		"include_statement": {
 			"name": "keyword.control.import.intens",
 			"match": "^\\s*(INCLUDE)\\b"
+		},
+		"preprocessor_statement": {
+			"contentName": "meta.preprocessor.include.c",
+			"begin": "^\\s*(#include)\\b",
+			"beginCaptures": {
+				"1": {"name": "keyword.control.import.include.c"}
+			},
+			"patterns": [
+				{
+					"contentName": "string.quoted.other.lt-gt.include.c",
+					"begin": "(\\<)",
+					"beginCaptures": {
+						"1": {"name": "punctuation.definition.string.begin.c"}
+					},
+					"end": "(\\>)|(?=$)",
+					"endCaptures": {
+						"1": {"name": "punctuation.definition.string.end.c"}
+					}
+				},
+				{ "include": "#prototype" }
+			],
+			"end": "$"
 		},
 		"datapool_block": {
 			"contentName": "meta.namespace.intens",
