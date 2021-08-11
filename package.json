@@ -3,7 +3,7 @@
     "displayName": "INTENS Language",
     "description": "Unofficial syntax definition for the INTENS language",
     "license": "ISC",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/anticultist/vscode-intenslang"
@@ -15,16 +15,32 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "intens",
-            "aliases": ["INTENS", "intens"],
-            "extensions": [".des", ".inc", ".des.in", ".inc.in"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "intens",
-            "scopeName": "source.intens",
-            "path": "./syntaxes/intens.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "intens",
+                "aliases": [
+                    "INTENS",
+                    "intens"
+                ],
+                "extensions": [
+                    ".des",
+                    ".inc",
+                    ".des.in",
+                    ".inc.in"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "intens",
+                "scopeName": "source.intens",
+                "path": "./syntaxes/intens.tmLanguage.json"
+            }
+        ]
+    },
+    "dependencies": {
+        "tree-sitter": "^0.19.0",
+        "tree-sitter-cli": "^0.20.0"
     }
 }

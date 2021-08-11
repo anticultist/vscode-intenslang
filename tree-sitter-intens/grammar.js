@@ -31,7 +31,7 @@ module.exports = grammar({
       $.invalid,
       $.none,
       $.reason,
-      ';'
+      ';'  // null statement
     ),
 
     comment: $ => token(seq('//', /.*/)),
@@ -238,7 +238,26 @@ module.exports = grammar({
     ),
 
     _function_expression: $ => choice(
+      $._expression,
+      $.if_statement
+    ),
+
+    if_statement: $ => prec.right(seq(
+      'IF',
+      '(',
+      $.condition,
+      ')',
+      $._function_expression,
+      optional($.else_part)
+    )),
+
+    condition: $ => choice(
       $._expression
+    ),
+
+    else_part: $ => seq(
+      'ELSE',
+      $._function_expression
     ),
 
     ui_manager_block: $ => seq(
