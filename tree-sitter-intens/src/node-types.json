@@ -1,5 +1,76 @@
 [
   {
+    "type": "block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "exit",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "invalid",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "reason",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "true",
+          "named": true
+        },
+        {
+          "type": "variables_declaration",
+          "named": true
+        },
+        {
+          "type": "while_loop",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "color_declaration",
     "named": true,
     "fields": {
@@ -223,11 +294,19 @@
       "required": false,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
         {
           "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "exit",
           "named": true
         },
         {
@@ -255,15 +334,37 @@
           "named": true
         },
         {
+          "type": "return",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
         {
           "type": "true",
           "named": true
+        },
+        {
+          "type": "variables_declaration",
+          "named": true
+        },
+        {
+          "type": "while_loop",
+          "named": true
         }
       ]
     }
+  },
+  {
+    "type": "end_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "exit",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "function_body",
@@ -274,11 +375,19 @@
       "required": false,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
         {
           "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "exit",
           "named": true
         },
         {
@@ -306,11 +415,23 @@
           "named": true
         },
         {
+          "type": "return",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
         {
           "type": "true",
+          "named": true
+        },
+        {
+          "type": "variables_declaration",
+          "named": true
+        },
+        {
+          "type": "while_loop",
           "named": true
         }
       ]
@@ -417,6 +538,10 @@
       "required": true,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
@@ -430,6 +555,10 @@
         },
         {
           "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "exit",
           "named": true
         },
         {
@@ -457,11 +586,23 @@
           "named": true
         },
         {
+          "type": "return",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
         {
           "type": "true",
+          "named": true
+        },
+        {
+          "type": "variables_declaration",
+          "named": true
+        },
+        {
+          "type": "while_loop",
           "named": true
         }
       ]
@@ -597,6 +738,11 @@
     "fields": {}
   },
   {
+    "type": "return",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "set_declaration",
     "named": true,
     "fields": {
@@ -678,6 +824,10 @@
         },
         {
           "type": "description",
+          "named": true
+        },
+        {
+          "type": "end_statement",
           "named": true
         },
         {
@@ -899,6 +1049,81 @@
     }
   },
   {
+    "type": "while_loop",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "exit",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "invalid",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "reason",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "true",
+          "named": true
+        },
+        {
+          "type": "variables_declaration",
+          "named": true
+        },
+        {
+          "type": "while_loop",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "\"",
     "named": false
   },
@@ -912,6 +1137,10 @@
   },
   {
     "type": ",",
+    "named": false
+  },
+  {
+    "type": ".",
     "named": false
   },
   {
@@ -940,6 +1169,10 @@
   },
   {
     "type": "END",
+    "named": false
+  },
+  {
+    "type": "EXIT",
     "named": false
   },
   {
@@ -1039,6 +1272,10 @@
     "named": false
   },
   {
+    "type": "RETURN",
+    "named": false
+  },
+  {
     "type": "SET",
     "named": false
   },
@@ -1048,6 +1285,10 @@
   },
   {
     "type": "UI_MANAGER",
+    "named": false
+  },
+  {
+    "type": "WHILE",
     "named": false
   },
   {

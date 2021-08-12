@@ -18,7 +18,8 @@ module.exports = grammar({
       $.operator_block,
       $.functions_block,
       $.ui_manager_block,
-      $.db_manager_block
+      $.db_manager_block,
+      $.end_statement
     ),
 
     _expression: $ => choice(
@@ -105,6 +106,11 @@ module.exports = grammar({
         alias(/[A-Za-z_][A-Za-z_0-9]*/, $.parameter)
       )),
       '}'
+    ),
+
+    end_statement: $ => seq(
+      'END',
+      '.'
     ),
 
     language_block: $ => seq(
@@ -239,7 +245,28 @@ module.exports = grammar({
 
     _function_expression: $ => choice(
       $._expression,
-      $.if_statement
+      $.variables_declaration,
+      $.if_statement,
+      $.while_loop,
+      $.block,
+      $.return,
+      $.exit
+    ),
+
+    block: $ => seq(
+      '{',
+      repeat($._function_expression),
+      '}'
+    ),
+
+    return: $ => seq(
+      'RETURN',
+      ';'
+    ),
+
+    exit: $ => seq(
+      'EXIT',
+      ';'
     ),
 
     if_statement: $ => prec.right(seq(
@@ -257,6 +284,14 @@ module.exports = grammar({
 
     else_part: $ => seq(
       'ELSE',
+      $._function_expression
+    ),
+
+    while_loop: $ => seq(
+      'WHILE',
+      '(',
+      $.condition,
+      ')',
       $._function_expression
     ),
 

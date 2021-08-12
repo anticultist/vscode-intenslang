@@ -145,3 +145,114 @@ END FUNCTIONS;
             (if_statement
               (condition (false))
               (else_part))))))))
+
+=================
+simple while loop
+=================
+
+FUNCTIONS
+  FUNC myfunc {
+    WHILE (FALSE) ;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (while_loop
+            (condition (false))))))))
+
+===============
+function blocks
+===============
+
+FUNCTIONS
+  FUNC myfunc {
+    WHILE (FALSE) {
+      IF (TRUE) {
+      } ELSE {
+      }
+    }
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (while_loop
+            (condition (false))
+            (block
+              (if_statement
+                (condition (true))
+                (block)
+                (else_part
+                  (block))))))))))
+
+================
+return statement
+================
+
+FUNCTIONS
+  FUNC myfunc {
+    RETURN;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (return))))))
+
+==============
+exit statement
+==============
+
+FUNCTIONS
+  FUNC myfunc {
+    EXIT;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (exit))))))
+
+======================
+variables declarations
+======================
+
+FUNCTIONS
+  FUNC myfunc {
+    INTEGER a, b, c;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (variables_declaration
+            (primitive_type)
+            (variable_declaration (variable_identifier))
+            (variable_declaration (variable_identifier))
+            (variable_declaration (variable_identifier))))))))

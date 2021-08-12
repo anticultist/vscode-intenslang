@@ -120,3 +120,13 @@ INCLUDE ../etc/other.inc
 (source_file
   (include (file_name))
   (include (file_name)))
+
+==============
+end of program
+==============
+
+END.
+
+---
+(source_file
+  (end_statement))
