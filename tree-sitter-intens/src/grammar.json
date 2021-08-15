@@ -913,6 +913,97 @@
         {
           "type": "SYMBOL",
           "name": "_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "tasks_declaration"
+        }
+      ]
+    },
+    "tasks_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "TASK"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "task_declaration"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "task_declaration"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "task_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            "named": true,
+            "value": "task_identifier"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "function_options"
+                  },
+                  "named": true,
+                  "value": "task_options"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "function_body"
+                  },
+                  "named": true,
+                  "value": "task_body"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -965,6 +1056,18 @@
           "value": "FUNC"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "function_options"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SEQ",
           "members": [
             {
@@ -992,6 +1095,19 @@
         {
           "type": "STRING",
           "value": ";"
+        }
+      ]
+    },
+    "function_options": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

@@ -99,6 +99,16 @@ float in exponential notation 5
 (source_file
   (number))
 
+===============================
+float in exponential notation 6
+===============================
+
+-1.04858e+011
+
+---
+(source_file
+  (number))
+
 ===========
 description
 ===========

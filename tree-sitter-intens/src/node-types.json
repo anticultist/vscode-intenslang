@@ -464,6 +464,11 @@
     }
   },
   {
+    "type": "function_options",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "functions_block",
     "named": true,
     "fields": {},
@@ -524,6 +529,10 @@
       "types": [
         {
           "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "function_options",
           "named": true
         }
       ]
@@ -708,6 +717,10 @@
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "tasks_declaration",
           "named": true
         },
         {
@@ -940,6 +953,127 @@
     "type": "string",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "task_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "eoln",
+          "named": true
+        },
+        {
+          "type": "exit",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "invalid",
+          "named": true
+        },
+        {
+          "type": "none",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "reason",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "true",
+          "named": true
+        },
+        {
+          "type": "variables_declaration",
+          "named": true
+        },
+        {
+          "type": "while_loop",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "task_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "task_identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "task_body",
+          "named": true
+        },
+        {
+          "type": "task_options",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "task_options",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "tasks_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "task_declaration",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "ui_manager_block",
@@ -1284,6 +1418,10 @@
     "named": false
   },
   {
+    "type": "TASK",
+    "named": false
+  },
+  {
     "type": "UI_MANAGER",
     "named": false
   },
@@ -1345,6 +1483,10 @@
   },
   {
     "type": "set_identifier",
+    "named": true
+  },
+  {
+    "type": "task_identifier",
     "named": true
   },
   {

@@ -8,3 +8,51 @@ END OPERATOR;
 ---
 (source_file
   (operator_block))
+
+===============================
+single task forward declaration
+===============================
+
+OPERATOR
+  TASK mytask;
+END OPERATOR;
+
+---
+(source_file
+  (operator_block
+    (tasks_declaration
+      (task_declaration
+        (task_identifier)))))
+
+==================================
+multiple task forward declarations
+==================================
+
+OPERATOR
+  TASK mytask, mytask2, mytask3;
+END OPERATOR;
+
+---
+(source_file
+  (operator_block
+    (tasks_declaration
+      (task_declaration (task_identifier))
+      (task_declaration (task_identifier))
+      (task_declaration (task_identifier)))))
+
+======================================================
+single task declaration with an empty options and body
+======================================================
+
+OPERATOR
+  TASK mytask {} {};
+END OPERATOR;
+
+---
+(source_file
+  (operator_block
+    (tasks_declaration
+      (task_declaration
+        (task_identifier)
+        (task_options)
+        (task_body)))))

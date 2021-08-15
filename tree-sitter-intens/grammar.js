@@ -210,7 +210,22 @@ module.exports = grammar({
     ),
 
     _operator_block_expression: $ => choice(
-      $._expression
+      $._expression,
+      $.tasks_declaration
+    ),
+
+    tasks_declaration: $ => seq(
+      'TASK',
+      commaSep($.task_declaration),
+      ';'
+    ),
+
+    task_declaration: $ => seq(
+      field('name', alias($.identifier, $.task_identifier)),
+      optional(seq(
+        alias($.function_options, $.task_options),
+        alias($.function_body, $.task_body))
+      )
     ),
 
     functions_block: $ => seq(
@@ -228,8 +243,14 @@ module.exports = grammar({
 
     functions_declaration: $ => seq(
       'FUNC',
+      optional($.function_options),
       commaSep($.function_declaration),
       ';'
+    ),
+
+    function_options: $ => seq(
+      '{',
+      '}'
     ),
 
     function_declaration: $ => seq(

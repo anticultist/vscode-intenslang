@@ -79,6 +79,23 @@ END FUNCTIONS;
       (function_declaration
         (function_identifier)))))
 
+===========================================
+single function with empty options and body
+===========================================
+
+FUNCTIONS
+  FUNC {} myfunc{};
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_options)
+      (function_declaration
+        (function_identifier)
+        (function_body)))))
+
 ===================
 simple if statement
 ===================
