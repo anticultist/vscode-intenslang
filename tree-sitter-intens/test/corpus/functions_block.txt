@@ -251,6 +251,28 @@ END FUNCTIONS;
         (function_body
           (exit))))))
 
+====================
+variable declaration
+====================
+
+FUNCTIONS
+  FUNC myfunc {
+    INTEGER a;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (variables_declaration
+            (primitive_type)
+            (variable_declaration (variable_identifier))))))))
+
+
 ======================
 variables declarations
 ======================

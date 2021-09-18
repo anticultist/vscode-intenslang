@@ -140,3 +140,15 @@ END.
 ---
 (source_file
   (end_statement))
+
+=================
+number assignment
+=================
+
+a = 1;
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (number)))

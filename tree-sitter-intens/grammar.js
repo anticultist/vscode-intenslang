@@ -1,5 +1,19 @@
+const PREC = {  // precedence
+  ASSIGNMENT: -1,
+  DEFAULT: 0
+};
+
 module.exports = grammar({
   name: 'intens',
+
+  extras: $ => [
+    /\s|\\\r?\n/,
+    $.comment
+  ],
+
+  // conflicts: $ => [
+  //   [$.variables_declaration, $.assignment]
+  // ],
 
   word: $ => $.identifier,
 
@@ -10,6 +24,7 @@ module.exports = grammar({
 
     _high_level_blocks: $ => choice(
       $._expression,
+      $.assignment,
       $.include,
       $.description,
       $.language_block,
@@ -23,7 +38,6 @@ module.exports = grammar({
     ),
 
     _expression: $ => choice(
-      $.comment,
       $.string,
       $.number,
       $.true,
@@ -31,11 +45,11 @@ module.exports = grammar({
       $.eoln,
       $.invalid,
       $.none,
-      $.reason,
-      ';'  // null statement
+      $.reason
     ),
 
     comment: $ => token(seq('//', /.*/)),
+    // comment: $ => token(seq('//', /(\\(.|\r?\n)|[^\\\n])*/)),
 
     string: $ => seq(
       '"',
@@ -87,6 +101,35 @@ module.exports = grammar({
       'REASON_SELECT_POINT',
       'REASON_SELECT_RECTANGLE',
       'REASON_UNSELECT'
+    ),
+
+    assignment: $ => prec.right(PREC.ASSIGNMENT, seq(
+      field('left', $._assignment_left_expression),
+      choice(
+        '=',
+        '+=',
+        '-=',
+        '*=',
+        '/='
+      ),
+      field('right', $._assignment_right_expression),
+      ';'
+    )),
+
+    _assignment_left_expression: $ => choice(
+      $.identifier
+    ),
+
+    _assignment_right_expression: $ => choice(
+      $.identifier,
+      $.string,
+      $.number,
+      $.true,
+      $.false,
+      $.eoln,
+      $.invalid,
+      $.none,
+      $.reason
     ),
 
     include: $ => seq(
@@ -265,13 +308,15 @@ module.exports = grammar({
     ),
 
     _function_expression: $ => choice(
-      $._expression,
       $.variables_declaration,
+      // $.assignment,  // TODO: resolve conflict
       $.if_statement,
       $.while_loop,
       $.block,
       $.return,
-      $.exit
+      $.exit,
+      $._expression,
+      ';'  // null statement
     ),
 
     block: $ => seq(
