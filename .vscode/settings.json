@@ -1,0 +1,26 @@
+{
+    "files.exclude": {
+        "node_modules/": true
+    },
+    "cSpell.words": [
+        "COLORBIT",
+        "DATAPOOL",
+        "EOLN",
+        "FIELDGROUP",
+        "FILESTREAM",
+        "HELPFILE",
+        "HELPKEY",
+        "MESSAGEBOX",
+        "OLDVALUE",
+        "PROCESSGROUP",
+        "STRUCT",
+        "TABLESIZE",
+        "tmgrammar",
+        "TSEP",
+        "TTRAIL",
+        "USERGROUPS",
+        "WRITEONLY",
+        "XAXIS",
+        "YAXIS"
+    ]
+}
