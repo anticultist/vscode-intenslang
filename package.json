@@ -39,10 +39,7 @@
             }
         ]
     },
-    "dependencies": {
-        "tree-sitter": "^0.20.0",
-        "tree-sitter-cli": "^0.20.1"
-    },
+    "dependencies": {},
     "devDependencies": {
         "vscode-tmgrammar-test": "0.0.11"
     }
