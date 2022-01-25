@@ -74,13 +74,13 @@ module.exports = grammar({
     invalid: $ => 'INVALID',
     none: $ => 'NONE',
 
-    primitive_type: $ => token(choice(
+    primitive_type: $ => choice(
       'CDATA',
       'COMPLEX',
       'INTEGER',
       'REAL',
       'STRING'
-    )),
+    ),
 
     reason: $ => choice(
       'REASON_ACTIVATE',
@@ -130,6 +130,7 @@ module.exports = grammar({
       $.invalid,
       $.none,
       $.reason
+      // TODO: extend list
     ),
 
     include: $ => seq(
@@ -309,7 +310,7 @@ module.exports = grammar({
 
     _function_expression: $ => choice(
       $.variables_declaration,
-      // $.assignment,  // TODO: resolve conflict
+      $.assignment,
       $.if_statement,
       $.while_loop,
       $.block,

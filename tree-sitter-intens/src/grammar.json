@@ -230,32 +230,29 @@
       "value": "NONE"
     },
     "primitive_type": {
-      "type": "TOKEN",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "CDATA"
-          },
-          {
-            "type": "STRING",
-            "value": "COMPLEX"
-          },
-          {
-            "type": "STRING",
-            "value": "INTEGER"
-          },
-          {
-            "type": "STRING",
-            "value": "REAL"
-          },
-          {
-            "type": "STRING",
-            "value": "STRING"
-          }
-        ]
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "CDATA"
+        },
+        {
+          "type": "STRING",
+          "value": "COMPLEX"
+        },
+        {
+          "type": "STRING",
+          "value": "INTEGER"
+        },
+        {
+          "type": "STRING",
+          "value": "REAL"
+        },
+        {
+          "type": "STRING",
+          "value": "STRING"
+        }
+      ]
     },
     "reason": {
       "type": "CHOICE",
@@ -1267,6 +1264,10 @@
         {
           "type": "SYMBOL",
           "name": "variables_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assignment"
         },
         {
           "type": "SYMBOL",

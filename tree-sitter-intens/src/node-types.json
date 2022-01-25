@@ -66,6 +66,10 @@
       "required": false,
       "types": [
         {
+          "type": "assignment",
+          "named": true
+        },
+        {
           "type": "block",
           "named": true
         },
@@ -336,6 +340,10 @@
       "required": false,
       "types": [
         {
+          "type": "assignment",
+          "named": true
+        },
+        {
           "type": "block",
           "named": true
         },
@@ -412,6 +420,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
         {
           "type": "block",
           "named": true
@@ -576,6 +588,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
         {
           "type": "block",
           "named": true
@@ -762,6 +778,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "primitive_type",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "reason",
@@ -976,6 +997,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
         {
           "type": "block",
           "named": true
@@ -1197,6 +1222,10 @@
       "required": true,
       "types": [
         {
+          "type": "assignment",
+          "named": true
+        },
+        {
           "type": "block",
           "named": true
         },
@@ -1304,7 +1333,15 @@
     "named": false
   },
   {
+    "type": "CDATA",
+    "named": false
+  },
+  {
     "type": "COLOR",
+    "named": false
+  },
+  {
+    "type": "COMPLEX",
     "named": false
   },
   {
@@ -1348,11 +1385,19 @@
     "named": false
   },
   {
+    "type": "INTEGER",
+    "named": false
+  },
+  {
     "type": "LANGUAGE",
     "named": false
   },
   {
     "type": "OPERATOR",
+    "named": false
+  },
+  {
+    "type": "REAL",
     "named": false
   },
   {
@@ -1440,6 +1485,10 @@
     "named": false
   },
   {
+    "type": "STRING",
+    "named": false
+  },
+  {
     "type": "TASK",
     "named": false
   },
@@ -1501,10 +1550,6 @@
   },
   {
     "type": "parameter",
-    "named": true
-  },
-  {
-    "type": "primitive_type",
     "named": true
   },
   {
