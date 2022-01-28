@@ -19,7 +19,7 @@
 		{ "include": "#ui_manager_block" },
 		{ "include": "#db_manager_block" },
 		{ "include": "#language_block" },
-		{ "include": "#end_of_propram" },
+		{ "include": "#end_of_program" },
 		{ "include": "#end_of_statement" },
 		{ "include": "#comma" },
 		{ "include": "#structure_definition" },
@@ -591,11 +591,11 @@
 				"2": {"name": "keyword.other.intens"}
 			}
 		},
-		"end_of_propram": {
+		"end_of_program": {
 			"match": "\\b(END)\\b\\s*(.)",
 			"captures": {
 				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "punctuation.terminator.propram.intens"}
+				"2": {"name": "punctuation.terminator.program.intens"}
 			}
 		},
 		"variable_definition": {
