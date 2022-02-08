@@ -1,25 +1,25 @@
 {
-	"name": "tree-sitter-intens-server",
-	"description": "intens LSP server",
-	"license": "ISC",
-	"version": "0.1.0",
-	"publisher": "anticultist",
-	"engines": {
-		"node": "*"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/anticultist/vscode-intenslang"
-	},
-	"dependencies": {
-		"vscode-languageserver": "^7.0.0",
-		"vscode-languageserver-textdocument": "^1.0.3",
-		"web-tree-sitter": "^0.20.3"
-	},
-	"devDependencies": {
-		"@types/node": "^17.0.12",
-		"@types/vscode": "^1.63.1",
-		"vscode-test": "^1.6.1"
-	},
-	"scripts": {}
+  "name": "tree-sitter-intens-server",
+  "description": "intens LSP server",
+  "license": "ISC",
+  "version": "0.1.0",
+  "publisher": "anticultist",
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anticultist/vscode-intenslang"
+  },
+  "dependencies": {
+    "vscode-languageserver": "^7.0.0",
+    "vscode-languageserver-textdocument": "^1.0.4",
+    "web-tree-sitter": "^0.20.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.14",
+    "@types/vscode": "^1.64.0",
+    "vscode-test": "^1.6.1"
+  },
+  "scripts": {}
 }
