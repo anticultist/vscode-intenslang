@@ -1,391 +1,243 @@
-const PREC = {  // precedence
+const PREC = {
+  // precedence
   ASSIGNMENT: -1,
-  DEFAULT: 0
+  DEFAULT: 0,
 };
 
 module.exports = grammar({
   name: 'intens',
 
-  extras: $ => [
-    /\s|\\\r?\n/,
-    $.comment
-  ],
+  extras: ($) => [/\s|\\\r?\n/, $.comment],
 
   // conflicts: $ => [
   //   [$.variables_declaration, $.assignment]
   // ],
 
-  word: $ => $.identifier,
+  word: ($) => $.identifier,
 
   rules: {
-    source_file: $ => repeat($._high_level_blocks),
+    source_file: ($) => repeat($._high_level_blocks),
 
-    identifier: $ => /[a-zA-Z][a-zA-Z_0-9#]*/,
+    identifier: ($) => /[a-zA-Z][a-zA-Z_0-9#]*/,
 
-    _high_level_blocks: $ => choice(
-      $._expression,
-      $.assignment,
-      $.include,
-      $.description,
-      $.language_block,
-      $.datapool_block,
-      $.streamer_block,
-      $.operator_block,
-      $.functions_block,
-      $.ui_manager_block,
-      $.db_manager_block,
-      $.end_statement
-    ),
+    _high_level_blocks: ($) =>
+      choice(
+        $._expression,
+        $.assignment,
+        $.include,
+        $.description,
+        $.language_block,
+        $.datapool_block,
+        $.streamer_block,
+        $.operator_block,
+        $.functions_block,
+        $.ui_manager_block,
+        $.db_manager_block,
+        $.end_statement,
+      ),
 
-    _expression: $ => choice(
-      $.string,
-      $.number,
-      $.true,
-      $.false,
-      $.eoln,
-      $.invalid,
-      $.none,
-      $.reason
-    ),
+    _expression: ($) =>
+      choice($.string, $.number, $.true, $.false, $.eoln, $.invalid, $.none, $.reason),
 
-    comment: $ => token(seq('//', /.*/)),
+    comment: ($) => token(seq('//', /.*/)),
     // comment: $ => token(seq('//', /(\\(.|\r?\n)|[^\\\n])*/)),
 
-    string: $ => seq(
-      '"',
-      repeat(choice(
-        /[^"\\\n]+|\\\r?\n/
-      )),
-      '"'
-    ),
+    string: ($) => seq('"', repeat(choice(/[^"\\\n]+|\\\r?\n/)), '"'),
 
-    number: $ => token(
-      seq(
-        optional(/[+-]/),
-        /[0-9][0-9_]*/,
-        optional(seq('.', optional(/[0-9][0-9_]*/))),
-        optional(/[eE][+-]?([0-9][0-9_]*)/)
-      )
-    ),
-
-    true: $ => 'TRUE',
-    false: $ => 'FALSE',
-    eoln: $ => 'EOLN',
-    invalid: $ => 'INVALID',
-    none: $ => 'NONE',
-
-    primitive_type: $ => choice(
-      'CDATA',
-      'COMPLEX',
-      'INTEGER',
-      'REAL',
-      'STRING'
-    ),
-
-    reason: $ => choice(
-      'REASON_ACTIVATE',
-      'REASON_CLEAR',
-      'REASON_CLOSE',
-      'REASON_CONNECTION',
-      'REASON_DROP',
-      'REASON_DUPLICATE',
-      'REASON_INPUT',
-      'REASON_INSERT',
-      'REASON_MOVE',
-      'REASON_OPEN',
-      'REASON_PACK',
-      'REASON_REMOVE',
-      'REASON_REMOVE_CONNECTION',
-      'REASON_REMOVE_ELEMENT',
-      'REASON_SELECT',
-      'REASON_SELECT_POINT',
-      'REASON_SELECT_RECTANGLE',
-      'REASON_UNSELECT'
-    ),
-
-    assignment: $ => prec.right(PREC.ASSIGNMENT, seq(
-      field('left', $._assignment_left_expression),
-      choice(
-        '=',
-        '+=',
-        '-=',
-        '*=',
-        '/='
+    number: ($) =>
+      token(
+        seq(
+          optional(/[+-]/),
+          /[0-9][0-9_]*/,
+          optional(seq('.', optional(/[0-9][0-9_]*/))),
+          optional(/[eE][+-]?([0-9][0-9_]*)/),
+        ),
       ),
-      field('right', $._assignment_right_expression),
-      ';'
-    )),
 
-    _assignment_left_expression: $ => choice(
-      $.identifier
-    ),
+    true: ($) => 'TRUE',
+    false: ($) => 'FALSE',
+    eoln: ($) => 'EOLN',
+    invalid: ($) => 'INVALID',
+    none: ($) => 'NONE',
 
-    _assignment_right_expression: $ => choice(
-      $.identifier,
-      $.string,
-      $.number,
-      $.true,
-      $.false,
-      $.eoln,
-      $.invalid,
-      $.none,
-      $.reason
-      // TODO: extend list
-    ),
+    primitive_type: ($) => choice('CDATA', 'COMPLEX', 'INTEGER', 'REAL', 'STRING'),
 
-    include: $ => seq(
-      'INCLUDE',
-      alias(/[A-Za-z_0-9\./]+/, $.file_name)
-    ),
+    reason: ($) =>
+      choice(
+        'REASON_ACTIVATE',
+        'REASON_CLEAR',
+        'REASON_CLOSE',
+        'REASON_CONNECTION',
+        'REASON_DROP',
+        'REASON_DUPLICATE',
+        'REASON_INPUT',
+        'REASON_INSERT',
+        'REASON_MOVE',
+        'REASON_OPEN',
+        'REASON_PACK',
+        'REASON_REMOVE',
+        'REASON_REMOVE_CONNECTION',
+        'REASON_REMOVE_ELEMENT',
+        'REASON_SELECT',
+        'REASON_SELECT_POINT',
+        'REASON_SELECT_RECTANGLE',
+        'REASON_UNSELECT',
+      ),
 
-    description: $ => seq(
-      'DESCRIPTION',
-      field('description_text', $.string),
-      ';'
-    ),
+    assignment: ($) =>
+      prec.right(
+        PREC.ASSIGNMENT,
+        seq(
+          field('left', $._assignment_left_expression),
+          choice('=', '+=', '-=', '*=', '/='),
+          field('right', $._assignment_right_expression),
+          ';',
+        ),
+      ),
 
-    parameter_block: $ => seq(
-      '{',
-      commaSep(choice(
-        alias(/[A-Za-z_][A-Za-z_0-9]*/, $.parameter)
-      )),
-      '}'
-    ),
+    _assignment_left_expression: ($) => choice($.identifier),
 
-    end_statement: $ => seq(
-      'END',
-      '.'
-    ),
+    _assignment_right_expression: ($) =>
+      choice(
+        $.identifier,
+        $.string,
+        $.number,
+        $.true,
+        $.false,
+        $.eoln,
+        $.invalid,
+        $.none,
+        $.reason,
+        // TODO: extend list
+      ),
 
-    language_block: $ => seq(
-      'LANGUAGE',
-      repeat($._language_block_expression),
-      'END',
-      'LANGUAGE',
-      ';'
-    ),
+    include: ($) => seq('INCLUDE', alias(/[A-Za-z_0-9\./]+/, $.file_name)),
 
-    _language_block_expression: $ => choice(
-      $._expression
-    ),
+    description: ($) => seq('DESCRIPTION', field('description_text', $.string), ';'),
 
-    datapool_block: $ => seq(
-      'DATAPOOL',
-      repeat($._datapool_block_expression),
-      'END',
-      'DATAPOOL',
-      ';'
-    ),
+    parameter_block: ($) =>
+      seq('{', commaSep(choice(alias(/[A-Za-z_][A-Za-z_0-9]*/, $.parameter))), '}'),
 
-    _datapool_block_expression: $ => choice(
-      $._expression,
-      $.sets_declaration,
-      $.colors_declaration,
-      $.variables_declaration,
-    ),
+    end_statement: ($) => seq('END', '.'),
 
-    variables_declaration: $ => seq(
-      field('type', $.primitive_type),
-      optional($.parameter_block),
-      commaSep($.variable_declaration),
-      ';'
-    ),
+    language_block: ($) =>
+      seq('LANGUAGE', repeat($._language_block_expression), 'END', 'LANGUAGE', ';'),
 
-    variable_declaration: $ => seq(
-      field('name', alias($.identifier, $.variable_identifier)),
-      optional($.dimension),
-      optional($.parameter_block)
-    ),
+    _language_block_expression: ($) => choice($._expression),
 
-    dimension: $ => seq(
-      '[',
-      commaSep($.number),
-      ']'
-    ),
+    datapool_block: ($) =>
+      seq('DATAPOOL', repeat($._datapool_block_expression), 'END', 'DATAPOOL', ';'),
 
-    colors_declaration: $ => seq(
-      'COLOR',
-      commaSep($.color_declaration),
-      ';'
-    ),
+    _datapool_block_expression: ($) =>
+      choice($._expression, $.sets_declaration, $.colors_declaration, $.variables_declaration),
 
-    color_declaration: $ => seq(
-      field('name', alias($.identifier, $.color_identifier)),
-      '(',
-      ')'
-    ),
+    variables_declaration: ($) =>
+      seq(
+        field('type', $.primitive_type),
+        optional($.parameter_block),
+        commaSep($.variable_declaration),
+        ';',
+      ),
 
-    sets_declaration: $ => seq(
-      'SET',
-      commaSep($.set_declaration),
-      ';'
-    ),
+    variable_declaration: ($) =>
+      seq(
+        field('name', alias($.identifier, $.variable_identifier)),
+        optional($.dimension),
+        optional($.parameter_block),
+      ),
 
-    set_declaration: $ => seq(
-      field('name', alias($.identifier, $.set_identifier)),
-      optional($.parameter_block),
-      '(',
-      commaSep($.set_item),
-      ')'
-    ),
+    dimension: ($) => seq('[', commaSep($.number), ']'),
 
-    set_item: $ => choice(
-      $.string
-    ),
+    colors_declaration: ($) => seq('COLOR', commaSep($.color_declaration), ';'),
 
-    streamer_block: $ => seq(
-      'STREAMER',
-      repeat($._streamer_block_expression),
-      'END',
-      'STREAMER',
-      ';'
-    ),
+    color_declaration: ($) => seq(field('name', alias($.identifier, $.color_identifier)), '(', ')'),
 
-    _streamer_block_expression: $ => choice(
-      $._expression
-    ),
+    sets_declaration: ($) => seq('SET', commaSep($.set_declaration), ';'),
 
-    operator_block: $ => seq(
-      'OPERATOR',
-      repeat($._operator_block_expression),
-      'END',
-      'OPERATOR',
-      ';'
-    ),
+    set_declaration: ($) =>
+      seq(
+        field('name', alias($.identifier, $.set_identifier)),
+        optional($.parameter_block),
+        '(',
+        commaSep($.set_item),
+        ')',
+      ),
 
-    _operator_block_expression: $ => choice(
-      $._expression,
-      $.tasks_declaration
-    ),
+    set_item: ($) => choice($.string),
 
-    tasks_declaration: $ => seq(
-      'TASK',
-      commaSep($.task_declaration),
-      ';'
-    ),
+    streamer_block: ($) =>
+      seq('STREAMER', repeat($._streamer_block_expression), 'END', 'STREAMER', ';'),
 
-    task_declaration: $ => seq(
-      field('name', alias($.identifier, $.task_identifier)),
-      optional(seq(
-        alias($.function_options, $.task_options),
-        alias($.function_body, $.task_body))
-      )
-    ),
+    _streamer_block_expression: ($) => choice($._expression),
 
-    functions_block: $ => seq(
-      'FUNCTIONS',
-      repeat($._functions_block_expression),
-      'END',
-      'FUNCTIONS',
-      ';'
-    ),
+    operator_block: ($) =>
+      seq('OPERATOR', repeat($._operator_block_expression), 'END', 'OPERATOR', ';'),
 
-    _functions_block_expression: $ => choice(
-      $._expression,
-      $.functions_declaration
-    ),
+    _operator_block_expression: ($) => choice($._expression, $.tasks_declaration),
 
-    functions_declaration: $ => seq(
-      'FUNC',
-      optional($.function_options),
-      commaSep($.function_declaration),
-      ';'
-    ),
+    tasks_declaration: ($) => seq('TASK', commaSep($.task_declaration), ';'),
 
-    function_options: $ => seq(
-      '{',
-      '}'
-    ),
+    task_declaration: ($) =>
+      seq(
+        field('name', alias($.identifier, $.task_identifier)),
+        optional(
+          seq(alias($.function_options, $.task_options), alias($.function_body, $.task_body)),
+        ),
+      ),
 
-    function_declaration: $ => seq(
-      field('name', alias($.identifier, $.function_identifier)),
-      optional($.function_body)
-    ),
+    functions_block: ($) =>
+      seq('FUNCTIONS', repeat($._functions_block_expression), 'END', 'FUNCTIONS', ';'),
 
-    function_body: $ => seq(
-      '{',
-      repeat($._function_expression),
-      '}'
-    ),
+    _functions_block_expression: ($) => choice($._expression, $.functions_declaration),
 
-    _function_expression: $ => choice(
-      $.variables_declaration,
-      $.assignment,
-      $.if_statement,
-      $.while_loop,
-      $.block,
-      $.return,
-      $.exit,
-      $._expression,
-      ';'  // null statement
-    ),
+    functions_declaration: ($) =>
+      seq('FUNC', optional($.function_options), commaSep($.function_declaration), ';'),
 
-    block: $ => seq(
-      '{',
-      repeat($._function_expression),
-      '}'
-    ),
+    function_options: ($) => seq('{', '}'),
 
-    return: $ => seq(
-      'RETURN',
-      ';'
-    ),
+    function_declaration: ($) =>
+      seq(field('name', alias($.identifier, $.function_identifier)), optional($.function_body)),
 
-    exit: $ => seq(
-      'EXIT',
-      ';'
-    ),
+    function_body: ($) => seq('{', repeat($._function_expression), '}'),
 
-    if_statement: $ => prec.right(seq(
-      'IF',
-      '(',
-      $.condition,
-      ')',
-      $._function_expression,
-      optional($.else_part)
-    )),
+    _function_expression: ($) =>
+      choice(
+        $.variables_declaration,
+        $.assignment,
+        $.if_statement,
+        $.while_loop,
+        $.block,
+        $.return,
+        $.exit,
+        $._expression,
+        ';', // null statement
+      ),
 
-    condition: $ => choice(
-      $._expression
-    ),
+    block: ($) => seq('{', repeat($._function_expression), '}'),
 
-    else_part: $ => seq(
-      'ELSE',
-      $._function_expression
-    ),
+    return: ($) => seq('RETURN', ';'),
 
-    while_loop: $ => seq(
-      'WHILE',
-      '(',
-      $.condition,
-      ')',
-      $._function_expression
-    ),
+    exit: ($) => seq('EXIT', ';'),
 
-    ui_manager_block: $ => seq(
-      'UI_MANAGER',
-      repeat($._ui_manager_block_expression),
-      'END',
-      'UI_MANAGER',
-      ';'
-    ),
+    if_statement: ($) =>
+      prec.right(seq('IF', '(', $.condition, ')', $._function_expression, optional($.else_part))),
 
-    _ui_manager_block_expression: $ => choice(
-      $._expression
-    ),
+    condition: ($) => choice($._expression),
 
-    db_manager_block: $ => seq(
-      'DB_MANAGER',
-      repeat($._db_manager_block_expression),
-      'END',
-      'DB_MANAGER',
-      ';'
-    ),
+    else_part: ($) => seq('ELSE', $._function_expression),
 
-    _db_manager_block_expression: $ => choice(
-      $._expression
-    ),
-  }
+    while_loop: ($) => seq('WHILE', '(', $.condition, ')', $._function_expression),
+
+    ui_manager_block: ($) =>
+      seq('UI_MANAGER', repeat($._ui_manager_block_expression), 'END', 'UI_MANAGER', ';'),
+
+    _ui_manager_block_expression: ($) => choice($._expression),
+
+    db_manager_block: ($) =>
+      seq('DB_MANAGER', repeat($._db_manager_block_expression), 'END', 'DB_MANAGER', ';'),
+
+    _db_manager_block_expression: ($) => choice($._expression),
+  },
 });
 
 function commaSep(rule) {
