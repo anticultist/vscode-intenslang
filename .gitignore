@@ -4,3 +4,12 @@ out
 node_modules
 .vscode-test
 *.code-workspace
+/tree-sitter-intens/src
+/tree-sitter-intens/bindings
+/tree-sitter-intens/build
+/tree-sitter-intens/binding.gyp
+/tree-sitter-intens/Cargo.toml
+/tree-sitter-intens/tree-sitter-intens.wasm
+/tree-sitter-intens/parser.lib
+/tree-sitter-intens/parser.obj
+/tree-sitter-intens/parser.exp
