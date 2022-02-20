@@ -1,0 +1,198 @@
+======
+number
+======
+
+foo = 1;
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (number)))
+
+==========
+identifier
+==========
+
+foo = bar;
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (identifier)))
+
+======
+string
+======
+
+foo = "Lorem ipsum";
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (string)))
+
+=================
+number addition 1
+=================
+
+foo = 1 + 2;
+
+---
+(source_file
+  (assignment
+    (identifier)
+      (binary_expression
+        (number) (number))))
+
+=================
+number addition 2
+=================
+
+foo = 1 + 2 + 3;
+
+---
+
+(source_file
+    (assignment
+        (identifier)
+            (binary_expression
+                (binary_expression
+                    (number) (number))
+                (number))))
+
+===================
+identifier addition
+===================
+
+foo = bar + baz;
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (binary_expression
+      (identifier) (identifier))))
+
+===============
+string addition
+===============
+
+foo = "bar" + "baz";
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (binary_expression
+      (string) (string))))
+
+==================
+number subtraction
+==================
+
+foo = 1 - 2;
+
+---
+(source_file
+  (assignment
+    (identifier)
+      (binary_expression
+        (number) (number))))
+
+======================
+identifier subtraction
+======================
+
+foo = bar - baz;
+
+---
+(source_file
+  (assignment
+    (identifier)
+      (binary_expression
+        (identifier) (identifier))))
+
+=====================
+number multiplication
+=====================
+
+foo = 1 * 2;
+
+---
+(source_file
+  (assignment
+    (identifier)
+      (binary_expression
+        (number) (number))))
+
+=========================
+identifier multiplication
+=========================
+
+foo = bar * baz;
+
+---
+(source_file
+  (assignment
+    (identifier)
+      (binary_expression
+        (identifier) (identifier))))
+
+==============================
+complex arithmetic operation 1
+==============================
+
+foo = 1 * 2 + 3;
+
+---
+(source_file
+    (assignment (identifier)
+        (binary_expression
+            (binary_expression (number) (number))
+            (number))))
+
+==============================
+complex arithmetic operation 2
+==============================
+
+foo = 1 + 2 * 3;
+
+---
+(source_file
+    (assignment
+        (identifier)
+            (binary_expression (number)
+            (binary_expression (number) (number)))))
+
+===============================
+number addition with bracketing
+===============================
+
+foo = (1 + 2);
+
+---
+(source_file
+    (assignment
+        (identifier)
+        (parenthesized_expression
+            (binary_expression
+                (number) (number)))))
+
+==============================================
+complex arithmetic operation with bracketing 1
+===============================================
+
+foo = (1 + 2) * (3 - 4);
+
+---
+(source_file
+    (assignment
+        (identifier)
+        (binary_expression
+            (parenthesized_expression
+                (binary_expression (number) (number)))
+            (parenthesized_expression
+                (binary_expression (number) (number))))))

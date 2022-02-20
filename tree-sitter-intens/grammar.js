@@ -2,6 +2,8 @@ const PREC = {
   // precedence
   ASSIGNMENT: -1,
   DEFAULT: 0,
+  ADD: 10,
+  MULTIPLY: 11,
 };
 
 module.exports = grammar({
@@ -9,18 +11,14 @@ module.exports = grammar({
 
   extras: ($) => [/\s|\\\r?\n/, $.comment],
 
-  // conflicts: $ => [
-  //   [$.variables_declaration, $.assignment]
-  // ],
-
   word: ($) => $.identifier,
 
   rules: {
-    source_file: ($) => repeat($._high_level_blocks),
+    source_file: ($) => repeat($._high_level_block),
 
     identifier: ($) => /[a-zA-Z][a-zA-Z_0-9#]*/,
 
-    _high_level_blocks: ($) =>
+    _high_level_block: ($) =>
       choice(
         $._expression,
         $.assignment,
@@ -36,6 +34,7 @@ module.exports = grammar({
         $.end_statement,
       ),
 
+    // TODO: improve name
     _expression: ($) =>
       choice($.string, $.number, $.true, $.false, $.eoln, $.invalid, $.none, $.reason),
 
@@ -108,8 +107,33 @@ module.exports = grammar({
         $.invalid,
         $.none,
         $.reason,
-        // TODO: extend list
+        $.binary_expression,
+        $.parenthesized_expression,
       ),
+
+    binary_expression: ($) => {
+      const table = [
+        ['+', PREC.ADD],
+        ['-', PREC.ADD],
+        ['*', PREC.MULTIPLY],
+        ['/', PREC.MULTIPLY],
+      ];
+
+      return choice(
+        ...table.map(([operator, precedence]) => {
+          return prec.left(
+            precedence,
+            seq(
+              field('left', $._assignment_right_expression),
+              field('operator', operator),
+              field('right', $._assignment_right_expression),
+            ),
+          );
+        }),
+      );
+    },
+
+    parenthesized_expression: ($) => seq('(', $._assignment_right_expression, ')'),
 
     include: ($) => seq('INCLUDE', alias(/[A-Za-z_0-9\./]+/, $.file_name)),
 
