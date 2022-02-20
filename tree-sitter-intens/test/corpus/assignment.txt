@@ -196,3 +196,17 @@ foo = (1 + 2) * (3 - 4);
                 (binary_expression (number) (number)))
             (parenthesized_expression
                 (binary_expression (number) (number))))))
+
+==================
+boolean comparison
+==================
+
+foo = 1 < 2;
+
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (binary_expression
+      (number) (number))))

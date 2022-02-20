@@ -2,6 +2,8 @@ const PREC = {
   // precedence
   ASSIGNMENT: -1,
   DEFAULT: 0,
+  EQUAL: 6,
+  RELATIONAL: 7,
   ADD: 10,
   MULTIPLY: 11,
 };
@@ -96,6 +98,7 @@ module.exports = grammar({
 
     _assignment_left_expression: ($) => choice($.identifier),
 
+    // TODO: improve name
     _assignment_right_expression: ($) =>
       choice(
         $.identifier,
@@ -117,6 +120,12 @@ module.exports = grammar({
         ['-', PREC.ADD],
         ['*', PREC.MULTIPLY],
         ['/', PREC.MULTIPLY],
+        ['==', PREC.EQUAL],
+        ['!=', PREC.EQUAL],
+        ['>', PREC.RELATIONAL],
+        ['>=', PREC.RELATIONAL],
+        ['<=', PREC.RELATIONAL],
+        ['<', PREC.RELATIONAL],
       ];
 
       return choice(
@@ -246,7 +255,7 @@ module.exports = grammar({
     if_statement: ($) =>
       prec.right(seq('IF', '(', $.condition, ')', $._function_expression, optional($.else_part))),
 
-    condition: ($) => choice($._expression),
+    condition: ($) => choice($._assignment_right_expression),
 
     else_part: ($) => seq('ELSE', $._function_expression),
 
