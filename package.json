@@ -14,6 +14,10 @@
   "categories": [
     "Programming Languages"
   ],
+  "activationEvents": [
+    "onLanguage:intens"
+  ],
+  "main": "./client/out/extension",
   "contributes": {
     "languages": [
       {
@@ -27,8 +31,7 @@
           ".inc",
           ".des.in",
           ".inc.in"
-        ],
-        "configuration": "./language-configuration.json"
+        ]
       }
     ],
     "grammars": [
@@ -37,7 +40,30 @@
         "scopeName": "source.intens",
         "path": "./syntaxes/intens.tmLanguage.json"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "INTENS",
+      "properties": {
+        "intensLanguageServer.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "intensLanguageServer.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "verbose",
+          "description": "Traces the communication between VS Code and the language server."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run webpack",
@@ -55,17 +81,17 @@
   "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^9.1.0",
-    "@types/node": "^17.0.18",
-    "@typescript-eslint/parser": "^5.12.0",
+    "@types/node": "^17.0.21",
+    "@typescript-eslint/parser": "^5.15.0",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.9.0",
+    "eslint": "^8.11.0",
     "merge-options": "^3.0.4",
-    "mocha": "^9.2.1",
+    "mocha": "^9.2.2",
     "rimraf": "^3.0.2",
-    "ts-loader": "^9.2.6",
-    "typescript": "^4.5.5",
+    "ts-loader": "^9.2.8",
+    "typescript": "^4.6.2",
     "webpack-cli": "^4.9.2",
-    "webpack": "^5.69.1",
+    "webpack": "^5.70.0",
     "vscode-tmgrammar-test": "0.0.11"
   }
 }

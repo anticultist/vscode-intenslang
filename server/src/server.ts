@@ -2,32 +2,32 @@
 // https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample
 
 import {
-	createConnection,
-	TextDocuments,
-	ProposedFeatures,
-	InitializeParams,
-	DidChangeConfigurationNotification,
-	Location,
-	Range,
-	Position,
-	DocumentSymbolParams,
-	SymbolInformation,
-	TextDocumentSyncKind,
-	InitializeResult
+  createConnection,
+  TextDocuments,
+  ProposedFeatures,
+  InitializeParams,
+  DidChangeConfigurationNotification,
+  Location,
+  Range,
+  Position,
+  DocumentSymbolParams,
+  SymbolInformation,
+  TextDocumentSyncKind,
+  InitializeResult,
 } from 'vscode-languageserver/node';
 
-import {
-	TextDocument
-} from 'vscode-languageserver-textdocument';
+import { TextDocument } from 'vscode-languageserver-textdocument';
 
 import * as Parser from 'web-tree-sitter';
-import * as path from "path";
+import * as path from 'path';
 
 async function loadParser() {
-	await Parser.init();
-	parser = new Parser;
-	const MyLang = await Parser.Language.load(path.resolve(__dirname, '..', 'tree-sitter-intens.wasm'));
-	parser.setLanguage(MyLang);
+  await Parser.init();
+  parser = new Parser();
+  const MyLang = await Parser.Language.load(
+    path.resolve(__dirname, '..', 'tree-sitter-intens.wasm'),
+  );
+  parser.setLanguage(MyLang);
 }
 
 // Create a connection for the server, using Node's IPC as a transport.
@@ -43,56 +43,55 @@ let hasConfigurationCapability: boolean = false;
 let hasWorkspaceFolderCapability: boolean = false;
 let hasDiagnosticRelatedInformationCapability: boolean = false;
 
-connection.onInitialize(async (params: InitializeParams) => {	
-	let capabilities = params.capabilities;
+connection.onInitialize(async (params: InitializeParams) => {
+  connection.console.info('onInitialize :)');
 
-	// Does the client support the `workspace/configuration` request?
-	// If not, we fall back using global settings.
-	hasConfigurationCapability = !!(
-		capabilities.workspace && !!capabilities.workspace.configuration
-	);
-	hasWorkspaceFolderCapability = !!(
-		capabilities.workspace && !!capabilities.workspace.workspaceFolders
-	);
-	hasDiagnosticRelatedInformationCapability = !!(
-		capabilities.textDocument &&
-		capabilities.textDocument.publishDiagnostics &&
-		capabilities.textDocument.publishDiagnostics.relatedInformation
-	);
+  let capabilities = params.capabilities;
 
-	const result: InitializeResult = {
-		capabilities: {
-			textDocumentSync: TextDocumentSyncKind.Incremental,
-			documentSymbolProvider: true
-		}
-	};
-	if (hasWorkspaceFolderCapability) {
-		result.capabilities.workspace = {
-			workspaceFolders: {
-				supported: true
-			}
-		};
-	}
+  // Does the client support the `workspace/configuration` request?
+  // If not, we fall back using global settings.
+  hasConfigurationCapability = !!(capabilities.workspace && !!capabilities.workspace.configuration);
+  hasWorkspaceFolderCapability = !!(
+    capabilities.workspace && !!capabilities.workspace.workspaceFolders
+  );
+  hasDiagnosticRelatedInformationCapability = !!(
+    capabilities.textDocument &&
+    capabilities.textDocument.publishDiagnostics &&
+    capabilities.textDocument.publishDiagnostics.relatedInformation
+  );
 
-	await loadParser();
-	
-	return result;
+  const result: InitializeResult = {
+    capabilities: {
+      textDocumentSync: TextDocumentSyncKind.Incremental,
+      documentSymbolProvider: true,
+    },
+  };
+  if (hasWorkspaceFolderCapability) {
+    result.capabilities.workspace = {
+      workspaceFolders: {
+        supported: true,
+      },
+    };
+  }
+
+  await loadParser();
+
+  return result;
 });
 
 connection.onInitialized(() => {
-	if (hasConfigurationCapability) {
-		// Register for all configuration changes.
-		connection.client.register(DidChangeConfigurationNotification.type, undefined);
-	}
-	if (hasWorkspaceFolderCapability) {
-		connection.workspace.onDidChangeWorkspaceFolders(_event => {
-		});
-	}
+  if (hasConfigurationCapability) {
+    // Register for all configuration changes.
+    connection.client.register(DidChangeConfigurationNotification.type, undefined);
+  }
+  if (hasWorkspaceFolderCapability) {
+    connection.workspace.onDidChangeWorkspaceFolders((_event) => {});
+  }
 });
 
 // The MS Access dump format settings
 interface IntensSettings {
-	maxNumberOfProblems: number;
+  maxNumberOfProblems: number;
 }
 
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
@@ -104,77 +103,74 @@ let globalSettings: IntensSettings = defaultSettings;
 // Cache the settings of all open documents
 let documentSettings: Map<string, Thenable<IntensSettings>> = new Map();
 
-connection.onDidChangeConfiguration(change => {
-	if (hasConfigurationCapability) {
-		// Reset all cached document settings
-		documentSettings.clear();
-	} else {
-		globalSettings = <IntensSettings>(
-			(change.settings.intensLanguageServer || defaultSettings)
-		);
-	}
+connection.onDidChangeConfiguration((change) => {
+  if (hasConfigurationCapability) {
+    // Reset all cached document settings
+    documentSettings.clear();
+  } else {
+    globalSettings = <IntensSettings>(change.settings.intensLanguageServer || defaultSettings);
+  }
 
-	// Revalidate all open text documents
-	documents.all().forEach(validateTextDocument);
+  // Revalidate all open text documents
+  documents.all().forEach(validateTextDocument);
 });
 
 function getDocumentSettings(resource: string): Thenable<IntensSettings> {
-	if (!hasConfigurationCapability) {
-		return Promise.resolve(globalSettings);
-	}
-	let result = documentSettings.get(resource);
-	if (!result) {
-		result = connection.workspace.getConfiguration({
-			scopeUri: resource,
-			section: 'intensLanguageServer'
-		});
-		documentSettings.set(resource, result);
-	}
-	return result;
+  if (!hasConfigurationCapability) {
+    return Promise.resolve(globalSettings);
+  }
+  let result = documentSettings.get(resource);
+  if (!result) {
+    result = connection.workspace.getConfiguration({
+      scopeUri: resource,
+      section: 'intensLanguageServer',
+    });
+    documentSettings.set(resource, result);
+  }
+  return result;
 }
 
 // Only keep settings for open documents
-documents.onDidClose(e => {
-	documentSettings.delete(e.document.uri);
+documents.onDidClose((e) => {
+  documentSettings.delete(e.document.uri);
 });
 
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
-documents.onDidChangeContent(change => {
-	validateTextDocument(change.document);
+documents.onDidChangeContent((change) => {
+  validateTextDocument(change.document);
 });
 
-async function validateTextDocument(textDocument: TextDocument): Promise<void> {
+async function validateTextDocument(textDocument: TextDocument): Promise<void> {}
+
+connection.onDidChangeWatchedFiles((_change) => {});
+
+function symbolsFromAST(uri: string, root: Parser.Tree): SymbolInformation[] {
+  const symbols: SymbolInformation[] = [];
+
+  // TODO
+  console.log('symbolsFromAST');
+
+  return symbols;
 }
 
-connection.onDidChangeWatchedFiles(_change => {
+connection.onDocumentSymbol((params: DocumentSymbolParams): SymbolInformation[] => {
+  connection.console.log('onDocumentSymbol :)');
+
+  if (parser === undefined) {
+    connection.console.log('Could not provide symbol information: parser is not available');
+    return [];
+  }
+
+  const document_text = documents.get(params.textDocument.uri)?.getText();
+  if (document_text === undefined) {
+    connection.console.log('Could not provide symbol information: failed to get document text');
+    return [];
+  }
+
+  const tree = parser.parse(document_text);
+  return symbolsFromAST(params.textDocument.uri, tree);
 });
-
-function symbolsFromAST(uri:string, root: Parser.Tree): SymbolInformation[] {
-	const symbols:SymbolInformation[] = [];
-
-	// TODO
-
-	return symbols;
-}
-
-connection.onDocumentSymbol(
-	(params: DocumentSymbolParams): SymbolInformation[] => {
-		if (parser === undefined) {
-			connection.console.log('Could not provide symbol information: parser is not available');
-			return [];
-		}
-		
-		const document_text = documents.get(params.textDocument.uri)?.getText();
-		if (document_text === undefined) {
-			connection.console.log('Could not provide symbol information: failed to get document text');
-			return [];
-		}
-		
-		const tree = parser.parse(document_text);
-		return symbolsFromAST(params.textDocument.uri, tree);
-	}
-);
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
