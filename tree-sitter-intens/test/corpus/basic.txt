@@ -131,6 +131,36 @@ INCLUDE ../etc/other.inc
   (include (file_name))
   (include (file_name)))
 
+================
+simple help file
+================
+
+HELPFILE "myhelpfile.hlp";
+
+---
+(source_file
+  (help_file
+    (file_name)))
+
+=================
+complex help file
+=================
+
+HELPFILE "myhelpfile.hlp",
+  OPEN_FILE "my_help.html" HELPKEY("mykey"),
+  OPEN_URL "https://www.example.com/";
+
+---
+(source_file
+  (help_file
+    (file_name)
+    (open_file
+      (file_name)
+      (help_file_option
+        (string)))
+    (open_url
+      (document_url))))
+
 ==============
 end of program
 ==============

@@ -26,6 +26,7 @@ module.exports = grammar({
         $.assignment,
         $.include,
         $.description,
+        $.help_file,
         $.language_block,
         $.datapool_block,
         $.streamer_block,
@@ -147,6 +148,20 @@ module.exports = grammar({
     include: ($) => seq('INCLUDE', alias(/[A-Za-z_0-9\./]+/, $.file_name)),
 
     description: ($) => seq('DESCRIPTION', field('description_text', $.string), ';'),
+
+    help_file: ($) =>
+      seq('HELPFILE', commaSep(choice(alias($.string, $.file_name), $.open_file, $.open_url)), ';'),
+
+    open_file: ($) => seq('OPEN_FILE', alias($.string, $.file_name), optional($.help_file_option)),
+
+    open_url: ($) => seq('OPEN_URL', alias($.string, $.document_url), optional($.help_file_option)),
+
+    help_file_option: ($) =>
+      choice(
+        alias($.string, $.title),
+        alias('HIDDEN', $.hidden),
+        seq('HELPKEY', '(', commaSep(choice($.string, $.identifier)), ')'),
+      ),
 
     parameter_block: ($) =>
       seq('{', commaSep(choice(alias(/[A-Za-z_][A-Za-z_0-9]*/, $.parameter))), '}'),
