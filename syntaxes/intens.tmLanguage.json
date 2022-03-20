@@ -2,12 +2,7 @@
 	"name": "INTENS",
 	"scopeName": "source.intens",
 	"uuid": "e951a14d-24c9-4260-9068-5628fe553513",
-	"fileTypes": [
-		"des",
-		"inc",
-		"des.in",
-		"inc.in"
-	],
+	"fileTypes": ["des", "inc", "des.in", "inc.in"],
 	"patterns": [
 		{ "include": "#prototype" },
 		{ "include": "#high_level_commands" },
@@ -57,11 +52,11 @@
 			"name": "string.quoted.double.intens",
 			"begin": "(\")",
 			"beginCaptures": {
-				"1": {"name": "punctuation.definition.string.begin.intens"}
+				"1": { "name": "punctuation.definition.string.begin.intens" }
 			},
 			"end": "(\")",
 			"endCaptures": {
-				"1": {"name": "punctuation.definition.string.end.intens"}
+				"1": { "name": "punctuation.definition.string.end.intens" }
 			},
 			"patterns": [
 				{
@@ -75,8 +70,8 @@
 				{
 					"match": "(<table).*(>)",
 					"captures": {
-						"1": {"name": "keyword.other.DML.html"},
-						"2": {"name": "keyword.other.DML.html"}
+						"1": { "name": "keyword.other.DML.html" },
+						"2": { "name": "keyword.other.DML.html" }
 					}
 				},
 				{
@@ -129,7 +124,7 @@
 				{ "include": "#simple_assignments" }
 			]
 		},
-		"simple_assignments" : {
+		"simple_assignments": {
 			"name": "keyword.operator.assignment.intens",
 			"match": "=(?!=)"
 		},
@@ -173,18 +168,18 @@
 			"contentName": "meta.preprocessor.include.c",
 			"begin": "^\\s*(#include)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.control.import.include.c"}
+				"1": { "name": "keyword.control.import.include.c" }
 			},
 			"patterns": [
 				{
 					"contentName": "string.quoted.other.lt-gt.include.c",
 					"begin": "(\\<)",
 					"beginCaptures": {
-						"1": {"name": "punctuation.definition.string.begin.c"}
+						"1": { "name": "punctuation.definition.string.begin.c" }
 					},
 					"end": "(\\>)|(?=$)",
 					"endCaptures": {
-						"1": {"name": "punctuation.definition.string.end.c"}
+						"1": { "name": "punctuation.definition.string.end.c" }
 					}
 				},
 				{ "include": "#prototype" }
@@ -195,7 +190,7 @@
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(DATAPOOL)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -207,15 +202,15 @@
 			],
 			"end": "\\b(END)\\b\\s+\\b(DATAPOOL)\\b",
 			"endCaptures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "keyword.other.intens" }
 			}
 		},
 		"streamer_block": {
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(STREAMER)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -226,14 +221,14 @@
 			],
 			"end": "\\b(END)\\b\\s+\\b(STREAMER)\\b",
 			"endCaptures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "keyword.other.intens" }
 			}
 		},
 		"stream_definition": {
 			"begin": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
 			"beginCaptures": {
-				"1": {"name": "punctuation.definition.variable.intens"}
+				"1": { "name": "punctuation.definition.variable.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -246,7 +241,7 @@
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(OPERATOR)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -261,14 +256,14 @@
 			],
 			"end": "\\b(END)\\b\\s+\\b(OPERATOR)\\b",
 			"endCaptures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "keyword.other.intens" }
 			}
 		},
 		"task_definition": {
 			"begin": "\\b(TASK)\\b",
 			"beginCaptures": {
-				"1": {"name": "storage.type.other.intens"}
+				"1": { "name": "storage.type.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -282,28 +277,25 @@
 			],
 			"end": ";",
 			"endCaptures": {
-				"0": {"name": "punctuation.terminator.statement.intens"}
+				"0": { "name": "punctuation.terminator.statement.intens" }
 			}
 		},
 		"task_body": {
 			"contentName": "meta.block.intens",
 			"begin": "{",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.block.begin.intens"}
+				"0": { "name": "punctuation.section.block.begin.intens" }
 			},
-			"patterns": [
-				{ "include": "#prototype" },
-				{ "include": "#function_statements" }
-			],
+			"patterns": [{ "include": "#prototype" }, { "include": "#function_statements" }],
 			"end": "}",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
+				"0": { "name": "punctuation.section.block.end.intens" }
 			}
 		},
 		"operator_definition": {
 			"begin": "\\b(FILESTREAM|MESSAGE_QUEUE|PROCESS|PROCESSGROUP|SOCKET|TIMER)\\b",
 			"beginCaptures": {
-				"1": {"name": "storage.type.other.intens"}
+				"1": { "name": "storage.type.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -315,7 +307,7 @@
 				{
 					"begin": "(:)",
 					"beginCaptures": {
-						"1":  {"name": "punctuation.separator.intens"}
+						"1": { "name": "punctuation.separator.intens" }
 					},
 					"patterns": [
 						{
@@ -328,7 +320,7 @@
 				{
 					"begin": "(=)",
 					"beginCaptures": {
-						"1":  {"name": "keyword.operator.assignment.augmented.intens"}
+						"1": { "name": "keyword.operator.assignment.augmented.intens" }
 					},
 					"patterns": [
 						{
@@ -344,30 +336,27 @@
 			],
 			"end": ";",
 			"endCaptures": {
-				"0": {"name": "punctuation.terminator.statement.intens"}
+				"0": { "name": "punctuation.terminator.statement.intens" }
 			}
 		},
 		"functions_block": {
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(FUNCTIONS)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" }
 			},
-			"patterns": [
-				{ "include": "#function_statements" },
-				{ "include": "#function_definition" }
-			],
+			"patterns": [{ "include": "#function_statements" }, { "include": "#function_definition" }],
 			"end": "\\b(END)\\b\\s+\\b(FUNCTIONS)\\b",
 			"endCaptures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "keyword.other.intens" }
 			}
 		},
 		"function_definition": {
 			"contentName": "meta.function.intens",
 			"begin": "\\b(FUNC)\\b",
 			"beginCaptures": {
-				"1": {"name": "storage.type.function.intens"}
+				"1": { "name": "storage.type.function.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -381,13 +370,13 @@
 			],
 			"end": ";",
 			"endCaptures": {
-				"0": {"name": "punctuation.terminator.statement.intens"}
+				"0": { "name": "punctuation.terminator.statement.intens" }
 			}
 		},
 		"function_body": {
 			"begin": "{",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.block.begin.intens"}
+				"0": { "name": "punctuation.section.block.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -396,7 +385,7 @@
 			],
 			"end": "}",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
+				"0": { "name": "punctuation.section.block.end.intens" }
 			}
 		},
 		"function_properties": {
@@ -412,7 +401,7 @@
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(UI_MANAGER)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#ui_structure_definition" },
@@ -427,14 +416,14 @@
 			],
 			"end": "\\b(END)\\b\\s+\\b(UI_MANAGER)\\b",
 			"endCaptures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "keyword.other.intens" }
 			}
 		},
 		"ui_structure_definition": {
 			"begin": "\\b(FIELDGROUP|FOLDER|FORM|IMAGE|INDEX|LINEPLOT|LIST|LISTPLOT|LOG_WINDOW|NAVIGATOR|PLOT2D|PLUGIN|PSPLOT|STD_WINDOW|TABLE|TEXT_WINDOW|THERMO|TIMETABLE|UNIPLOT|XRT3DPLOT|XRTGRAPH)\\b",
 			"beginCaptures": {
-				"1": {"name": "storage.type.other.intens"}
+				"1": { "name": "storage.type.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -449,13 +438,13 @@
 			],
 			"end": ";",
 			"endCaptures": {
-				"0": {"name": "punctuation.terminator.statement.intens"}
+				"0": { "name": "punctuation.terminator.statement.intens" }
 			}
 		},
 		"ui_structure_body": {
 			"begin": "(\\()",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.group.begin.intens"}
+				"0": { "name": "punctuation.section.group.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -479,13 +468,13 @@
 			],
 			"end": "(\\))",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.group.end.intens"}
+				"0": { "name": "punctuation.section.group.end.intens" }
 			}
 		},
 		"menu_definition": {
 			"begin": "\\b(MENU)\\b",
 			"beginCaptures": {
-				"1": {"name": "storage.type.other.intens"}
+				"1": { "name": "storage.type.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -495,13 +484,13 @@
 			],
 			"end": ";",
 			"endCaptures": {
-				"0": {"name": "punctuation.terminator.statement.intens"}
+				"0": { "name": "punctuation.terminator.statement.intens" }
 			}
 		},
 		"menu_parameter": {
 			"begin": "(\\()",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.group.begin.intens"}
+				"0": { "name": "punctuation.section.group.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -512,8 +501,8 @@
 				{
 					"match": "\\b(FUNC)\\b\\s*\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
 					"captures": {
-						"1": {"name": "variable.parameter.intens"},
-						"2": {"name": "variable.function.intens"}
+						"1": { "name": "variable.parameter.intens" },
+						"2": { "name": "variable.function.intens" }
 					}
 				},
 				{ "include": "#comma" },
@@ -522,14 +511,14 @@
 			],
 			"end": "(\\))",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.group.end.intens"}
+				"0": { "name": "punctuation.section.group.end.intens" }
 			}
 		},
 		"db_manager_block": {
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(DB_MANAGER)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -546,15 +535,15 @@
 			],
 			"end": "\\b(END)\\b\\s+\\b(DB_MANAGER)\\b",
 			"endCaptures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "keyword.other.intens" }
 			}
 		},
 		"sql_block": {
 			"contentName": "meta.block.intens",
 			"begin": "{",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.block.begin.intens"}
+				"0": { "name": "punctuation.section.block.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -571,14 +560,14 @@
 			],
 			"end": "}",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
+				"0": { "name": "punctuation.section.block.end.intens" }
 			}
 		},
 		"language_block": {
 			"contentName": "meta.namespace.intens",
 			"begin": "\\b(LANGUAGE)\\b",
 			"beginCaptures": {
-				"1": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -587,21 +576,21 @@
 			],
 			"end": "\\b(END)\\b\\s+\\b(LANGUAGE)\\b",
 			"endCaptures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "keyword.other.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "keyword.other.intens" }
 			}
 		},
 		"end_of_program": {
 			"match": "\\b(END)\\b\\s*(.)",
 			"captures": {
-				"1": {"name": "keyword.other.intens"},
-				"2": {"name": "punctuation.terminator.program.intens"}
+				"1": { "name": "keyword.other.intens" },
+				"2": { "name": "punctuation.terminator.program.intens" }
 			}
 		},
 		"variable_definition": {
 			"begin": "\\b(?:CDATA|COLOR|COMPLEX|INTEGER|REAL|STRING)\\b",
 			"beginCaptures": {
-				"0": {"name": "storage.type.intens"}
+				"0": { "name": "storage.type.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -617,20 +606,20 @@
 			],
 			"end": ";",
 			"endCaptures": {
-				"0": {"name": "punctuation.terminator.statement.intens"}
+				"0": { "name": "punctuation.terminator.statement.intens" }
 			}
 		},
 		"variable_conditional_states": {
 			"begin": "\\(",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.group.begin.intens"}
+				"0": { "name": "punctuation.section.group.begin.intens" }
 			},
 			"patterns": [
 				{
 					"match": "\\b(ELSE|INVALID)\\b\\s*(=)",
 					"captures": {
-						"1": {"name": "variable.parameter.intens"},
-						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+						"1": { "name": "variable.parameter.intens" },
+						"2": { "name": "keyword.operator.assignment.augmented.intens" }
 					}
 				},
 				{ "include": "#prototype" },
@@ -645,13 +634,13 @@
 			],
 			"end": "\\)",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.group.end.intens"}
+				"0": { "name": "punctuation.section.group.end.intens" }
 			}
 		},
 		"custom_variable_type_definition": {
 			"begin": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b",
 			"beginCaptures": {
-				"0": {"name": "storage.type.intens"}
+				"0": { "name": "storage.type.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -667,13 +656,13 @@
 			],
 			"end": ";",
 			"endCaptures": {
-				"0": {"name": "punctuation.terminator.statement.intens"}
+				"0": { "name": "punctuation.terminator.statement.intens" }
 			}
 		},
 		"set_definition": {
 			"begin": "\\b(?:SET)\\b",
 			"beginCaptures": {
-				"0": {"name": "storage.type.enum.intens"}
+				"0": { "name": "storage.type.enum.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -692,7 +681,7 @@
 			"contentName": "meta.struct.intens",
 			"begin": "\\b(?:STRUCT)\\b",
 			"beginCaptures": {
-				"0": {"name": "storage.type.struct.intens"}
+				"0": { "name": "storage.type.struct.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -710,7 +699,7 @@
 		"structure_inherit_from": {
 			"begin": ":",
 			"beginCaptures": {
-				"0": {"name": "punctuation.separator.intens"}
+				"0": { "name": "punctuation.separator.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -726,7 +715,7 @@
 		"structure_body": {
 			"begin": "(\\{)",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.block.begin.intens"}
+				"0": { "name": "punctuation.section.block.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -735,21 +724,21 @@
 			],
 			"end": "(\\})|(?=;)",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
+				"0": { "name": "punctuation.section.block.end.intens" }
 			}
 		},
 		"parameter_block": {
 			"contentName": "meta.block.intens",
 			"begin": "{",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.block.begin.intens"}
+				"0": { "name": "punctuation.section.block.begin.intens" }
 			},
 			"patterns": [
 				{
 					"match": "\\b(INDEX|INVALID)\\b\\s*(=)",
 					"captures": {
-						"1": {"name": "variable.parameter.intens"},
-						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+						"1": { "name": "variable.parameter.intens" },
+						"2": { "name": "keyword.operator.assignment.augmented.intens" }
 					}
 				},
 				{ "include": "#function_call" },
@@ -779,13 +768,13 @@
 			],
 			"end": "}",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
+				"0": { "name": "punctuation.section.block.end.intens" }
 			}
 		},
 		"parameter_group": {
 			"begin": "\\(",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.group.begin.intens"}
+				"0": { "name": "punctuation.section.group.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -801,20 +790,20 @@
 			],
 			"end": "\\)",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.group.end.intens"}
+				"0": { "name": "punctuation.section.group.end.intens" }
 			}
 		},
 		"func_parameter": {
 			"begin": "\\b(FUNC|ON_EOS|ON_VIEW_ACTION)\\b",
 			"beginCaptures": {
-				"0": {"name": "variable.parameter.intens"}
+				"0": { "name": "variable.parameter.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
 				{
 					"begin": "=",
 					"beginCaptures": {
-						"0": {"name": "keyword.operator.assignment.augmented.intens"}
+						"0": { "name": "keyword.operator.assignment.augmented.intens" }
 					},
 					"patterns": [
 						{ "include": "#prototype" },
@@ -832,14 +821,14 @@
 		"set_parameter": {
 			"begin": "\\b(SET)\\b",
 			"beginCaptures": {
-				"0": {"name": "variable.parameter.intens"}
+				"0": { "name": "variable.parameter.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
 				{
 					"begin": "=",
 					"beginCaptures": {
-						"0": {"name": "keyword.operator.assignment.augmented.intens"}
+						"0": { "name": "keyword.operator.assignment.augmented.intens" }
 					},
 					"patterns": [
 						{ "include": "#prototype" },
@@ -857,14 +846,14 @@
 		"other_parameter": {
 			"begin": "(?<!\\.)\\b([A-Za-z_][A-Za-z_0-9]*)\\b(?![\\.\\[])",
 			"beginCaptures": {
-				"0": {"name": "variable.parameter.intens"}
+				"0": { "name": "variable.parameter.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
 				{
 					"begin": "=",
 					"beginCaptures": {
-						"0": {"name": "keyword.operator.assignment.augmented.intens"}
+						"0": { "name": "keyword.operator.assignment.augmented.intens" }
 					},
 					"patterns": [
 						{ "include": "#prototype" },
@@ -875,7 +864,7 @@
 						{
 							"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\b\\s*(?=\\()",
 							"captures": {
-								"1": {"name": "support.function.builtin.intens"}
+								"1": { "name": "support.function.builtin.intens" }
 							}
 						},
 						{
@@ -906,8 +895,8 @@
 				{
 					"match": "\\b(ABORT|EXIT|RETURN)\\b\\s*(;)",
 					"captures": {
-						"1": {"name": "keyword.control.intens"},
-						"2": {"name": "punctuation.terminator.statement.intens"}
+						"1": { "name": "keyword.control.intens" },
+						"2": { "name": "punctuation.terminator.statement.intens" }
 					}
 				},
 				{
@@ -923,8 +912,8 @@
 				{
 					"begin": "\\b(IF|WHILE)\\b\\s*(\\()",
 					"beginCaptures": {
-						"1": {"name": "keyword.control.intens"},
-						"2": {"name": "punctuation.section.group.begin.intens"}
+						"1": { "name": "keyword.control.intens" },
+						"2": { "name": "punctuation.section.group.begin.intens" }
 					},
 					"patterns": [
 						{ "include": "#prototype" },
@@ -938,7 +927,7 @@
 					],
 					"end": "(\\))",
 					"endCaptures": {
-						"0": {"name": "punctuation.section.group.end.intens"}
+						"0": { "name": "punctuation.section.group.end.intens" }
 					}
 				},
 				{
@@ -946,7 +935,6 @@
 					"match": "\\b(IF|WHILE)\\b"
 				}
 			]
-
 		},
 		"else_part": {
 			"name": "keyword.control.intens",
@@ -955,20 +943,18 @@
 		"anonymous_block": {
 			"begin": "(\\{)",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.block.begin.intens"}
+				"0": { "name": "punctuation.section.block.begin.intens" }
 			},
-			"patterns": [
-				{ "include": "#function_statements" }
-			],
+			"patterns": [{ "include": "#function_statements" }],
 			"end": "(\\})",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
+				"0": { "name": "punctuation.section.block.end.intens" }
 			}
 		},
 		"anonymous_group": {
 			"begin": "(\\()",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.group.begin.intens"}
+				"0": { "name": "punctuation.section.group.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -997,13 +983,13 @@
 			],
 			"end": "(\\))",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.group.end.intens"}
+				"0": { "name": "punctuation.section.group.end.intens" }
 			}
 		},
 		"square_bracket": {
 			"begin": "(\\[)",
 			"beginCaptures": {
-				"0": {"name": "punctuation.section.brackets.begin.intens"}
+				"0": { "name": "punctuation.section.brackets.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -1030,7 +1016,7 @@
 			],
 			"end": "(\\])",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.brackets.end.intens"}
+				"0": { "name": "punctuation.section.brackets.end.intens" }
 			}
 		},
 		"function_call": {
@@ -1044,14 +1030,14 @@
 		"run_function": {
 			"begin": "\\b(ALLOW|DISALLOW|RUN)\\b",
 			"beginCaptures": {
-				"0": {"name": "support.function.builtin.intens"}
+				"0": { "name": "support.function.builtin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
 				{
 					"begin": "(\\()",
 					"beginCaptures": {
-						"0": {"name": "punctuation.section.group.begin.intens"}
+						"0": { "name": "punctuation.section.group.begin.intens" }
 					},
 					"patterns": [
 						{ "include": "#prototype" },
@@ -1066,7 +1052,7 @@
 					],
 					"end": "(\\))",
 					"endCaptures": {
-						"0": {"name": "punctuation.section.group.end.intens"}
+						"0": { "name": "punctuation.section.group.end.intens" }
 					}
 				},
 				{
@@ -1079,8 +1065,8 @@
 		"function_call_with_round_brackets": {
 			"begin": "\\b([A-Z][A-Z0-9_]*)\\b\\s*(\\()",
 			"beginCaptures": {
-				"1": {"name": "support.function.builtin.intens"},
-				"2": {"name": "punctuation.section.group.begin.intens"}
+				"1": { "name": "support.function.builtin.intens" },
+				"2": { "name": "punctuation.section.group.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -1096,8 +1082,8 @@
 				{
 					"match": "\\b([A-Z][A-Z0-9_]*)\\b\\s*(=)(?!=)",
 					"captures": {
-						"1": {"name": "variable.parameter.intens"},
-						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+						"1": { "name": "variable.parameter.intens" },
+						"2": { "name": "keyword.operator.assignment.augmented.intens" }
 					}
 				},
 				{
@@ -1107,14 +1093,14 @@
 			],
 			"end": "(\\))",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.group.end.intens"}
+				"0": { "name": "punctuation.section.group.end.intens" }
 			}
 		},
 		"function_call_with_curly_bracket": {
 			"begin": "\\b(DIRNAME|FILENAME)\\b\\s*(\\{)",
 			"beginCaptures": {
-				"1": {"name": "support.function.builtin.intens"},
-				"2": {"name": "punctuation.section.block.begin.intens"}
+				"1": { "name": "support.function.builtin.intens" },
+				"2": { "name": "punctuation.section.block.begin.intens" }
 			},
 			"patterns": [
 				{ "include": "#prototype" },
@@ -1124,8 +1110,8 @@
 				{
 					"match": "\\b([A-Z][A-Z0-9_]*)\\b\\s*(=)(?!=)",
 					"captures": {
-						"1": {"name": "variable.parameter.intens"},
-						"2": {"name": "keyword.operator.assignment.augmented.intens"}
+						"1": { "name": "variable.parameter.intens" },
+						"2": { "name": "keyword.operator.assignment.augmented.intens" }
 					}
 				},
 				{
@@ -1135,7 +1121,7 @@
 			],
 			"end": "(\\})",
 			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.intens"}
+				"0": { "name": "punctuation.section.block.end.intens" }
 			}
 		},
 		"function_call_without_arguments": {
