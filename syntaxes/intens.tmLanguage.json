@@ -29,7 +29,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.intens",
-					"match": "\\b(DESCRIPTION|HELPFILE|OPEN_URL)\\b"
+					"match": "\\b(DESCRIPTION|HELPFILE|OPEN_FILE|OPEN_URL)\\b"
 				},
 				{
 					"name": "storage.type.other.intens",
