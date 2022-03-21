@@ -27,6 +27,7 @@ module.exports = grammar({
         $.include,
         $.description,
         $.help_file,
+        $.user_groups,
         $.language_block,
         $.datapool_block,
         $.streamer_block,
@@ -163,6 +164,10 @@ module.exports = grammar({
         seq('HELPKEY', '(', commaSep(choice($.string, $.identifier)), ')'),
       ),
 
+    user_groups: ($) => seq('USERGROUPS', commaSep($.user_group), ';'),
+
+    user_group: ($) => seq($.identifier, '(', commaSep($.string), ')'),
+
     parameter_block: ($) =>
       seq('{', commaSep(choice(alias(/[A-Za-z_][A-Za-z_0-9]*/, $.parameter))), '}'),
 
@@ -171,7 +176,7 @@ module.exports = grammar({
     language_block: ($) =>
       seq('LANGUAGE', repeat($._language_block_expression), 'END', 'LANGUAGE', ';'),
 
-    _language_block_expression: ($) => choice($._expression),
+    _language_block_expression: ($) => choice($._expression, $.assignment),
 
     datapool_block: ($) =>
       seq('DATAPOOL', repeat($._datapool_block_expression), 'END', 'DATAPOOL', ';'),

@@ -161,6 +161,25 @@ HELPFILE "myhelpfile.hlp",
     (open_url
       (document_url))))
 
+===========
+user groups
+===========
+
+USERGROUPS
+  some_user ("me", "you"),
+  admin ("someone");
+
+---
+(source_file
+  (user_groups
+    (user_group
+      (identifier)
+      (string)
+      (string))
+    (user_group
+      (identifier)
+      (string))))
+
 ==============
 end of program
 ==============
