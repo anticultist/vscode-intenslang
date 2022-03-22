@@ -66,6 +66,33 @@ END DATAPOOL;
         (variable_declaration (variable_identifier) (parameter_block (parameter) (parameter)))
         (variable_declaration (variable_identifier) (parameter_block (parameter))))))
 
+=====================================================
+variable declarations with parameters and assignments
+=====================================================
+
+DATAPOOL
+  INTEGER {EDITABLE}
+    foo { LABEL="mylabel", TOGGLE, FUNC=myfunc };
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (variables_declaration
+      (primitive_type)
+      (parameter_block
+        (parameter))
+      (variable_declaration
+        (variable_identifier)
+        (parameter_block
+          (parameter_assignment
+            (parameter)
+            (string))
+          (parameter)
+          (parameter_assignment
+            (parameter)
+            (identifier)))))))
+
 =======================
 variable with dimension
 =======================

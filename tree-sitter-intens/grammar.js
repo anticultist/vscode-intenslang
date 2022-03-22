@@ -169,7 +169,10 @@ module.exports = grammar({
     user_group: ($) => seq($.identifier, '(', commaSep($.string), ')'),
 
     parameter_block: ($) =>
-      seq('{', commaSep(choice(alias(/[A-Za-z_][A-Za-z_0-9]*/, $.parameter))), '}'),
+      seq('{', commaSep(choice(alias($.identifier, $.parameter), $.parameter_assignment)), '}'),
+
+    parameter_assignment: ($) =>
+      seq(alias($.identifier, $.parameter), '=', $._assignment_right_expression),
 
     end_statement: ($) => seq('END', '.'),
 
