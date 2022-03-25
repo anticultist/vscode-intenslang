@@ -206,7 +206,19 @@ module.exports = grammar({
 
     colors_declaration: ($) => seq('COLOR', commaSep($.color_declaration), ';'),
 
-    color_declaration: ($) => seq(field('name', alias($.identifier, $.color_identifier)), '(', ')'),
+    color_declaration: ($) =>
+      seq(field('name', alias($.identifier, $.color_identifier)), $.color_set),
+
+    color_set: ($) => seq('(', commaSep($.color_set_item), ')'),
+
+    color_set_item: ($) =>
+      seq(choice('INVALID', 'ELSE', $.color_set_value, $.color_set_range), '=', $.tuple),
+
+    color_set_value: ($) => seq(optional(choice('<', '>')), choice($.number, $.string, $.variable)),
+
+    color_set_range: ($) => seq('RANGE', '(', $.color_set_value, ',', $.color_set_value, ')'),
+
+    tuple: ($) => seq('(', commaSep($._assignment_right_expression), ')'),
 
     sets_declaration: ($) => seq('SET', commaSep($.set_declaration), ';'),
 
@@ -283,6 +295,8 @@ module.exports = grammar({
     else_part: ($) => seq('ELSE', $._function_expression),
 
     while_loop: ($) => seq('WHILE', '(', $.condition, ')', $._function_expression),
+
+    variable: ($) => seq($.identifier, optional(seq('.', $.identifier))),
 
     ui_manager_block: ($) =>
       seq('UI_MANAGER', repeat($._ui_manager_block_expression), 'END', 'UI_MANAGER', ';'),
