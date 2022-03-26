@@ -209,7 +209,7 @@ module.exports = grammar({
     color_declaration: ($) =>
       seq(field('name', alias($.identifier, $.color_identifier)), $.color_set),
 
-    color_set: ($) => seq('(', commaSep($.color_set_item), ')'),
+    color_set: ($) => seq('(', optionalCommaSep($.color_set_item), ')'),
 
     color_set_item: ($) =>
       seq(choice('INVALID', 'ELSE', $.color_set_value, $.color_set_range), '=', $.tuple),
@@ -312,4 +312,8 @@ module.exports = grammar({
 
 function commaSep(rule) {
   return seq(rule, repeat(seq(',', rule)));
+}
+
+function optionalCommaSep(rule) {
+  return optional(seq(rule, repeat(seq(',', rule))));
 }

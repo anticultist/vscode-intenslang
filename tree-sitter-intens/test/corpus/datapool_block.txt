@@ -169,6 +169,19 @@ END DATAPOOL;
 =================
 color declaration
 =================
+DATAPOOL
+  COLOR mycolor1 ();
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (colors_declaration
+      (color_declaration (color_identifier) (color_set)))))
+
+=========================
+complex color declaration
+=========================
 
 DATAPOOL
   COLOR mycolor2 (
