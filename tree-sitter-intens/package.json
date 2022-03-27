@@ -20,9 +20,9 @@
     "clean": "rimraf bindings build src binding.gyp Cargo.toml tree-sitter-intens.wasm",
     "test": "tree-sitter test",
     "build": "tree-sitter generate",
-    "postbuild": "copyfiles -f ./tree-sitter-intens.wasm ../server",
     "build:n:test": "npm run build && tree-sitter test",
     "prebuild:wasm": "npm run build",
-    "build:wasm": "tree-sitter build-wasm"
+    "build:wasm": "tree-sitter build-wasm",
+    "postbuild:wasm": "copyfiles -f ./tree-sitter-intens.wasm ../server"
   }
 }
