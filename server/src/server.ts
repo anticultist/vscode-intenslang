@@ -3,17 +3,20 @@
 
 import {
   createConnection,
-  TextDocuments,
-  ProposedFeatures,
-  InitializeParams,
+  Diagnostic,
+  DiagnosticSeverity,
   DidChangeConfigurationNotification,
-  Location,
-  Range,
-  Position,
   DocumentSymbolParams,
-  SymbolInformation,
-  TextDocumentSyncKind,
+  InitializeParams,
   InitializeResult,
+  Location,
+  Position,
+  ProposedFeatures,
+  Range,
+  SymbolInformation,
+  SymbolKind,
+  TextDocuments,
+  TextDocumentSyncKind,
 } from 'vscode-languageserver/node';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -44,8 +47,6 @@ let hasWorkspaceFolderCapability: boolean = false;
 let hasDiagnosticRelatedInformationCapability: boolean = false;
 
 connection.onInitialize(async (params: InitializeParams) => {
-  connection.console.info('onInitialize :)');
-
   let capabilities = params.capabilities;
 
   // Does the client support the `workspace/configuration` request?
@@ -91,13 +92,14 @@ connection.onInitialized(() => {
 
 // The MS Access dump format settings
 interface IntensSettings {
+  showProblems: boolean;
   maxNumberOfProblems: number;
 }
 
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
-const defaultSettings: IntensSettings = { maxNumberOfProblems: 1000 };
+const defaultSettings: IntensSettings = { showProblems: false, maxNumberOfProblems: 100 };
 let globalSettings: IntensSettings = defaultSettings;
 
 // Cache the settings of all open documents
@@ -141,30 +143,108 @@ documents.onDidChangeContent((change) => {
   validateTextDocument(change.document);
 });
 
-async function validateTextDocument(textDocument: TextDocument): Promise<void> {}
+async function validateTextDocument(textDocument: TextDocument): Promise<void> {
+  let settings = await getDocumentSettings(textDocument.uri);
+  if (!settings.showProblems || settings.maxNumberOfProblems <= 0) {
+    connection.sendDiagnostics({ uri: textDocument.uri, diagnostics: [] });
+    return;
+  }
+
+  const document_text = textDocument.getText();
+  const tree = parser.parse(document_text);
+
+  let problems = 0;
+  const diagnostics: Diagnostic[] = [];
+
+  function lookForProblems(syntax_node: Parser.SyntaxNode) {
+    if (problems >= settings.maxNumberOfProblems) {
+      return;
+    }
+
+    if (syntax_node.type !== 'ERROR') {
+      for (const child_node of syntax_node.namedChildren) {
+        lookForProblems(child_node);
+      }
+
+      return;
+    }
+    problems++;
+
+    const diagnostic: Diagnostic = {
+      severity: DiagnosticSeverity.Error,
+      range: Range.create(
+        Position.create(syntax_node.startPosition.row, syntax_node.startPosition.column),
+        Position.create(syntax_node.endPosition.row, syntax_node.endPosition.column),
+      ),
+      message: `Could not parse expression`,
+      source: textDocument.uri,
+    };
+    diagnostics.push(diagnostic);
+  }
+
+  lookForProblems(tree.rootNode);
+
+  connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
+}
 
 connection.onDidChangeWatchedFiles((_change) => {});
 
 function symbolsFromAST(uri: string, root: Parser.Tree): SymbolInformation[] {
   const symbols: SymbolInformation[] = [];
 
-  // TODO
-  console.log('symbolsFromAST');
+  function scanTopLevelStructure(x: Parser.SyntaxNode) {
+    switch (x.type) {
+      case 'functions_block':
+        scanFunctionsBlock(x);
+        break;
+      case 'language_block':
+        scanLanguageBlock(x);
+        break;
+    }
+  }
+
+  function scanFunctionsBlock(func_block_node: Parser.SyntaxNode) {
+    symbols.push({
+      name: 'FUNCTIONS',
+      kind: SymbolKind.Namespace,
+      location: Location.create(
+        uri,
+        Range.create(
+          Position.create(func_block_node.startPosition.row, func_block_node.startPosition.column),
+          Position.create(func_block_node.endPosition.row, func_block_node.endPosition.column),
+        ),
+      ),
+    });
+  }
+
+  function scanLanguageBlock(lang_block_node: Parser.SyntaxNode) {
+    symbols.push({
+      name: 'LANGUAGE',
+      kind: SymbolKind.Namespace,
+      location: Location.create(
+        uri,
+        Range.create(
+          Position.create(lang_block_node.startPosition.row, lang_block_node.startPosition.column),
+          Position.create(lang_block_node.endPosition.row, lang_block_node.endPosition.column),
+        ),
+      ),
+    });
+  }
+
+  for (const syntax_node of root.rootNode.namedChildren) {
+    scanTopLevelStructure(syntax_node);
+  }
 
   return symbols;
 }
 
 connection.onDocumentSymbol((params: DocumentSymbolParams): SymbolInformation[] => {
-  connection.console.log('onDocumentSymbol :)');
-
   if (parser === undefined) {
-    connection.console.log('Could not provide symbol information: parser is not available');
     return [];
   }
 
   const document_text = documents.get(params.textDocument.uri)?.getText();
   if (document_text === undefined) {
-    connection.console.log('Could not provide symbol information: failed to get document text');
     return [];
   }
 

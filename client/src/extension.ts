@@ -16,9 +16,6 @@ let client: LanguageClient;
 process.traceDeprecation = true;
 
 export function activate(context: ExtensionContext) {
-  // console.log('activate');
-  console.info('activated');
-
   // The server is implemented in node
   let serverModule = context.asAbsolutePath(path.join('server', 'out', 'server.js'));
   // The debug options for the server
@@ -47,7 +44,7 @@ export function activate(context: ExtensionContext) {
   };
 
   // Create the language client and start the client.
-  client = new LanguageClient('intensLanguageServer', 'INTENS LSP', serverOptions, clientOptions);
+  client = new LanguageClient('intensLanguageServer', 'INTENS', serverOptions, clientOptions);
 
   // Start the client. This will also launch the server
   client.start();
