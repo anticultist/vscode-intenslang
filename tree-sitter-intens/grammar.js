@@ -231,7 +231,9 @@ module.exports = grammar({
         ')',
       ),
 
-    set_item: ($) => choice($.string),
+    set_item: ($) => choice($.string, $.set_assignment),
+
+    set_assignment: ($) => seq($.string, '=', choice($.string, $.number)),
 
     streamer_block: ($) =>
       seq('STREAMER', repeat($._streamer_block_expression), 'END', 'STREAMER', ';'),
