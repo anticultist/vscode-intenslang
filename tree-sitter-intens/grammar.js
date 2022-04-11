@@ -185,7 +185,13 @@ module.exports = grammar({
       seq('DATAPOOL', repeat($._datapool_block_expression), 'END', 'DATAPOOL', ';'),
 
     _datapool_block_expression: ($) =>
-      choice($._expression, $.sets_declaration, $.colors_declaration, $.variables_declaration),
+      choice(
+        $._expression,
+        $.sets_declaration,
+        $.structure_declaration,
+        $.colors_declaration,
+        $.variables_declaration,
+      ),
 
     variables_declaration: ($) =>
       seq(
@@ -234,6 +240,16 @@ module.exports = grammar({
     set_item: ($) => choice($.string, $.set_assignment),
 
     set_assignment: ($) => seq($.string, '=', choice($.string, $.number)),
+
+    structure_declaration: ($) =>
+      seq(
+        'STRUCT',
+        field('name', alias($.identifier, $.structure_identifier)),
+        '{',
+        optionalCommaSep($.variables_declaration),
+        '}',
+        ';',
+      ),
 
     streamer_block: ($) =>
       seq('STREAMER', repeat($._streamer_block_expression), 'END', 'STREAMER', ';'),

@@ -184,6 +184,31 @@ DATAPOOL
   SET myset1 {GLOBAL, INVALID=NONE} ("");
 END DATAPOOL;
 
+=======================
+structure declaration 1
+=======================
+
+DATAPOOL
+  STRUCT MYSTRUCT {};
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (structure_declaration
+      (structure_identifier))))
+
+=======================
+structure declaration 2
+=======================
+
+DATAPOOL
+  STRUCT MYSTRUCT {
+    INTEGER one, two;
+    REAL three;
+  };
+END DATAPOOL;
+
 =================
 color declaration
 =================
