@@ -114,6 +114,7 @@ module.exports = grammar({
         $.reason,
         $.binary_expression,
         $.parenthesized_expression,
+        $.negation,
       ),
 
     binary_expression: ($) => {
@@ -143,6 +144,8 @@ module.exports = grammar({
         }),
       );
     },
+
+    negation: ($) => seq('!', $._assignment_right_expression),
 
     parenthesized_expression: ($) => seq('(', $._assignment_right_expression, ')'),
 
@@ -251,10 +254,16 @@ module.exports = grammar({
         ';',
       ),
 
-    streamer_block: ($) =>
-      seq('STREAMER', repeat($._streamer_block_expression), 'END', 'STREAMER', ';'),
+    streamer_block: ($) => seq('STREAMER', repeat($.stream_definition), 'END', 'STREAMER', ';'),
 
-    _streamer_block_expression: ($) => choice($._expression),
+    stream_definition: ($) =>
+      seq(
+        field('name', alias($.identifier, $.stream_identifier)),
+        '(',
+        commaSep($._assignment_right_expression),
+        ')',
+        ';',
+      ),
 
     operator_block: ($) =>
       seq('OPERATOR', repeat($._operator_block_expression), 'END', 'OPERATOR', ';'),

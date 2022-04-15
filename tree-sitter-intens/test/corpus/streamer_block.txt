@@ -8,3 +8,19 @@ END STREAMER;
 ---
 (source_file
   (streamer_block))
+
+=====================
+simple streamer block
+=====================
+
+STREAMER
+  simple_stream (!foo, foo);
+END STREAMER;
+
+---
+(source_file
+  (streamer_block
+    (stream_definition
+      (stream_identifier)
+      (negation (identifier))
+      (identifier))))
