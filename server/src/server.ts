@@ -194,38 +194,123 @@ function symbolsFromAST(uri: string, root: Parser.Tree): SymbolInformation[] {
 
   function scanTopLevelStructure(x: Parser.SyntaxNode) {
     switch (x.type) {
+      case 'datapool_block':
+        scanDatapoolBlock(x);
+        break;
+      case 'db_manager_block':
+        scanDBManagerBlock(x);
+        break;
       case 'functions_block':
         scanFunctionsBlock(x);
         break;
       case 'language_block':
         scanLanguageBlock(x);
         break;
+      case 'operator_block':
+        scanOperatorBlock(x);
+        break;
+      case 'streamer_block':
+        scanStreamerBlock(x);
+        break;
+      case 'ui_manager_block':
+        scanUIManagerBlock(x);
+        break;
     }
   }
 
-  function scanFunctionsBlock(func_block_node: Parser.SyntaxNode) {
+  function scanDatapoolBlock(node: Parser.SyntaxNode) {
+    symbols.push({
+      name: 'DATAPOOL',
+      kind: SymbolKind.Namespace,
+      location: Location.create(
+        uri,
+        Range.create(
+          Position.create(node.startPosition.row, node.startPosition.column),
+          Position.create(node.endPosition.row, node.endPosition.column),
+        ),
+      ),
+    });
+  }
+
+  function scanDBManagerBlock(node: Parser.SyntaxNode) {
+    symbols.push({
+      name: 'DB_MANAGER',
+      kind: SymbolKind.Namespace,
+      location: Location.create(
+        uri,
+        Range.create(
+          Position.create(node.startPosition.row, node.startPosition.column),
+          Position.create(node.endPosition.row, node.endPosition.column),
+        ),
+      ),
+    });
+  }
+
+  function scanFunctionsBlock(node: Parser.SyntaxNode) {
     symbols.push({
       name: 'FUNCTIONS',
       kind: SymbolKind.Namespace,
       location: Location.create(
         uri,
         Range.create(
-          Position.create(func_block_node.startPosition.row, func_block_node.startPosition.column),
-          Position.create(func_block_node.endPosition.row, func_block_node.endPosition.column),
+          Position.create(node.startPosition.row, node.startPosition.column),
+          Position.create(node.endPosition.row, node.endPosition.column),
         ),
       ),
     });
   }
 
-  function scanLanguageBlock(lang_block_node: Parser.SyntaxNode) {
+  function scanLanguageBlock(node: Parser.SyntaxNode) {
     symbols.push({
       name: 'LANGUAGE',
       kind: SymbolKind.Namespace,
       location: Location.create(
         uri,
         Range.create(
-          Position.create(lang_block_node.startPosition.row, lang_block_node.startPosition.column),
-          Position.create(lang_block_node.endPosition.row, lang_block_node.endPosition.column),
+          Position.create(node.startPosition.row, node.startPosition.column),
+          Position.create(node.endPosition.row, node.endPosition.column),
+        ),
+      ),
+    });
+  }
+
+  function scanOperatorBlock(node: Parser.SyntaxNode) {
+    symbols.push({
+      name: 'OPERATOR',
+      kind: SymbolKind.Namespace,
+      location: Location.create(
+        uri,
+        Range.create(
+          Position.create(node.startPosition.row, node.startPosition.column),
+          Position.create(node.endPosition.row, node.endPosition.column),
+        ),
+      ),
+    });
+  }
+
+  function scanStreamerBlock(node: Parser.SyntaxNode) {
+    symbols.push({
+      name: 'STREAMER',
+      kind: SymbolKind.Namespace,
+      location: Location.create(
+        uri,
+        Range.create(
+          Position.create(node.startPosition.row, node.startPosition.column),
+          Position.create(node.endPosition.row, node.endPosition.column),
+        ),
+      ),
+    });
+  }
+
+  function scanUIManagerBlock(node: Parser.SyntaxNode) {
+    symbols.push({
+      name: 'UI_MANAGER',
+      kind: SymbolKind.Namespace,
+      location: Location.create(
+        uri,
+        Range.create(
+          Position.create(node.startPosition.row, node.startPosition.column),
+          Position.create(node.endPosition.row, node.endPosition.column),
         ),
       ),
     });

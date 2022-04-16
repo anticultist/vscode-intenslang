@@ -9,9 +9,9 @@ END STREAMER;
 (source_file
   (streamer_block))
 
-=====================
-simple streamer block
-=====================
+========================
+simple stream definition
+========================
 
 STREAMER
   simple_stream (!foo, foo);
@@ -24,3 +24,14 @@ END STREAMER;
       (stream_identifier)
       (negation (identifier))
       (identifier))))
+
+=============================
+stream definition with option
+=============================
+
+STREAMER
+  my_stream2 {PROCESS="the_file.txt"}
+  (
+    foo, foo.baz:-10:2:TSEP
+  );
+END STREAMER;
