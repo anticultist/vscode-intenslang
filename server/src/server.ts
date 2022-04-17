@@ -9,17 +9,17 @@ import {
   DocumentSymbolParams,
   InitializeParams,
   InitializeResult,
-  Location,
   Position,
   ProposedFeatures,
   Range,
   SymbolInformation,
-  SymbolKind,
   TextDocuments,
   TextDocumentSyncKind,
 } from 'vscode-languageserver/node';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
+
+import { symbolsFromAST } from './symbols-creation';
 
 import * as Parser from 'web-tree-sitter';
 import * as path from 'path';
@@ -188,140 +188,6 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 }
 
 connection.onDidChangeWatchedFiles((_change) => {});
-
-function symbolsFromAST(uri: string, root: Parser.Tree): SymbolInformation[] {
-  const symbols: SymbolInformation[] = [];
-
-  function scanTopLevelStructure(x: Parser.SyntaxNode) {
-    switch (x.type) {
-      case 'datapool_block':
-        scanDatapoolBlock(x);
-        break;
-      case 'db_manager_block':
-        scanDBManagerBlock(x);
-        break;
-      case 'functions_block':
-        scanFunctionsBlock(x);
-        break;
-      case 'language_block':
-        scanLanguageBlock(x);
-        break;
-      case 'operator_block':
-        scanOperatorBlock(x);
-        break;
-      case 'streamer_block':
-        scanStreamerBlock(x);
-        break;
-      case 'ui_manager_block':
-        scanUIManagerBlock(x);
-        break;
-    }
-  }
-
-  function scanDatapoolBlock(node: Parser.SyntaxNode) {
-    symbols.push({
-      name: 'DATAPOOL',
-      kind: SymbolKind.Namespace,
-      location: Location.create(
-        uri,
-        Range.create(
-          Position.create(node.startPosition.row, node.startPosition.column),
-          Position.create(node.endPosition.row, node.endPosition.column),
-        ),
-      ),
-    });
-  }
-
-  function scanDBManagerBlock(node: Parser.SyntaxNode) {
-    symbols.push({
-      name: 'DB_MANAGER',
-      kind: SymbolKind.Namespace,
-      location: Location.create(
-        uri,
-        Range.create(
-          Position.create(node.startPosition.row, node.startPosition.column),
-          Position.create(node.endPosition.row, node.endPosition.column),
-        ),
-      ),
-    });
-  }
-
-  function scanFunctionsBlock(node: Parser.SyntaxNode) {
-    symbols.push({
-      name: 'FUNCTIONS',
-      kind: SymbolKind.Namespace,
-      location: Location.create(
-        uri,
-        Range.create(
-          Position.create(node.startPosition.row, node.startPosition.column),
-          Position.create(node.endPosition.row, node.endPosition.column),
-        ),
-      ),
-    });
-  }
-
-  function scanLanguageBlock(node: Parser.SyntaxNode) {
-    symbols.push({
-      name: 'LANGUAGE',
-      kind: SymbolKind.Namespace,
-      location: Location.create(
-        uri,
-        Range.create(
-          Position.create(node.startPosition.row, node.startPosition.column),
-          Position.create(node.endPosition.row, node.endPosition.column),
-        ),
-      ),
-    });
-  }
-
-  function scanOperatorBlock(node: Parser.SyntaxNode) {
-    symbols.push({
-      name: 'OPERATOR',
-      kind: SymbolKind.Namespace,
-      location: Location.create(
-        uri,
-        Range.create(
-          Position.create(node.startPosition.row, node.startPosition.column),
-          Position.create(node.endPosition.row, node.endPosition.column),
-        ),
-      ),
-    });
-  }
-
-  function scanStreamerBlock(node: Parser.SyntaxNode) {
-    symbols.push({
-      name: 'STREAMER',
-      kind: SymbolKind.Namespace,
-      location: Location.create(
-        uri,
-        Range.create(
-          Position.create(node.startPosition.row, node.startPosition.column),
-          Position.create(node.endPosition.row, node.endPosition.column),
-        ),
-      ),
-    });
-  }
-
-  function scanUIManagerBlock(node: Parser.SyntaxNode) {
-    symbols.push({
-      name: 'UI_MANAGER',
-      kind: SymbolKind.Namespace,
-      location: Location.create(
-        uri,
-        Range.create(
-          Position.create(node.startPosition.row, node.startPosition.column),
-          Position.create(node.endPosition.row, node.endPosition.column),
-        ),
-      ),
-    });
-  }
-
-  for (const syntax_node of root.rootNode.namedChildren) {
-    scanTopLevelStructure(syntax_node);
-  }
-
-  return symbols;
-}
 
 connection.onDocumentSymbol((params: DocumentSymbolParams): SymbolInformation[] => {
   if (parser === undefined) {

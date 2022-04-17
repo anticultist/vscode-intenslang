@@ -259,14 +259,12 @@ module.exports = grammar({
     stream_definition: ($) =>
       seq(
         field('name', alias($.identifier, $.stream_identifier)),
-        optional($.stream_options),
+        optional($.parameter_block),
         '(',
         commaSep($._assignment_right_expression),
         ')',
         ';',
       ),
-
-    stream_options: ($) => seq('{', '}'),
 
     operator_block: ($) =>
       seq('OPERATOR', repeat($._operator_block_expression), 'END', 'OPERATOR', ';'),
