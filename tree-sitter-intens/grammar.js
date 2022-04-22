@@ -175,7 +175,7 @@ module.exports = grammar({
       seq(
         '{',
         optionalCommaSep(
-          choice(alias($.identifier, $.parameter), $.parameter_assignment, $.string),
+          choice(alias($.identifier, $.parameter), $.parameter_assignment, $.string, $.tuple),
         ),
         '}',
       ),
@@ -233,7 +233,8 @@ module.exports = grammar({
 
     color_set_range: ($) => seq('RANGE', '(', $.color_set_value, ',', $.color_set_value, ')'),
 
-    tuple: ($) => seq('(', commaSep($._assignment_right_expression), ')'),
+    tuple: ($) =>
+      seq('(', commaSep(choice($._assignment_right_expression, $.parameter_assignment)), ')'),
 
     sets_declaration: ($) => seq('SET', commaSep($.set_declaration), ';'),
 
@@ -277,6 +278,7 @@ module.exports = grammar({
 
     _operator_block_expression: ($) => choice($.operators_definition, $.tasks_declaration),
 
+    // TODO: improve PROCESSGROUP
     operators_definition: ($) =>
       seq(
         choice('SOCKET', 'PROCESS', 'PROCESSGROUP', 'TIMER', 'FILESTREAM', 'MESSAGE_QUEUE'),
@@ -284,10 +286,12 @@ module.exports = grammar({
         ';',
       ),
 
+    // this is a generalized superset
     operator_definition: ($) =>
       seq(
         field('name', $.identifier),
         optional(seq(':', alias($.identifier, $.parent_class))),
+        optional(seq('=', alias($.identifier, $.reference))),
         optional($.parameter_block),
       ),
 

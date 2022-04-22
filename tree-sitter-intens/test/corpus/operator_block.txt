@@ -73,3 +73,24 @@ END OPERATOR;
         (identifier)
         (parent_class)
         (parameter_block (string))))))
+
+=======================
+file stream declaration
+=======================
+
+OPERATOR
+  FILESTREAM my_file_stream_fs = my_stream
+    {"My Stream", FILTER="CSV (*.csv)", WRITEONLY};
+END OPERATOR;
+
+---
+(source_file
+  (operator_block
+    (operators_definition
+      (operator_definition
+        (identifier)
+        (reference)
+        (parameter_block
+          (string)
+          (parameter_assignment (parameter) (string))
+          (parameter))))))
