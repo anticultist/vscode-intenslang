@@ -91,7 +91,7 @@ END FUNCTIONS;
 (source_file
   (functions_block
     (functions_declaration
-      (function_options)
+      (parameter_block)
       (function_declaration
         (function_identifier)
         (function_body)))))

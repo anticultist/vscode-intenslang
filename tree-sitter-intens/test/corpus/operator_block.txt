@@ -54,5 +54,22 @@ END OPERATOR;
     (tasks_declaration
       (task_declaration
         (task_identifier)
-        (task_options)
+        (parameter_block)
         (task_body)))))
+
+===================
+process declaration
+===================
+
+OPERATOR
+  PROCESS my_process_pr : BATCH { "my_process.pl" };
+END OPERATOR;
+
+---
+(source_file
+  (operator_block
+    (operators_definition
+      (operator_definition
+        (identifier)
+        (parent_class)
+        (parameter_block (string))))))

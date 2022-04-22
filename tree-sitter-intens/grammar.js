@@ -172,7 +172,13 @@ module.exports = grammar({
     user_group: ($) => seq($.identifier, '(', commaSep($.string), ')'),
 
     parameter_block: ($) =>
-      seq('{', commaSep(choice(alias($.identifier, $.parameter), $.parameter_assignment)), '}'),
+      seq(
+        '{',
+        optionalCommaSep(
+          choice(alias($.identifier, $.parameter), $.parameter_assignment, $.string),
+        ),
+        '}',
+      ),
 
     parameter_assignment: ($) =>
       seq(alias($.identifier, $.parameter), '=', $._assignment_right_expression),
@@ -269,16 +275,28 @@ module.exports = grammar({
     operator_block: ($) =>
       seq('OPERATOR', repeat($._operator_block_expression), 'END', 'OPERATOR', ';'),
 
-    _operator_block_expression: ($) => choice($._expression, $.tasks_declaration),
+    _operator_block_expression: ($) => choice($.operators_definition, $.tasks_declaration),
+
+    operators_definition: ($) =>
+      seq(
+        choice('SOCKET', 'PROCESS', 'PROCESSGROUP', 'TIMER', 'FILESTREAM', 'MESSAGE_QUEUE'),
+        commaSep($.operator_definition),
+        ';',
+      ),
+
+    operator_definition: ($) =>
+      seq(
+        field('name', $.identifier),
+        optional(seq(':', alias($.identifier, $.parent_class))),
+        optional($.parameter_block),
+      ),
 
     tasks_declaration: ($) => seq('TASK', commaSep($.task_declaration), ';'),
 
     task_declaration: ($) =>
       seq(
         field('name', alias($.identifier, $.task_identifier)),
-        optional(
-          seq(alias($.function_options, $.task_options), alias($.function_body, $.task_body)),
-        ),
+        optional(seq($.parameter_block, alias($.function_body, $.task_body))),
       ),
 
     functions_block: ($) =>
@@ -287,9 +305,7 @@ module.exports = grammar({
     _functions_block_expression: ($) => choice($._expression, $.functions_declaration),
 
     functions_declaration: ($) =>
-      seq('FUNC', optional($.function_options), commaSep($.function_declaration), ';'),
-
-    function_options: ($) => seq('{', '}'),
+      seq('FUNC', optional($.parameter_block), commaSep($.function_declaration), ';'),
 
     function_declaration: ($) =>
       seq(field('name', alias($.identifier, $.function_identifier)), optional($.function_body)),
@@ -329,6 +345,7 @@ module.exports = grammar({
     ui_manager_block: ($) =>
       seq('UI_MANAGER', repeat($._ui_manager_block_expression), 'END', 'UI_MANAGER', ';'),
 
+    // TODO: FIELDGROUP, PLOT2D, FORM, IMAGE, INDEX, FOLDER, THERMO, MENU, ...
     _ui_manager_block_expression: ($) => choice($._expression),
 
     db_manager_block: ($) =>
