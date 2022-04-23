@@ -255,11 +255,14 @@ module.exports = grammar({
       seq(
         'STRUCT',
         field('name', alias($.identifier, $.structure_identifier)),
+        optional($.inheritance),
         '{',
         optionalCommaSep($.variables_declaration),
         '}',
         ';',
       ),
+
+    inheritance: ($) => seq(':', commaSep(alias($.identifier, $.parent))),
 
     streamer_block: ($) => seq('STREAMER', repeat($.stream_definition), 'END', 'STREAMER', ';'),
 
@@ -281,16 +284,19 @@ module.exports = grammar({
     // TODO: improve PROCESSGROUP
     operators_definition: ($) =>
       seq(
-        choice('SOCKET', 'PROCESS', 'PROCESSGROUP', 'TIMER', 'FILESTREAM', 'MESSAGE_QUEUE'),
+        field(
+          'type',
+          choice('SOCKET', 'PROCESS', 'PROCESSGROUP', 'TIMER', 'FILESTREAM', 'MESSAGE_QUEUE'),
+        ),
         commaSep($.operator_definition),
         ';',
       ),
 
-    // this is a generalized superset
+    // NOTE: this is a generalized superset
     operator_definition: ($) =>
       seq(
         field('name', $.identifier),
-        optional(seq(':', alias($.identifier, $.parent_class))),
+        optional(seq(':', alias($.identifier, $.parent))),
         optional(seq('=', alias($.identifier, $.reference))),
         optional($.parameter_block),
       ),

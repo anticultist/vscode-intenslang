@@ -209,6 +209,38 @@ DATAPOOL
   };
 END DATAPOOL;
 
+======================================
+structure declaration with inheritance
+======================================
+
+DATAPOOL
+  STRUCT MY_STRUCT_EXT : MY_STRUCT {};
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (structure_declaration
+      (structure_identifier)
+      (inheritance (parent)))))
+
+============================================
+structure declaration with multi-inheritance
+============================================
+
+DATAPOOL
+  STRUCT MY_STRUCT_EXT : MY_STRUCT, MY_STRUCT2 {};
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (structure_declaration
+      (structure_identifier)
+      (inheritance
+        (parent)
+        (parent)))))
+
 =================
 color declaration
 =================

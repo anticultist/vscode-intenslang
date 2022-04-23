@@ -71,7 +71,7 @@ END OPERATOR;
     (operators_definition
       (operator_definition
         (identifier)
-        (parent_class)
+        (parent)
         (parameter_block (string))))))
 
 =======================
