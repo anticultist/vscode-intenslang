@@ -279,21 +279,21 @@ module.exports = grammar({
     operator_block: ($) =>
       seq('OPERATOR', repeat($._operator_block_expression), 'END', 'OPERATOR', ';'),
 
-    _operator_block_expression: ($) => choice($.operators_definition, $.tasks_declaration),
+    _operator_block_expression: ($) => choice($.operators_declaration, $.tasks_declaration),
 
     // TODO: improve PROCESSGROUP
-    operators_definition: ($) =>
+    operators_declaration: ($) =>
       seq(
         field(
           'type',
           choice('SOCKET', 'PROCESS', 'PROCESSGROUP', 'TIMER', 'FILESTREAM', 'MESSAGE_QUEUE'),
         ),
-        commaSep($.operator_definition),
+        commaSep($.operator_declaration),
         ';',
       ),
 
     // NOTE: this is a generalized superset
-    operator_definition: ($) =>
+    operator_declaration: ($) =>
       seq(
         field('name', $.identifier),
         optional(seq(':', alias($.identifier, $.parent))),
@@ -352,11 +352,41 @@ module.exports = grammar({
 
     variable: ($) => seq($.identifier, optional(seq('.', $.identifier))),
 
-    ui_manager_block: ($) =>
-      seq('UI_MANAGER', repeat($._ui_manager_block_expression), 'END', 'UI_MANAGER', ';'),
+    ui_manager_block: ($) => seq('UI_MANAGER', repeat($.ui_declarations), 'END', 'UI_MANAGER', ';'),
 
-    // TODO: FIELDGROUP, PLOT2D, FORM, IMAGE, INDEX, FOLDER, THERMO, MENU, ...
-    _ui_manager_block_expression: ($) => choice($._expression),
+    ui_declarations: ($) =>
+      seq(
+        choice(
+          'FIELDGROUP',
+          'FOLDER',
+          'FORM',
+          'IMAGE',
+          'INDEX',
+          'LINEPLOT',
+          'LIST',
+          'LISTPLOT',
+          'LOG_WINDOW',
+          'NAVIGATOR',
+          'PLOT2D',
+          'PLUGIN',
+          'PSPLOT',
+          'STD_WINDOW',
+          'TABLE',
+          'TEXT_WINDOW',
+          'THERMO',
+          'TIMETABLE',
+          'UNIPLOT',
+          'XRT3DPLOT',
+          'XRTGRAPH',
+        ),
+        commaSep($.ui_declaration),
+        ';',
+      ),
+
+    ui_declaration: ($) =>
+      seq(field('name', $.identifier), optional($.parameter_block), optional($.tuple)),
+
+    // TODO: MENU declaration
 
     db_manager_block: ($) =>
       seq('DB_MANAGER', repeat($._db_manager_block_expression), 'END', 'DB_MANAGER', ';'),

@@ -68,8 +68,8 @@ END OPERATOR;
 ---
 (source_file
   (operator_block
-    (operators_definition
-      (operator_definition
+    (operators_declaration
+      (operator_declaration
         (identifier)
         (parent)
         (parameter_block (string))))))
@@ -86,8 +86,8 @@ END OPERATOR;
 ---
 (source_file
   (operator_block
-    (operators_definition
-      (operator_definition
+    (operators_declaration
+      (operator_declaration
         (identifier)
         (reference)
         (parameter_block

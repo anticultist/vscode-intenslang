@@ -8,3 +8,18 @@ END UI_MANAGER;
 ---
 (source_file
   (ui_manager_block))
+
+=================
+index declaration
+=================
+
+UI_MANAGER
+  INDEX my_index;
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (ui_declarations
+      (ui_declaration
+        (identifier)))))
