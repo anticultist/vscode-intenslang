@@ -209,6 +209,19 @@ DATAPOOL
   };
 END DATAPOOL;
 
+---
+(source_file
+  (datapool_block
+    (structure_declaration
+      (structure_identifier)
+      (variables_declaration
+        (primitive_type)
+        (variable_declaration (variable_identifier))
+        (variable_declaration (variable_identifier)))
+      (variables_declaration
+        (primitive_type)
+        (variable_declaration (variable_identifier))))))
+
 ======================================
 structure declaration with inheritance
 ======================================

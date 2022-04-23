@@ -257,7 +257,7 @@ module.exports = grammar({
         field('name', alias($.identifier, $.structure_identifier)),
         optional($.inheritance),
         '{',
-        optionalCommaSep($.variables_declaration),
+        repeat($.variables_declaration),
         '}',
         ';',
       ),
