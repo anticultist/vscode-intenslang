@@ -340,3 +340,51 @@ END FUNCTIONS;
             (variable_declaration (variable_identifier))
             (variable_declaration (variable_identifier))
             (variable_declaration (variable_identifier))))))))
+
+=============
+function call
+=============
+
+FUNCTIONS
+  FUNC myfunc {
+    RUN( myfunc2 );
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (function_call
+            (function_name)
+            (function_arguments
+              (parameter))))))))
+
+====================
+nested function call
+====================
+
+FUNCTIONS
+  FUNC myfunc {
+    MESSAGEBOX(COMPOSE("Finished %1!", "function"));
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (function_call
+            (function_name)
+            (function_arguments
+              (function_call
+                (function_name)
+                (function_arguments
+                  (string)
+                  (string))))))))))

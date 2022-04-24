@@ -115,6 +115,7 @@ module.exports = grammar({
         $.binary_expression,
         $.parenthesized_expression,
         $.negation,
+        $.function_call,
       ),
 
     binary_expression: ($) => {
@@ -148,6 +149,19 @@ module.exports = grammar({
     negation: ($) => seq('!', $._assignment_right_expression),
 
     parenthesized_expression: ($) => seq('(', $._assignment_right_expression, ')'),
+
+    function_call: ($) => seq(alias($.identifier, $.function_name), '(', $.function_arguments, ')'),
+
+    function_arguments: ($) =>
+      commaSep(
+        choice(
+          alias($.identifier, $.parameter),
+          $.parameter_assignment,
+          $.string,
+          $.tuple,
+          $.function_call,
+        ),
+      ),
 
     include: ($) => seq('INCLUDE', alias(/[A-Za-z_0-9\./]+/, $.file_name)),
 
@@ -331,6 +345,7 @@ module.exports = grammar({
         $.block,
         $.return,
         $.exit,
+        $.function_call,
         $._expression,
         ';', // null statement
       ),

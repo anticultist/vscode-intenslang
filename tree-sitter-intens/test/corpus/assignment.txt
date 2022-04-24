@@ -210,3 +210,30 @@ foo = 1 < 2;
     (identifier)
     (binary_expression
       (number) (number))))
+
+=========
+increment
+=========
+
+foo += 1.;
+
+---
+(source_file
+  (assignment
+    (identifier) (number)))
+
+==============
+function usage
+==============
+
+foo = COMPOSE_STRING("bar %1", "baz");
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (function_call
+      (function_name)
+      (function_arguments
+        (string)
+        (string)))))
