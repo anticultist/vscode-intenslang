@@ -57,3 +57,26 @@ STREAMER
   my_stream { XML {SCHEMA="my_schema.xsd", VERSION="1.0"} }
     (foo, bar, EOLN);
 END STREAMER;
+
+=================================
+stream definition with a wildcard
+=================================
+
+STREAMER
+  scan_control_enable_scan_stream (
+    ( breakEvent.coordinate[#].channel.id )
+  );
+END STREAMER;
+
+---
+(source_file
+  (streamer_block
+    (stream_definition
+      (stream_identifier)
+      (tuple
+        (field_expression
+          (identifier)
+          (identifier)
+          (list (wildcard))
+          (identifier)
+          (identifier))))))

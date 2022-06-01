@@ -281,7 +281,7 @@ module.exports = grammar({
         ']',
       ),
 
-    wildcard: ($) => choice('*', /#[a-zA-Z][a-zA-Z_0-9#]*/),
+    wildcard: ($) => choice('*', '#', /#[a-zA-Z][a-zA-Z_0-9#]*/),
 
     sets_declaration: ($) => seq('SET', commaSep($.set_declaration), ';'),
 
