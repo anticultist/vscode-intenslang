@@ -94,3 +94,40 @@ END OPERATOR;
           (string)
           (parameter_assignment (parameter) (string))
           (parameter))))))
+
+==================
+socket declaration
+==================
+
+OPERATOR
+  SOCKET my_socket2 {
+    MFM,
+    PORT=333,
+    STREAM=my_stream2,
+    struct[*].data,
+    THUMBNAIL(struct[*].thumbnail, 200, 200)};
+END OPERATOR;
+
+---
+(source_file
+  (operator_block
+    (operators_declaration
+      (operator_declaration
+        (identifier)
+        (parameter_block
+          (parameter)
+          (parameter_assignment (parameter) (number))
+          (parameter_assignment (parameter) (identifier))
+          (field_expression
+            (identifier)
+            (list (wildcard))
+            (identifier))
+          (function_call
+            (function_name)
+            (function_arguments
+              (field_expression
+                (identifier)
+                (list (wildcard))
+                (identifier))
+              (number)
+              (number))))))))

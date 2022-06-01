@@ -48,3 +48,12 @@ END STREAMER;
           (string)))
       (identifier)
       (identifier))))
+
+====================================
+stream definition with nested option
+====================================
+
+STREAMER
+  my_stream { XML {SCHEMA="my_schema.xsd", VERSION="1.0"} }
+    (foo, bar, EOLN);
+END STREAMER;

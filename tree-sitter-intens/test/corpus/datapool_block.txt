@@ -267,9 +267,9 @@ END DATAPOOL;
     (colors_declaration
       (color_declaration (color_identifier) (color_set)))))
 
-=========================
-complex color declaration
-=========================
+===========================
+complex color declaration 1
+===========================
 
 DATAPOOL
   COLOR mycolor2 (
@@ -309,6 +309,40 @@ END DATAPOOL;
             (tuple (string) (string)))
           (color_set_item
             (color_set_value (string))
+            (tuple (string) (string)))
+          (color_set_item
+            (tuple (string) (string))))))))
+
+===========================
+complex color declaration 2
+===========================
+
+DATAPOOL
+  COLOR kfm_response_color (
+    < foo.bar1 * foo.bar2 = ("#285ac8","#285ac8"),
+    > foo.bar4 * foo.bar4 = ("#c82828","#c82828"),
+    ELSE = ("#5ac828","#5ac828")
+  );
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (colors_declaration
+      (color_declaration
+        (color_identifier)
+        (color_set
+          (color_set_item
+            (color_set_value
+              (binary_expression
+                (field_expression (identifier) (identifier))
+                (field_expression (identifier) (identifier))))
+            (tuple (string) (string)))
+          (color_set_item
+            (color_set_value
+              (binary_expression
+                (field_expression (identifier) (identifier))
+                (field_expression (identifier) (identifier))))
             (tuple (string) (string)))
           (color_set_item
             (tuple (string) (string))))))))

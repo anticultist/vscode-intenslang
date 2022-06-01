@@ -138,6 +138,27 @@ END FUNCTIONS;
               (binary_expression
                 (identifier) (number)))))))))
 
+=====================
+combined if statement
+=====================
+
+FUNCTIONS
+  FUNC myfunc {
+    IF (TRUE && TRUE) ;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (if_statement
+            (condition
+              (binary_expression (true) (true)))))))))
+
 =================
 if-else statement
 =================
@@ -361,7 +382,7 @@ END FUNCTIONS;
           (function_call
             (function_name)
             (function_arguments
-              (parameter))))))))
+              (identifier))))))))
 
 ====================
 nested function call

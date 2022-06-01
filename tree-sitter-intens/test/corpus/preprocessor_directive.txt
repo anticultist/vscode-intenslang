@@ -1,0 +1,24 @@
+============
+code split 1
+============
+
+# 1 "../../foo.inc" 1
+
+---
+(source_file
+  (preprocessor_directive
+    (number)
+    (string)
+    (number)))
+
+============
+code split 2
+============
+
+# 1 "../../bar.inc"
+
+---
+(source_file
+  (preprocessor_directive
+    (number)
+    (string)))

@@ -56,12 +56,12 @@ foo = 1 + 2 + 3;
 ---
 
 (source_file
-    (assignment
-        (identifier)
-            (binary_expression
-                (binary_expression
-                    (number) (number))
-                (number))))
+  (assignment
+    (identifier)
+      (binary_expression
+        (binary_expression
+          (number) (number))
+        (number))))
 
 ===================
 identifier addition
@@ -149,10 +149,10 @@ foo = 1 * 2 + 3;
 
 ---
 (source_file
-    (assignment (identifier)
-        (binary_expression
-            (binary_expression (number) (number))
-            (number))))
+  (assignment (identifier)
+    (binary_expression
+      (binary_expression (number) (number))
+      (number))))
 
 ==============================
 complex arithmetic operation 2
@@ -162,10 +162,10 @@ foo = 1 + 2 * 3;
 
 ---
 (source_file
-    (assignment
-        (identifier)
-            (binary_expression (number)
-            (binary_expression (number) (number)))))
+  (assignment
+    (identifier)
+      (binary_expression (number)
+      (binary_expression (number) (number)))))
 
 ===============================
 number addition with bracketing
@@ -175,11 +175,11 @@ foo = (1 + 2);
 
 ---
 (source_file
-    (assignment
-        (identifier)
-        (parenthesized_expression
-            (binary_expression
-                (number) (number)))))
+  (assignment
+    (identifier)
+    (tuple
+      (binary_expression
+        (number) (number)))))
 
 ==============================================
 complex arithmetic operation with bracketing 1
@@ -189,13 +189,13 @@ foo = (1 + 2) * (3 - 4);
 
 ---
 (source_file
-    (assignment
-        (identifier)
-        (binary_expression
-            (parenthesized_expression
-                (binary_expression (number) (number)))
-            (parenthesized_expression
-                (binary_expression (number) (number))))))
+  (assignment
+    (identifier)
+    (binary_expression
+      (tuple
+        (binary_expression (number) (number)))
+      (tuple
+        (binary_expression (number) (number))))))
 
 ==================
 boolean comparison
@@ -222,9 +222,9 @@ foo += 1.;
   (assignment
     (identifier) (number)))
 
-==============
-function usage
-==============
+================
+function usage 1
+================
 
 foo = COMPOSE_STRING("bar %1", "baz");
 
@@ -237,3 +237,87 @@ foo = COMPOSE_STRING("bar %1", "baz");
       (function_arguments
         (string)
         (string)))))
+
+================
+function usage 2
+================
+
+foo = COMPOSE_STRING("It is %1!", foo=="text");
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (function_call
+      (function_name)
+      (function_arguments
+        (string)
+        (binary_expression
+          (identifier)
+          (string))))))
+
+==================
+field expression 1
+==================
+
+foo.bar = bar.foo;
+
+---
+(source_file
+  (assignment
+    (field_expression
+      (identifier)
+      (identifier))
+    (field_expression
+      (identifier)
+      (identifier))))
+
+==================
+field expression 2
+==================
+
+foo = bar[#A].baz;
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (field_expression
+      (identifier)
+      (list (wildcard))
+      (identifier))))
+
+==================
+field expression 3
+==================
+
+foo.VAR("bar").baz = 5;
+
+---
+(source_file
+  (assignment
+    (field_expression
+      (identifier)
+      (var_usage (string))
+      (identifier))
+    (number)))
+
+==================
+field expression 4
+==================
+
+foo[INDEX] = "lorem ipsum";
+
+---
+(source_file
+  (assignment
+    (field_expression
+      (identifier)
+      (list (identifier)))
+    (string)))
+
+==================
+field expression 5
+==================
+
+foo = COMPARE(foo.bar_baz[*]:19, THIS.object[m,n]);

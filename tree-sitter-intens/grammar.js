@@ -2,7 +2,10 @@ const PREC = {
   // precedence
   ASSIGNMENT: -1,
   DEFAULT: 0,
+  LOGICAL_OR: 1,
+  LOGICAL_AND: 2,
   EQUAL: 6,
+  BITWISE_AND: 5,
   RELATIONAL: 7,
   ADD: 10,
   MULTIPLY: 11,
@@ -11,7 +14,7 @@ const PREC = {
 module.exports = grammar({
   name: 'intens',
 
-  extras: ($) => [/\s|\\\r?\n/, $.comment],
+  extras: ($) => [/\s|\\\r?\n/, $.comment, $.preprocessor_directive],
 
   word: ($) => $.identifier,
 
@@ -44,6 +47,11 @@ module.exports = grammar({
 
     comment: ($) => token(seq('//', /.*/)),
     // comment: $ => token(seq('//', /(\\(.|\r?\n)|[^\\\n])*/)),
+
+    preprocessor_directive: ($) =>
+      prec.right(33, seq('#', $.number, $.string, optional($.number), /\r?\n/)),
+
+    // preprocessor_directive: ($) => seq('#', $.number, $.string),
 
     string: ($) => seq('"', repeat(choice(/[^"\\\n]+|\\\r?\n/)), '"'),
 
@@ -98,12 +106,15 @@ module.exports = grammar({
         ),
       ),
 
-    _assignment_left_expression: ($) => choice($.identifier),
+    _assignment_left_expression: ($) => choice($.identifier, $.var_usage, $.field_expression),
 
     // TODO: improve name
+    // TODO: add support for '&&', '||', '&'
     _assignment_right_expression: ($) =>
       choice(
         $.identifier,
+        $.var_usage,
+        $.field_expression,
         $.string,
         $.number,
         $.true,
@@ -113,7 +124,8 @@ module.exports = grammar({
         $.none,
         $.reason,
         $.binary_expression,
-        $.parenthesized_expression,
+        $.tuple,
+        $.list,
         $.negation,
         $.function_call,
       ),
@@ -130,6 +142,9 @@ module.exports = grammar({
         ['>=', PREC.RELATIONAL],
         ['<=', PREC.RELATIONAL],
         ['<', PREC.RELATIONAL],
+        ['&&', PREC.LOGICAL_AND],
+        ['||', PREC.LOGICAL_OR],
+        ['&', PREC.BITWISE_AND],
       ];
 
       return choice(
@@ -148,20 +163,17 @@ module.exports = grammar({
 
     negation: ($) => seq('!', $._assignment_right_expression),
 
-    parenthesized_expression: ($) => seq('(', $._assignment_right_expression, ')'),
-
     function_call: ($) => seq(alias($.identifier, $.function_name), '(', $.function_arguments, ')'),
 
-    function_arguments: ($) =>
-      commaSep(
-        choice(
-          alias($.identifier, $.parameter),
-          $.parameter_assignment,
-          $.string,
-          $.tuple,
-          $.function_call,
-        ),
+    function_arguments: ($) => commaSep($._assignment_right_expression),
+
+    field_expression: ($) =>
+      choice(
+        seq(choice($.identifier, $.var_usage), $.list),
+        dotSep(seq(choice($.identifier, $.var_usage), optional($.list))),
       ),
+
+    var_usage: ($) => seq('VAR', '(', $._assignment_right_expression, ')'),
 
     include: ($) => seq('INCLUDE', alias(/[A-Za-z_0-9\./]+/, $.file_name)),
 
@@ -189,7 +201,14 @@ module.exports = grammar({
       seq(
         '{',
         optionalCommaSep(
-          choice(alias($.identifier, $.parameter), $.parameter_assignment, $.string, $.tuple),
+          choice(
+            alias($.identifier, $.parameter),
+            $.field_expression,
+            $.parameter_assignment,
+            $.string,
+            $.tuple,
+            $.function_call,
+          ),
         ),
         '}',
       ),
@@ -243,12 +262,25 @@ module.exports = grammar({
     color_set_item: ($) =>
       seq(choice('INVALID', 'ELSE', $.color_set_value, $.color_set_range), '=', $.tuple),
 
-    color_set_value: ($) => seq(optional(choice('<', '>')), choice($.number, $.string, $.variable)),
+    color_set_value: ($) =>
+      seq(
+        optional(choice('<', '>')),
+        choice($.number, $.string, $.variable, $.binary_expression, $.function_call),
+      ),
 
     color_set_range: ($) => seq('RANGE', '(', $.color_set_value, ',', $.color_set_value, ')'),
 
     tuple: ($) =>
       seq('(', commaSep(choice($._assignment_right_expression, $.parameter_assignment)), ')'),
+
+    list: ($) =>
+      seq(
+        '[',
+        commaSep(choice($._assignment_right_expression, $.parameter_assignment, $.wildcard)),
+        ']',
+      ),
+
+    wildcard: ($) => choice('*', /#[a-zA-Z][a-zA-Z_0-9#]*/),
 
     sets_declaration: ($) => seq('SET', commaSep($.set_declaration), ';'),
 
@@ -313,6 +345,7 @@ module.exports = grammar({
         optional(seq(':', alias($.identifier, $.parent))),
         optional(seq('=', alias($.identifier, $.reference))),
         optional($.parameter_block),
+        optional($.tuple),
       ),
 
     tasks_declaration: ($) => seq('TASK', commaSep($.task_declaration), ';'),
@@ -416,4 +449,8 @@ function commaSep(rule) {
 
 function optionalCommaSep(rule) {
   return optional(seq(rule, repeat(seq(',', rule))));
+}
+
+function dotSep(rule) {
+  return seq(rule, repeat1(seq('.', rule)));
 }
