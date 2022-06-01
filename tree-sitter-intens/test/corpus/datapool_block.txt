@@ -346,3 +346,43 @@ END DATAPOOL;
             (tuple (string) (string)))
           (color_set_item
             (tuple (string) (string))))))))
+
+================================
+custom variable type declaration
+================================
+
+DATAPOOL
+  MY_STRUCT { OMIT_TTRAIL } foo, bar;
+END DATAPOOL;
+
+---
+
+(source_file
+  (datapool_block
+    (custom_variable_type_declaration
+      (parameter_block
+        (parameter))
+      (variable_declaration
+        (variable_identifier))
+      (variable_declaration
+        (variable_identifier)))))
+
+==============================================
+struct with a custom variable type declaration
+==============================================
+
+DATAPOOL
+  STRUCT FOO
+  {
+    MY_STRUCT bar;
+  };
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (structure_declaration
+      (structure_identifier)
+      (custom_variable_type_declaration
+        (variable_declaration
+          (variable_identifier))))))

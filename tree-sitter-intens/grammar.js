@@ -233,6 +233,7 @@ module.exports = grammar({
         $.structure_declaration,
         $.colors_declaration,
         $.variables_declaration,
+        $.custom_variable_type_declaration,
       ),
 
     variables_declaration: ($) =>
@@ -303,12 +304,20 @@ module.exports = grammar({
         field('name', alias($.identifier, $.structure_identifier)),
         optional($.inheritance),
         '{',
-        repeat($.variables_declaration),
+        repeat(choice($.variables_declaration, $.custom_variable_type_declaration)),
         '}',
         ';',
       ),
 
     inheritance: ($) => seq(':', commaSep(alias($.identifier, $.parent))),
+
+    custom_variable_type_declaration: ($) =>
+      seq(
+        field('type', /([A-Za-z_][A-Za-z_0-9]*)/),
+        optional($.parameter_block),
+        commaSep($.variable_declaration),
+        ';',
+      ),
 
     streamer_block: ($) => seq('STREAMER', repeat($.stream_definition), 'END', 'STREAMER', ';'),
 
