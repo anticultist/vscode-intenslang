@@ -14,7 +14,7 @@ single task forward declaration
 ===============================
 
 OPERATOR
-  TASK mytask;
+  TASK my_task;
 END OPERATOR;
 
 ---
@@ -29,7 +29,7 @@ multiple task forward declarations
 ==================================
 
 OPERATOR
-  TASK mytask, mytask2, mytask3;
+  TASK my_task, my_task2, my_task3;
 END OPERATOR;
 
 ---
@@ -45,7 +45,7 @@ single task declaration with an empty options and body
 ======================================================
 
 OPERATOR
-  TASK mytask {} {};
+  TASK my_task {} {};
 END OPERATOR;
 
 ---
@@ -131,3 +131,14 @@ END OPERATOR;
                 (identifier))
               (number)
               (number))))))))
+
+==========================
+progress group declaration
+==========================
+
+OPERATOR
+  PROCESSGROUP my_process_group_pg {"My name2", FORM=NONE, HIDDEN}
+    ([foo.bar] = my_process_pr());
+END OPERATOR;
+
+---

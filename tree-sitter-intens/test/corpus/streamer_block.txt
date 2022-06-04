@@ -58,13 +58,27 @@ STREAMER
     (foo, bar, EOLN);
 END STREAMER;
 
+---
+(source_file
+  (streamer_block
+    (stream_definition
+      (stream_identifier)
+      (parameter_block
+        (parameter)
+        (parameter_block
+          (parameter_assignment (parameter) (string))
+          (parameter_assignment (parameter) (string))))
+      (identifier)
+      (identifier)
+      (eoln))))
+
 =================================
 stream definition with a wildcard
 =================================
 
 STREAMER
-  scan_control_enable_scan_stream (
-    ( breakEvent.coordinate[#].channel.id )
+  my_stream (
+    ( foo.bar[#].baz.id )
   );
 END STREAMER;
 
@@ -80,3 +94,15 @@ END STREAMER;
           (list (wildcard))
           (identifier)
           (identifier))))))
+
+=========================================
+stream definition with a field conversion
+=========================================
+
+STREAMER
+  my_stream2 {PROCESS="the_file.txt"} (
+    foo, foo.baz:-10:2:TSEP
+  );
+END STREAMER;
+
+---

@@ -19,6 +19,16 @@ dolor sit amet"
 (source_file
   (string))
 
+===========
+hash string
+===========
+
+"#"
+
+---
+(source_file
+  (string))
+
 ==============
 integer number
 ==============

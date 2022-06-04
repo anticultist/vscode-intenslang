@@ -53,7 +53,7 @@ module.exports = grammar({
 
     // preprocessor_directive: ($) => seq('#', $.number, $.string),
 
-    string: ($) => seq('"', repeat(choice(/[^"\\\n]+|\\\r?\n/)), '"'),
+    string: ($) => seq('"', repeat(choice(/[^"\\\n]+|\\\r?\n/, '#')), '"'),
 
     number: ($) =>
       token(
@@ -202,7 +202,7 @@ module.exports = grammar({
         '{',
         optionalCommaSep(
           choice(
-            alias($.identifier, $.parameter),
+            seq(alias($.identifier, $.parameter), optional($.parameter_block)),
             $.field_expression,
             $.parameter_assignment,
             $.string,
@@ -281,7 +281,7 @@ module.exports = grammar({
         ']',
       ),
 
-    wildcard: ($) => choice('*', '#', /#[a-zA-Z][a-zA-Z_0-9#]*/),
+    wildcard: ($) => choice('*', '#', /#[a-zA-Z_0-9#]*/),
 
     sets_declaration: ($) => seq('SET', commaSep($.set_declaration), ';'),
 
