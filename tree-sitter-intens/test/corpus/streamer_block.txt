@@ -42,9 +42,9 @@ END STREAMER;
     (stream_definition
       (stream_identifier)
       (parameter_block
-        (parameter)
+        (parameter (identifier))
         (parameter_assignment
-          (parameter)
+          (parameter (identifier))
           (string)))
       (identifier)
       (identifier))))
@@ -64,10 +64,10 @@ END STREAMER;
     (stream_definition
       (stream_identifier)
       (parameter_block
-        (parameter)
+        (parameter (identifier))
         (parameter_block
-          (parameter_assignment (parameter) (string))
-          (parameter_assignment (parameter) (string))))
+          (parameter_assignment (parameter (identifier)) (string))
+          (parameter_assignment (parameter (identifier)) (string))))
       (identifier)
       (identifier)
       (eoln))))
@@ -104,5 +104,3 @@ STREAMER
     foo, foo.baz:-10:2:TSEP
   );
 END STREAMER;
-
----

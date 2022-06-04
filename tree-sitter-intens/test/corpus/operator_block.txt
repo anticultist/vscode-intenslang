@@ -92,8 +92,8 @@ END OPERATOR;
         (reference)
         (parameter_block
           (string)
-          (parameter_assignment (parameter) (string))
-          (parameter))))))
+          (parameter_assignment (parameter (identifier)) (string))
+          (parameter (identifier)))))))
 
 ==================
 socket declaration
@@ -115,9 +115,9 @@ END OPERATOR;
       (operator_declaration
         (identifier)
         (parameter_block
-          (parameter)
-          (parameter_assignment (parameter) (number))
-          (parameter_assignment (parameter) (identifier))
+          (parameter (identifier))
+          (parameter_assignment (parameter (identifier)) (number))
+          (parameter_assignment (parameter (identifier)) (identifier))
           (field_expression
             (identifier)
             (list (wildcard))
@@ -138,7 +138,20 @@ progress group declaration
 
 OPERATOR
   PROCESSGROUP my_process_group_pg {"My name2", FORM=NONE, HIDDEN}
-    ([foo.bar] = my_process_pr());
+    ( [foo.bar] = my_process_pr(); );
 END OPERATOR;
 
 ---
+(source_file
+  (operator_block
+    (operators_declaration
+      (operator_declaration
+        (identifier)
+        (parameter_block
+          (string)
+          (parameter_assignment (parameter (identifier)) (none))
+          (parameter (identifier)))
+        (tuple
+          (assignment
+            (list (field_expression (identifier) (identifier)))
+            (function_call (function_name))))))))

@@ -106,7 +106,8 @@ module.exports = grammar({
         ),
       ),
 
-    _assignment_left_expression: ($) => choice($.identifier, $.var_usage, $.field_expression),
+    _assignment_left_expression: ($) =>
+      choice($.identifier, $.var_usage, $.field_expression, $.list),
 
     // TODO: improve name
     // TODO: add support for '&&', '||', '&'
@@ -163,7 +164,8 @@ module.exports = grammar({
 
     negation: ($) => seq('!', $._assignment_right_expression),
 
-    function_call: ($) => seq(alias($.identifier, $.function_name), '(', $.function_arguments, ')'),
+    function_call: ($) =>
+      seq(alias($.identifier, $.function_name), '(', optional($.function_arguments), ')'),
 
     function_arguments: ($) => commaSep($._assignment_right_expression),
 
@@ -202,7 +204,7 @@ module.exports = grammar({
         '{',
         optionalCommaSep(
           choice(
-            seq(alias($.identifier, $.parameter), optional($.parameter_block)),
+            seq($.parameter, optional($.parameter_block)),
             $.field_expression,
             $.parameter_assignment,
             $.string,
@@ -213,8 +215,10 @@ module.exports = grammar({
         '}',
       ),
 
-    parameter_assignment: ($) =>
-      seq(alias($.identifier, $.parameter), '=', $._assignment_right_expression),
+    parameter_assignment: ($) => seq($.parameter, '=', $._assignment_right_expression),
+
+    // TODO: improve this definition
+    parameter: ($) => repeat1($.identifier),
 
     end_statement: ($) => seq('END', '.'),
 
@@ -272,7 +276,7 @@ module.exports = grammar({
     color_set_range: ($) => seq('RANGE', '(', $.color_set_value, ',', $.color_set_value, ')'),
 
     tuple: ($) =>
-      seq('(', commaSep(choice($._assignment_right_expression, $.parameter_assignment)), ')'),
+      seq('(', optionalCommaSep(choice($._assignment_right_expression, $.assignment)), ')'),
 
     list: ($) =>
       seq(

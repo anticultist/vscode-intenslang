@@ -24,9 +24,9 @@ END UI_MANAGER;
       (ui_declaration
         (identifier)))))
 
-=============================
-empty field group declaration
-=============================
+==========================================
+empty field with space separated parameter
+==========================================
 
 UI_MANAGER
   FIELDGROUP
@@ -35,6 +35,14 @@ UI_MANAGER
 END UI_MANAGER;
 
 ---
+(source_file
+  (ui_manager_block
+    (ui_declarations
+      (ui_declaration
+        (identifier)
+        (parameter_block
+          (parameter_assignment (parameter (identifier) (identifier)) (identifier)))
+        (tuple)))))
 
 ==================
 folder declaration
@@ -45,8 +53,6 @@ UI_MANAGER
       ["":baz, FUNC = myfunc4, FRAME] (my_group_fg)
     );
 END UI_MANAGER;
-
----
 
 ================
 menu declaration
@@ -59,5 +65,3 @@ UI_MANAGER
                FORM fancy_form,
                FUNC bye_func="Quit");
 END UI_MANAGER;
-
----

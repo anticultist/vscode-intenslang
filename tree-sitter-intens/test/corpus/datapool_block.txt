@@ -62,9 +62,9 @@ END DATAPOOL;
   (datapool_block
     (variables_declaration
       (primitive_type)
-        (parameter_block (parameter))
-        (variable_declaration (variable_identifier) (parameter_block (parameter) (parameter)))
-        (variable_declaration (variable_identifier) (parameter_block (parameter))))))
+        (parameter_block (parameter (identifier)))
+        (variable_declaration (variable_identifier) (parameter_block (parameter (identifier)) (parameter (identifier))))
+        (variable_declaration (variable_identifier) (parameter_block (parameter (identifier)))))))
 
 =====================================================
 variable declarations with parameters and assignments
@@ -81,16 +81,16 @@ END DATAPOOL;
     (variables_declaration
       (primitive_type)
       (parameter_block
-        (parameter))
+        (parameter (identifier)))
       (variable_declaration
         (variable_identifier)
         (parameter_block
           (parameter_assignment
-            (parameter)
+            (parameter (identifier))
             (string))
-          (parameter)
+          (parameter (identifier))
           (parameter_assignment
-            (parameter)
+            (parameter (identifier))
             (identifier)))))))
 
 =======================
@@ -124,7 +124,7 @@ END DATAPOOL;
       (variable_declaration
         (variable_identifier)
         (dimension (number) (number))
-        (parameter_block (parameter))))))
+        (parameter_block (parameter (identifier)))))))
 
 =================
 set declaration 1
@@ -361,7 +361,7 @@ END DATAPOOL;
   (datapool_block
     (custom_variable_type_declaration
       (parameter_block
-        (parameter))
+        (parameter (identifier)))
       (variable_declaration
         (variable_identifier))
       (variable_declaration
