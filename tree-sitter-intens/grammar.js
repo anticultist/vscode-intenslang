@@ -9,6 +9,8 @@ const PREC = {
   RELATIONAL: 7,
   ADD: 10,
   MULTIPLY: 11,
+  CALL: 12,
+  FIELD: 13,
 };
 
 module.exports = grammar({
@@ -165,14 +167,18 @@ module.exports = grammar({
     negation: ($) => seq('!', $._assignment_right_expression),
 
     function_call: ($) =>
-      seq(alias($.identifier, $.function_name), '(', optional($.function_arguments), ')'),
+      prec(
+        PREC.CALL,
+        seq(alias($.identifier, $.function_name), '(', optional($.function_arguments), ')'),
+      ),
 
-    function_arguments: ($) => commaSep($._assignment_right_expression),
+    function_arguments: ($) =>
+      commaSep(choice($._assignment_right_expression, $.parameter_assignment)),
 
     field_expression: ($) =>
       choice(
         seq(choice($.identifier, $.var_usage), $.list),
-        dotSep(seq(choice($.identifier, $.var_usage), optional($.list))),
+        prec(PREC.FIELD, dotSep(seq(choice($.identifier, $.var_usage), optional($.list)))),
       ),
 
     var_usage: ($) => seq('VAR', '(', $._assignment_right_expression, ')'),
@@ -215,12 +221,13 @@ module.exports = grammar({
         '}',
       ),
 
-    parameter_assignment: ($) => seq($.parameter, '=', $._assignment_right_expression),
+    parameter_assignment: ($) =>
+      prec(PREC.ASSIGNMENT, seq($.parameter, '=', $._assignment_right_expression)),
 
     label_assignment: ($) => seq($.string, ':', $._assignment_right_expression),
 
     // TODO: get rid of subtree of identifiers here
-    parameter: ($) => repeat1($.identifier),
+    parameter: ($) => prec(1, repeat1($.identifier)),
 
     end_statement: ($) => seq('END', '.'),
 
@@ -278,7 +285,14 @@ module.exports = grammar({
     color_set_range: ($) => seq('RANGE', '(', $.color_set_value, ',', $.color_set_value, ')'),
 
     tuple: ($) =>
-      seq('(', optionalCommaSep(choice($._assignment_right_expression, $.assignment)), ')'),
+      prec(
+        -1,
+        seq(
+          '(',
+          optionalCommaSep(choice($._assignment_right_expression, $.parameter_assignment)),
+          ')',
+        ),
+      ),
 
     list: ($) =>
       seq(
@@ -367,8 +381,11 @@ module.exports = grammar({
         optional(seq(':', alias($.identifier, $.parent))),
         optional(seq('=', alias($.identifier, $.reference))),
         optional($.parameter_block),
-        optional($.tuple),
+        optional($.operator_statements),
       ),
+
+    operator_statements: ($) =>
+      seq('(', optionalCommaSep(choice($._assignment_right_expression, $.assignment)), ')'),
 
     tasks_declaration: ($) => seq('TASK', commaSep($.task_declaration), ';'),
 
@@ -420,12 +437,19 @@ module.exports = grammar({
 
     while_loop: ($) => seq('WHILE', '(', $.condition, ')', $._function_expression),
 
-    ui_manager_block: ($) => seq('UI_MANAGER', repeat($.ui_declarations), 'END', 'UI_MANAGER', ';'),
+    ui_manager_block: ($) =>
+      seq(
+        'UI_MANAGER',
+        repeat(choice($.field_group_declarations, $.ui_declarations, $.table_declarations)),
+        'END',
+        'UI_MANAGER',
+        ';',
+      ),
 
+    // NOTE: this is a generalized superset
     ui_declarations: ($) =>
       seq(
         choice(
-          'FIELDGROUP',
           'FOLDER',
           'FORM',
           'IMAGE',
@@ -439,7 +463,6 @@ module.exports = grammar({
           'PLUGIN',
           'PSPLOT',
           'STD_WINDOW',
-          'TABLE',
           'TEXT_WINDOW',
           'THERMO',
           'TIMETABLE',
@@ -454,13 +477,30 @@ module.exports = grammar({
     ui_declaration: ($) =>
       seq(field('name', $.identifier), optional($.parameter_block), optional($.ui_subitems)),
 
-    ui_subitems: ($) => seq('(', optionalCommaSep($.ui_subitem), ')'),
+    ui_subitems: ($) => seq('(', optional(commaSep($.ui_subitem)), ')'),
 
     ui_subitem: ($) =>
       choice(
         seq($.list, $.tuple, optional($.list)),
         seq($.identifier, optional($.parameter_block), $.tuple),
+        $._assignment_right_expression,
       ),
+
+    field_group_declarations: ($) => seq('FIELDGROUP', commaSep($.field_group_declaration), ';'),
+
+    field_group_declaration: ($) =>
+      seq(field('name', $.identifier), optional($.parameter_block), $.field_group_lines),
+
+    field_group_lines: ($) => seq('(', optionalCommaSep($.field_group_line), ')'),
+
+    field_group_line: ($) => repeat1($._assignment_right_expression),
+
+    table_declarations: ($) => seq('TABLE', commaSep($.table_declaration), ';'),
+
+    table_declaration: ($) =>
+      seq(field('name', $.identifier), optional($.parameter_block), $.table_configuration),
+
+    table_configuration: ($) => seq('(', optional(repeat(seq($.function_call, ';'))), ')'),
 
     // TODO: MENU declaration
 

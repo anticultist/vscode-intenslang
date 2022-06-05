@@ -24,9 +24,9 @@ END UI_MANAGER;
       (ui_declaration
         (identifier)))))
 
-==========================================
-empty field with space separated parameter
-==========================================
+================================================
+empty field group with space separated parameter
+================================================
 
 UI_MANAGER
   FIELDGROUP
@@ -37,12 +37,50 @@ END UI_MANAGER;
 ---
 (source_file
   (ui_manager_block
-    (ui_declarations
-      (ui_declaration
+    (field_group_declarations
+      (field_group_declaration
         (identifier)
         (parameter_block
           (parameter_assignment (parameter (identifier) (identifier)) (identifier)))
-        (ui_subitems)))))
+        (field_group_lines)))))
+
+=======================
+field group declaration
+=======================
+
+UI_MANAGER
+  FIELDGROUP
+    my_group_fg { MARGIN(0) } (
+      foo.bar,
+      "Lorem ipsum"
+    ),
+    my_group2_fg {TABLE ORIENTATION=VERTICAL} ()
+  ;
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (field_group_declarations
+      (field_group_declaration
+        (identifier)
+        (parameter_block
+          (function_call
+            (function_name)
+            (function_arguments
+              (number))))
+        (field_group_lines
+          (field_group_line
+            (field_expression (identifier) (identifier)))
+          (field_group_line
+            (string))))
+      (field_group_declaration
+        (identifier)
+        (parameter_block
+          (parameter_assignment
+            (parameter (identifier) (identifier))
+            (identifier)))
+        (field_group_lines)))))
 
 ==================
 folder declaration
@@ -114,6 +152,51 @@ END UI_MANAGER;
                   (string))))
             (tuple)))))))
 
+=================
+table declaration
+=================
+
+UI_MANAGER
+  TABLE my_table {
+      HORIZONTAL(TABLESIZE=7, RANGE(1)),
+      VERTICAL(TABLESIZE=7, RANGE(1))
+    }
+    (
+      LEFT();
+      TOP();
+      TABLE();
+    );
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (table_declarations
+      (table_declaration
+        (identifier)
+        (parameter_block
+          (function_call
+            (function_name)
+            (function_arguments
+              (parameter_assignment
+                (parameter (identifier))
+                (number))
+              (function_call
+                (function_name)
+                (function_arguments (number)))))
+          (function_call
+            (function_name)
+            (function_arguments
+              (parameter_assignment
+                (parameter (identifier))
+                (number))
+              (function_call
+                (function_name)
+                (function_arguments (number))))))
+        (table_configuration
+          (function_call (function_name))
+          (function_call (function_name))
+          (function_call (function_name)))))))
 
 ================
 menu declaration

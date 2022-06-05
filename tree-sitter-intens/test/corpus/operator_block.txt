@@ -151,7 +151,7 @@ END OPERATOR;
           (string)
           (parameter_assignment (parameter (identifier)) (none))
           (parameter (identifier)))
-        (tuple
+        (operator_statements
           (assignment
             (list (field_expression (identifier) (identifier)))
             (function_call (function_name))))))))
