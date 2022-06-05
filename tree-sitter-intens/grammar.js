@@ -279,7 +279,14 @@ module.exports = grammar({
     color_set_value: ($) =>
       seq(
         optional(choice('<', '>')),
-        choice($.number, $.string, $.field_expression, $.binary_expression, $.function_call),
+        choice(
+          $.identifier,
+          $.number,
+          $.string,
+          $.field_expression,
+          $.binary_expression,
+          $.function_call,
+        ),
       ),
 
     color_set_range: ($) => seq('RANGE', '(', $.color_set_value, ',', $.color_set_value, ')'),

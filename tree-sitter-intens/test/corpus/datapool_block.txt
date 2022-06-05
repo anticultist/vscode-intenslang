@@ -72,7 +72,7 @@ variable declarations with parameters and assignments
 
 DATAPOOL
   INTEGER {EDITABLE}
-    foo { LABEL="mylabel", TOGGLE, FUNC=myfunc };
+    foo { LABEL="my label", TOGGLE, FUNC=myfunc };
 END DATAPOOL;
 
 ---
@@ -131,8 +131,8 @@ set declaration 1
 =================
 
 DATAPOOL
-  SET myset1 ("1", "2"),
-      myset2 ("3", "4");
+  SET my_set1 ("1", "2"),
+      my_set2 ("3", "4");
 END DATAPOOL;
 
 ---
@@ -147,7 +147,7 @@ set declaration 2
 =================
 
 DATAPOOL
-  SET myset ("A" = 1, "B" = 2);
+  SET my_set ("A" = 1, "B" = 2);
 END DATAPOOL;
 
 ---
@@ -164,7 +164,7 @@ set declaration 3
 =================
 
 DATAPOOL
-  SET myset ("A" = "a", "B" = "b");
+  SET my_set ("A" = "a", "B" = "b");
 END DATAPOOL;
 
 ---
@@ -181,7 +181,7 @@ set declaration with parameter
 ==============================
 
 DATAPOOL
-  SET myset1 {GLOBAL, INVALID=NONE} ("");
+  SET my_set1 {GLOBAL, INVALID=NONE} ("");
 END DATAPOOL;
 
 =======================
@@ -189,7 +189,7 @@ structure declaration 1
 =======================
 
 DATAPOOL
-  STRUCT MYSTRUCT {};
+  STRUCT MY_STRUCT {};
 END DATAPOOL;
 
 ---
@@ -203,7 +203,7 @@ structure declaration 2
 =======================
 
 DATAPOOL
-  STRUCT MYSTRUCT {
+  STRUCT MY_STRUCT {
     INTEGER one, two;
     REAL three;
   };
@@ -258,7 +258,7 @@ END DATAPOOL;
 color declaration
 =================
 DATAPOOL
-  COLOR mycolor1 ();
+  COLOR my_color1 ();
 END DATAPOOL;
 
 ---
@@ -272,13 +272,13 @@ complex color declaration 1
 ===========================
 
 DATAPOOL
-  COLOR mycolor2 (
+  COLOR my_color2 (
     INVALID = (red, black),
     < 0 = ("#fff", "#f00"),
     < foo.bar.baz = ("#fff", "#000"),
     RANGE(0, <2.1) = ("#ffffff", "#00ff00"),
     2 = ("#ffffff", "#0000ff"),
-    "mytext" = ( "#e0e0e0", "#e0e0e0" ),
+    "my text" = ( "#e0e0e0", "#e0e0e0" ),
     ELSE = ("#ffffff", "#0000ff")
   );
 END DATAPOOL;
@@ -343,6 +343,31 @@ END DATAPOOL;
               (binary_expression
                 (field_expression (identifier) (identifier))
                 (field_expression (identifier) (identifier))))
+            (tuple (string) (string)))
+          (color_set_item
+            (tuple (string) (string))))))))
+
+
+===========================
+complex color declaration 3
+===========================
+
+DATAPOOL
+  COLOR foo (
+    > bar = ("#c85028","#000000"),
+    ELSE = ("#abc828","#000000")
+  );
+END DATAPOOL;
+
+---
+(source_file
+  (datapool_block
+    (colors_declaration
+      (color_declaration
+        (color_identifier)
+        (color_set
+          (color_set_item
+            (color_set_value (identifier))
             (tuple (string) (string)))
           (color_set_item
             (tuple (string) (string))))))))
