@@ -42,7 +42,7 @@ END UI_MANAGER;
         (identifier)
         (parameter_block
           (parameter_assignment (parameter (identifier) (identifier)) (identifier)))
-        (tuple)))))
+        (ui_subitems)))))
 
 ==================
 folder declaration
@@ -53,6 +53,67 @@ UI_MANAGER
       ["":baz, FUNC = myfunc4, FRAME] (my_group_fg)
     );
 END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (ui_declarations
+      (ui_declaration
+        (identifier)
+        (parameter_block
+          (parameter (identifier))
+          (parameter (identifier))
+          (parameter (identifier)))
+        (ui_subitems
+          (ui_subitem
+            (list
+              (label_assignment (string) (identifier))
+              (parameter_assignment
+                (parameter (identifier))
+                (identifier))
+              (identifier))
+            (tuple (identifier))))))))
+
+===================
+2d plot declaration
+===================
+
+UI_MANAGER
+  PLOT2D my_plot {"My Plot"} (
+      plot {
+        XAXIS { LABEL="X-Axis" },
+        YAXIS1 { LABEL="Y-Axis", FORMAT="10" }
+      } ()
+    );
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (ui_declarations
+      (ui_declaration
+        (identifier)
+        (parameter_block (string))
+        (ui_subitems
+          (ui_subitem
+            (identifier)
+            (parameter_block
+              (parameter
+                (identifier))
+              (parameter_block
+                (parameter_assignment
+                  (parameter (identifier))
+                  (string)))
+              (parameter (identifier))
+              (parameter_block
+                (parameter_assignment
+                  (parameter (identifier))
+                  (string))
+                (parameter_assignment
+                  (parameter (identifier))
+                  (string))))
+            (tuple)))))))
+
 
 ================
 menu declaration

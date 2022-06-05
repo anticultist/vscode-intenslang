@@ -217,7 +217,9 @@ module.exports = grammar({
 
     parameter_assignment: ($) => seq($.parameter, '=', $._assignment_right_expression),
 
-    // TODO: improve this definition
+    label_assignment: ($) => seq($.string, ':', $._assignment_right_expression),
+
+    // TODO: get rid of subtree of identifiers here
     parameter: ($) => repeat1($.identifier),
 
     end_statement: ($) => seq('END', '.'),
@@ -270,7 +272,7 @@ module.exports = grammar({
     color_set_value: ($) =>
       seq(
         optional(choice('<', '>')),
-        choice($.number, $.string, $.variable, $.binary_expression, $.function_call),
+        choice($.number, $.string, $.field_expression, $.binary_expression, $.function_call),
       ),
 
     color_set_range: ($) => seq('RANGE', '(', $.color_set_value, ',', $.color_set_value, ')'),
@@ -281,7 +283,14 @@ module.exports = grammar({
     list: ($) =>
       seq(
         '[',
-        commaSep(choice($._assignment_right_expression, $.parameter_assignment, $.wildcard)),
+        commaSep(
+          choice(
+            $._assignment_right_expression,
+            $.parameter_assignment,
+            $.label_assignment,
+            $.wildcard,
+          ),
+        ),
         ']',
       ),
 
@@ -411,8 +420,6 @@ module.exports = grammar({
 
     while_loop: ($) => seq('WHILE', '(', $.condition, ')', $._function_expression),
 
-    variable: ($) => seq($.identifier, optional(seq('.', $.identifier))),
-
     ui_manager_block: ($) => seq('UI_MANAGER', repeat($.ui_declarations), 'END', 'UI_MANAGER', ';'),
 
     ui_declarations: ($) =>
@@ -445,7 +452,15 @@ module.exports = grammar({
       ),
 
     ui_declaration: ($) =>
-      seq(field('name', $.identifier), optional($.parameter_block), optional($.tuple)),
+      seq(field('name', $.identifier), optional($.parameter_block), optional($.ui_subitems)),
+
+    ui_subitems: ($) => seq('(', optionalCommaSep($.ui_subitem), ')'),
+
+    ui_subitem: ($) =>
+      choice(
+        seq($.list, $.tuple, optional($.list)),
+        seq($.identifier, optional($.parameter_block), $.tuple),
+      ),
 
     // TODO: MENU declaration
 

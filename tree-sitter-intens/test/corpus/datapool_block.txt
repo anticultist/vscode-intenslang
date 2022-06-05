@@ -275,7 +275,7 @@ DATAPOOL
   COLOR mycolor2 (
     INVALID = (red, black),
     < 0 = ("#fff", "#f00"),
-    < foo.foo = ("#fff", "#000"),
+    < foo.bar.baz = ("#fff", "#000"),
     RANGE(0, <2.1) = ("#ffffff", "#00ff00"),
     2 = ("#ffffff", "#0000ff"),
     "mytext" = ( "#e0e0e0", "#e0e0e0" ),
@@ -297,7 +297,7 @@ END DATAPOOL;
             (tuple (string) (string)))
           (color_set_item
             (color_set_value
-              (variable (identifier) (identifier)))
+              (field_expression (identifier) (identifier) (identifier)))
             (tuple (string) (string)))
           (color_set_item
             (color_set_range
