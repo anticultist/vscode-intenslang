@@ -112,7 +112,6 @@ module.exports = grammar({
       choice($.identifier, $.var_usage, $.field_expression, $.list),
 
     // TODO: improve name
-    // TODO: add support for '&&', '||', '&'
     _assignment_right_expression: ($) =>
       choice(
         $.identifier,
@@ -131,6 +130,7 @@ module.exports = grammar({
         $.list,
         $.negation,
         $.function_call,
+        // $.special_function_call,
       ),
 
     binary_expression: ($) => {
@@ -183,9 +183,19 @@ module.exports = grammar({
 
     field_expression: ($) =>
       choice(
-        seq(choice($.identifier, $.var_usage), $.list),
-        prec(PREC.FIELD, dotSep(seq(choice($.identifier, $.var_usage), optional($.list)))),
+        seq(choice($.identifier, $.var_usage), $.list, optional($.field_conversion)),
+        prec(
+          PREC.FIELD,
+          dotSep(
+            seq(choice($.identifier, $.var_usage), optional($.list), optional($.field_conversion)),
+          ),
+        ),
       ),
+
+    field_conversion: ($) =>
+      seq(':', $.number, optional(seq(':', $.number)), optional(seq(':', $.thousand_separator))),
+
+    thousand_separator: ($) => 'TSEP',
 
     var_usage: ($) => seq('VAR', '(', $._assignment_right_expression, ')'),
 

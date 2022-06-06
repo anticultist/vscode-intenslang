@@ -104,3 +104,21 @@ STREAMER
     foo, foo.baz:-10:2:TSEP
   );
 END STREAMER;
+
+---
+(source_file
+  (streamer_block
+    (stream_definition
+      (stream_identifier)
+      (parameter_block
+        (parameter_assignment
+          (parameter (identifier))
+          (string)))
+      (identifier)
+      (field_expression
+        (identifier)
+        (identifier)
+        (field_conversion
+          (number)
+          (number)
+          (thousand_separator))))))
