@@ -246,29 +246,29 @@ END UI_MANAGER;
 ---
 (source_file
   (ui_manager_block
-    (ui_declarations
-      (ui_declaration
+    (plot_declarations
+      (plot_declaration
         (identifier)
-        (parameter_block (string))
-        (ui_subitems
-          (ui_subitem
-            (identifier)
+        (parameter_block
+          (string))
+        (plot_items
+          (identifier)
+          (parameter_block
+            (parameter
+              (identifier))
             (parameter_block
-              (parameter
-                (identifier))
-              (parameter_block
-                (parameter_assignment
-                  (parameter (identifier))
-                  (string)))
-              (parameter (identifier))
-              (parameter_block
-                (parameter_assignment
-                  (parameter (identifier))
-                  (string))
-                (parameter_assignment
-                  (parameter (identifier))
-                  (string))))
-            (tuple)))))))
+              (parameter_assignment
+                (parameter (identifier))
+                (string)))
+            (parameter
+              (identifier))
+            (parameter_block
+              (parameter_assignment
+                (parameter (identifier))
+                (string))
+              (parameter_assignment
+                (parameter (identifier))
+                (string)))))))))
 
 =====================
 2d plot declaration 2
@@ -290,6 +290,76 @@ UI_MANAGER
     )
   );
 END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (plot_declarations
+      (plot_declaration
+        (identifier)
+        (parameter_block (string))
+        (plot_items
+          (identifier)
+          (parameter_block
+            (parameter (identifier))
+            (parameter_block
+              (parameter_assignment
+                (parameter (identifier))
+                (string)))
+            (parameter (identifier))
+            (parameter_block
+              (parameter_assignment
+                (parameter (identifier))
+                (string))
+              (parameter_assignment
+                (parameter (identifier))
+                (string))))
+          (plot_items
+            (binary_expression
+              (field_expression
+                (identifier)
+                (identifier))
+              (number))
+            (plot_items
+              (field_expression
+                (identifier)
+                (identifier))
+              (parameter_block
+                (parameter_assignment
+                  (parameter (identifier))
+                  (function_call
+                    (function_name)
+                    (function_arguments
+                      (field_expression (identifier) (identifier)))))
+                (parameter (identifier))))
+            (plot_items
+              (field_expression
+                (identifier)
+                (identifier))
+              (parameter_block
+                (parameter_assignment
+                  (parameter
+                    (identifier))
+                  (function_call
+                    (function_name)
+                    (function_arguments
+                      (field_expression (identifier) (identifier)))))
+                (parameter (identifier)))))
+          (plot_items
+            (binary_expression
+              (field_expression (identifier) (identifier))
+              (number))
+            (plot_items
+              (field_expression (identifier) (identifier))
+              (parameter_block
+                (parameter (identifier))
+                (function_call
+                  (function_name)
+                  (function_arguments
+                    (field_expression
+                      (identifier)
+                      (identifier)
+                      (list (wildcard)))))))))))))
 
 =================
 table declaration

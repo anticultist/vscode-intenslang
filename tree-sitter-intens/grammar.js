@@ -464,6 +464,7 @@ module.exports = grammar({
             $.field_group_declarations,
             $.form_declarations,
             $.menu_declarations,
+            $.plot_declarations,
             $.ui_declarations,
             $.table_declarations,
           ),
@@ -476,25 +477,23 @@ module.exports = grammar({
     // NOTE: this is a generalized superset
     ui_declarations: ($) =>
       seq(
-        choice(
-          'FOLDER',
-          'IMAGE',
-          'INDEX',
-          'LINEPLOT',
-          'LIST',
-          'LISTPLOT',
-          'LOG_WINDOW',
-          'NAVIGATOR',
-          'PLOT2D',
-          'PLUGIN',
-          'PSPLOT',
-          'STD_WINDOW',
-          'TEXT_WINDOW',
-          'THERMO',
-          'TIMETABLE',
-          'UNIPLOT',
-          'XRT3DPLOT',
-          'XRTGRAPH',
+        field(
+          'type',
+          choice(
+            'FOLDER',
+            'IMAGE',
+            'INDEX',
+            'LIST',
+            'LOG_WINDOW',
+            'NAVIGATOR',
+            'PLUGIN',
+            'PSPLOT',
+            'STD_WINDOW',
+            'TEXT_WINDOW',
+            'THERMO',
+            'TIMETABLE',
+            'UNIPLOT',
+          ),
         ),
         commaSep($.ui_declaration),
         ';',
@@ -575,6 +574,29 @@ module.exports = grammar({
         '(',
         optional($.menu_items),
         ')',
+      ),
+
+    plot_declarations: ($) =>
+      seq(
+        field('type', choice('LINEPLOT', 'LISTPLOT', 'PLOT2D', 'XRT3DPLOT', 'XRTGRAPH')),
+        commaSep($.plot_declaration),
+        ';',
+      ),
+
+    plot_declaration: ($) =>
+      seq(
+        field('name', $.identifier),
+        optional($.parameter_block),
+        '(',
+        optional($.plot_items),
+        ')',
+      ),
+
+    plot_items: ($) =>
+      seq(
+        $._assignment_right_expression,
+        optional($.parameter_block),
+        optional(seq('(', optionalCommaSep($.plot_items), ')')),
       ),
 
     table_declarations: ($) => seq('TABLE', commaSep($.table_declaration), ';'),
