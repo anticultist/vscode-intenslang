@@ -11,6 +11,7 @@ const PREC = {
   MULTIPLY: 11,
   CALL: 12,
   FIELD: 13,
+  FIELD_ALIGNMENT: 14,
 };
 
 module.exports = grammar({
@@ -523,7 +524,16 @@ module.exports = grammar({
 
     field_group_lines: ($) => seq('(', optionalCommaSep($.field_group_line), ')'),
 
-    field_group_line: ($) => repeat1($._assignment_right_expression),
+    field_group_line: ($) =>
+      repeat1(
+        seq(
+          $._assignment_right_expression,
+          optional($.field_alignment),
+          optional($.parameter_block),
+        ),
+      ),
+
+    field_alignment: ($) => prec(PREC.FIELD_ALIGNMENT, choice('<', '>', '|')),
 
     form_declarations: ($) => seq('FORM', commaSep($.form_declaration), ';'),
 

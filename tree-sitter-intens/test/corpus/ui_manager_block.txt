@@ -82,6 +82,73 @@ END UI_MANAGER;
             (identifier)))
         (field_group_lines)))))
 
+===========================================
+field group declaration with line parameter
+===========================================
+
+UI_MANAGER
+  FIELDGROUP
+    foo_fg (
+      LABEL(foo.bar) " " foo_folder{COLSPAN=2}
+    );
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (field_group_declarations
+      (field_group_declaration
+        (identifier)
+        (field_group_lines
+          (field_group_line
+            (function_call
+              (function_name)
+              (function_arguments
+                (field_expression
+                  (identifier)
+                  (identifier))))
+            (string)
+            (identifier)
+            (parameter_block
+              (parameter_assignment
+                (parameter (identifier))
+                (number)))))))))
+
+======================================
+field group declaration with alignment
+======================================
+
+UI_MANAGER
+  FIELDGROUP
+    foo_fg (
+      LABEL(foo.bar){COLSPAN=2} foo.bar> VOID
+    );
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (field_group_declarations
+      (field_group_declaration
+        (identifier)
+        (field_group_lines
+          (field_group_line
+            (function_call
+              (function_name)
+              (function_arguments
+                (field_expression
+                  (identifier)
+                  (identifier))))
+            (parameter_block
+              (parameter_assignment
+                (parameter (identifier))
+                (number)))
+            (field_expression
+              (identifier)
+              (identifier))
+            (field_alignment)
+            (identifier)))))))
+
 ==================
 folder declaration
 ==================
