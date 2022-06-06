@@ -149,6 +149,57 @@ END UI_MANAGER;
             (field_alignment)
             (identifier)))))))
 
+
+=============================================
+field group declaration with field conversion
+=============================================
+
+UI_MANAGER
+  FIELDGROUP
+    foo1_fg (
+      bar*1e9:9:2
+    ),
+    foo2_fg (
+      bar:9:2
+    ),
+    foo3_fg (
+      foo[4]:9:2
+    );
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (field_group_declarations
+      (field_group_declaration
+        (identifier)
+        (field_group_lines
+          (field_group_line
+            (binary_expression
+              (identifier)
+              (number))
+            (field_conversion
+              (number)
+              (number)))))
+      (field_group_declaration
+        (identifier)
+        (field_group_lines
+          (field_group_line
+            (identifier)
+            (field_conversion
+              (number)
+              (number)))))
+      (field_group_declaration
+        (identifier)
+        (field_group_lines
+          (field_group_line
+            (field_expression
+              (identifier)
+              (list (number)))
+            (field_conversion
+              (number)
+              (number))))))))
+
 ==================
 folder declaration
 ==================
@@ -179,9 +230,9 @@ END UI_MANAGER;
               (identifier))
             (tuple (identifier))))))))
 
-===================
-2d plot declaration
-===================
+=====================
+2d plot declaration 1
+=====================
 
 UI_MANAGER
   PLOT2D my_plot {"My Plot"} (
@@ -218,6 +269,27 @@ END UI_MANAGER;
                   (parameter (identifier))
                   (string))))
             (tuple)))))))
+
+=====================
+2d plot declaration 2
+=====================
+
+UI_MANAGER
+  PLOT2D my_plot {"My Plot"} (
+    plot {
+      XAXIS { LABEL="X-Axis" },
+      YAXIS1 { LABEL="Y-Axis", FORMAT="10" }
+    } (
+      foo.bar*1e3 (
+        foo.bar { LABEL=LABEL(foo.bar), YAXIS1 },
+        foo.bar { LABEL=LABEL(foo.bar), YAXIS1 }
+      ),
+      foo.bar*1e3 (
+        foo.bar { YAXIS1, MARKER(foo.bar[*]) }
+      )
+    )
+  );
+END UI_MANAGER;
 
 =================
 table declaration

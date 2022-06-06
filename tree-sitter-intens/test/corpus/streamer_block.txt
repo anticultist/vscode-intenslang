@@ -117,8 +117,8 @@ END STREAMER;
       (identifier)
       (field_expression
         (identifier)
-        (identifier)
-        (field_conversion
-          (number)
-          (number)
-          (thousand_separator))))))
+        (identifier))
+      (field_conversion
+        (number)
+        (number)
+        (thousand_separator)))))

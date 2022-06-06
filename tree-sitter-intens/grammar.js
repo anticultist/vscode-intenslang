@@ -184,13 +184,8 @@ module.exports = grammar({
 
     field_expression: ($) =>
       choice(
-        seq(choice($.identifier, $.var_usage), $.list, optional($.field_conversion)),
-        prec(
-          PREC.FIELD,
-          dotSep(
-            seq(choice($.identifier, $.var_usage), optional($.list), optional($.field_conversion)),
-          ),
-        ),
+        seq(choice($.identifier, $.var_usage), $.list),
+        prec(PREC.FIELD, dotSep(seq(choice($.identifier, $.var_usage), optional($.list)))),
       ),
 
     field_conversion: ($) =>
@@ -377,7 +372,7 @@ module.exports = grammar({
         field('name', alias($.identifier, $.stream_identifier)),
         optional($.parameter_block),
         '(',
-        commaSep($._assignment_right_expression),
+        commaSep(seq($._assignment_right_expression, optional($.field_conversion))),
         ')',
         ';',
       ),
@@ -528,6 +523,7 @@ module.exports = grammar({
       repeat1(
         seq(
           $._assignment_right_expression,
+          optional($.field_conversion),
           optional($.field_alignment),
           optional($.parameter_block),
         ),
