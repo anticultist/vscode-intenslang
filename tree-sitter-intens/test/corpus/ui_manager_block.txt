@@ -198,6 +198,114 @@ END UI_MANAGER;
           (function_call (function_name))
           (function_call (function_name)))))))
 
+=================
+image declaration
+=================
+
+UI_MANAGER
+  IMAGE img1 {
+    SIZE(256,256),
+    SOCKET=my_socket,
+    SETTINGS=foo.bar};
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (ui_declarations
+      (ui_declaration
+        (identifier)
+        (parameter_block
+          (function_call
+            (function_name)
+            (function_arguments (number) (number)))
+          (parameter_assignment
+            (parameter (identifier))
+            (identifier))
+          (parameter_assignment
+            (parameter (identifier))
+            (field_expression (identifier) (identifier))))))))
+
+================
+form declaration
+================
+
+UI_MANAGER
+  FORM
+    my_form1 {
+        "fancy name 1",
+        HIDDEN,
+        CLOSE_BUTTON=NONE,
+        FUNC=myfunc4
+      }
+      ( ),
+    log_win_form {
+        "Logging Window"
+      }
+      (LOG_WINDOW { SIZE=2000 } ),
+    other_form { "My Control"}
+    (
+      (
+        (
+          (
+            foo_fg,
+            VOID(20),
+            bar_fg
+          )[FRAME]
+        )
+        , VOID(20)
+      )
+    );
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (form_declarations
+      (form_declaration
+        (identifier)
+        (parameter_block
+          (string)
+          (parameter (identifier))
+          (parameter_assignment
+            (parameter (identifier))
+            (none))
+          (parameter_assignment
+            (parameter (identifier))
+            (identifier)))
+        (form_element_list))
+      (form_declaration
+        (identifier)
+        (parameter_block
+          (string))
+        (form_element_list
+          (special_function_call
+            (function_name)
+            (function_arguments
+              (parameter_assignment
+                (parameter (identifier))
+                (number))))))
+      (form_declaration
+        (identifier)
+        (parameter_block
+          (string))
+        (form_element_list
+          (form_element_list
+            (form_element_list
+              (form_element_list
+                (parameter (identifier))
+                (function_call
+                  (function_name)
+                  (function_arguments
+                    (number)))
+                (parameter (identifier))
+                (form_element_options
+                  (parameter (identifier)))))
+            (function_call
+              (function_name)
+              (function_arguments
+                (number)))))))))
+
 ================
 menu declaration
 ================
@@ -209,3 +317,31 @@ UI_MANAGER
                FORM fancy_form,
                FUNC bye_func="Quit");
 END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (menu_declarations
+      (menu_declaration
+        (identifier)
+        (parameter_block
+          (parameter (identifier)))
+        (menu_items
+          (parameter (identifier))))
+      (menu_declaration
+        (string)
+        (menu_items
+          (menu_function_item
+            (identifier)
+            (string))
+          (menu_submenu_item
+            (string)
+            (menu_items
+              (menu_function_item
+                (identifier)
+                (string))))
+          (menu_form_item
+            (identifier))
+          (menu_function_item
+            (identifier)
+            (string)))))))

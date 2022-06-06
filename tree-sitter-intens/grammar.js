@@ -172,6 +172,12 @@ module.exports = grammar({
         seq(alias($.identifier, $.function_name), '(', optional($.function_arguments), ')'),
       ),
 
+    special_function_call: ($) =>
+      prec(
+        PREC.CALL,
+        seq(alias($.identifier, $.function_name), '{', optional($.function_arguments), '}'),
+      ),
+
     function_arguments: ($) =>
       commaSep(choice($._assignment_right_expression, $.parameter_assignment)),
 
@@ -447,7 +453,15 @@ module.exports = grammar({
     ui_manager_block: ($) =>
       seq(
         'UI_MANAGER',
-        repeat(choice($.field_group_declarations, $.ui_declarations, $.table_declarations)),
+        repeat(
+          choice(
+            $.field_group_declarations,
+            $.form_declarations,
+            $.menu_declarations,
+            $.ui_declarations,
+            $.table_declarations,
+          ),
+        ),
         'END',
         'UI_MANAGER',
         ';',
@@ -458,7 +472,6 @@ module.exports = grammar({
       seq(
         choice(
           'FOLDER',
-          'FORM',
           'IMAGE',
           'INDEX',
           'LINEPLOT',
@@ -502,14 +515,58 @@ module.exports = grammar({
 
     field_group_line: ($) => repeat1($._assignment_right_expression),
 
+    form_declarations: ($) => seq('FORM', commaSep($.form_declaration), ';'),
+
+    form_declaration: ($) =>
+      seq(field('name', $.identifier), optional($.parameter_block), $.form_element_list),
+
+    form_element_list: ($) =>
+      seq(
+        '(',
+        optionalCommaSep(
+          choice($.parameter, $.function_call, $.special_function_call, $.form_element_list),
+        ),
+        ')',
+        optional($.form_element_options),
+      ),
+
+    form_element_options: ($) =>
+      seq('[', optionalCommaSep(choice($.parameter, $.parameter_assignment)), ']'),
+
+    menu_declarations: ($) => seq('MENU', commaSep($.menu_declaration), ';'),
+
+    menu_declaration: ($) =>
+      seq(
+        field('name', choice($.identifier, $.string)),
+        optional($.parameter_block),
+        '(',
+        optional($.menu_items),
+        ')',
+      ),
+
+    menu_items: ($) =>
+      commaSep(choice($.menu_function_item, $.menu_form_item, $.menu_submenu_item, $.parameter)),
+
+    menu_function_item: ($) => seq('FUNC', $.identifier, '=', $.string),
+
+    menu_form_item: ($) => seq('FORM', $.identifier),
+
+    menu_submenu_item: ($) =>
+      seq(
+        'MENU',
+        field('name', choice($.identifier, $.string)),
+        optional($.parameter_block),
+        '(',
+        optional($.menu_items),
+        ')',
+      ),
+
     table_declarations: ($) => seq('TABLE', commaSep($.table_declaration), ';'),
 
     table_declaration: ($) =>
       seq(field('name', $.identifier), optional($.parameter_block), $.table_configuration),
 
     table_configuration: ($) => seq('(', optional(repeat(seq($.function_call, ';'))), ')'),
-
-    // TODO: MENU declaration
 
     db_manager_block: ($) =>
       seq('DB_MANAGER', repeat($._db_manager_block_expression), 'END', 'DB_MANAGER', ';'),
