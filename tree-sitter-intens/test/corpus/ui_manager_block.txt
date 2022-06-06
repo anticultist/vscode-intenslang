@@ -200,6 +200,17 @@ END UI_MANAGER;
               (number)
               (number))))))))
 
+=========================================
+field group declaration with field access
+=========================================
+
+UI_MANAGER
+  FIELDGROUP
+    foo1_fg (
+      foo.bar[0].baz
+    );
+END UI_MANAGER;
+
 ==================
 folder declaration
 ==================

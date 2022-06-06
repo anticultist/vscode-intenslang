@@ -183,9 +183,12 @@ module.exports = grammar({
       commaSep(choice($._assignment_right_expression, $.parameter_assignment)),
 
     field_expression: ($) =>
-      choice(
-        seq(choice($.identifier, $.var_usage), $.list),
-        prec(PREC.FIELD, dotSep(seq(choice($.identifier, $.var_usage), optional($.list)))),
+      prec(
+        PREC.FIELD,
+        choice(
+          seq(choice($.identifier, $.var_usage), $.list),
+          dotSep(seq(choice($.identifier, $.var_usage), prec(30, optional($.list)))),
+        ),
       ),
 
     field_conversion: ($) =>
@@ -314,17 +317,20 @@ module.exports = grammar({
       ),
 
     list: ($) =>
-      seq(
-        '[',
-        commaSep(
-          choice(
-            $._assignment_right_expression,
-            $.parameter_assignment,
-            $.label_assignment,
-            $.wildcard,
+      prec(
+        -1,
+        seq(
+          '[',
+          commaSep(
+            choice(
+              $._assignment_right_expression,
+              $.parameter_assignment,
+              $.label_assignment,
+              $.wildcard,
+            ),
           ),
+          ']',
         ),
-        ']',
       ),
 
     wildcard: ($) => choice('*', '#', /#[a-zA-Z_0-9#]*/),
