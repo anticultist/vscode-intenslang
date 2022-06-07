@@ -33,7 +33,8 @@
           ".inc",
           ".des.in",
           ".inc.in"
-        ]
+        ],
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
