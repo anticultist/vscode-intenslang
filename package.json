@@ -4,6 +4,8 @@
   "description": "Unofficial syntax definition for the INTENS language",
   "license": "ISC",
   "version": "0.1.0",
+  "publisher": "anticultist",
+  "icon": "images/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/anticultist/vscode-intenslang"
