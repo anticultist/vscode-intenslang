@@ -468,6 +468,7 @@ module.exports = grammar({
         repeat(
           choice(
             $.field_group_declarations,
+            $.folder_declarations,
             $.form_declarations,
             $.menu_declarations,
             $.plot_declarations,
@@ -486,7 +487,6 @@ module.exports = grammar({
         field(
           'type',
           choice(
-            'FOLDER',
             'IMAGE',
             'INDEX',
             'LIST',
@@ -535,6 +535,22 @@ module.exports = grammar({
       ),
 
     field_alignment: ($) => prec(PREC.FIELD_ALIGNMENT, choice('<', '>', '|')),
+
+    folder_declarations: ($) => seq('FOLDER', commaSep($.folder_declaration), ';'),
+
+    folder_declaration: ($) =>
+      seq(field('name', $.identifier), optional($.parameter_block), optional($.folder_elements)),
+
+    folder_elements: ($) => seq('(', commaSep($.folder_element), ')'),
+
+    folder_element: ($) =>
+      seq(
+        optional(alias($.list, $.folder_element_properties)),
+        $.folder_subitems,
+        optional(alias($.list, $.folder_element_options)),
+      ),
+
+    folder_subitems: ($) => seq('(', commaSep(choice($.identifier, $.folder_element)), ')'),
 
     form_declarations: ($) => seq('FORM', commaSep($.form_declaration), ';'),
 

@@ -211,9 +211,9 @@ UI_MANAGER
     );
 END UI_MANAGER;
 
-==================
-folder declaration
-==================
+====================
+folder declaration 1
+====================
 
 UI_MANAGER
   FOLDER my_folder { LEFT, VERTICAL, STRETCH } (
@@ -224,22 +224,82 @@ END UI_MANAGER;
 ---
 (source_file
   (ui_manager_block
-    (ui_declarations
-      (ui_declaration
+    (folder_declarations
+      (folder_declaration
         (identifier)
         (parameter_block
           (parameter (identifier))
           (parameter (identifier))
           (parameter (identifier)))
-        (ui_subitems
-          (ui_subitem
-            (list
+        (folder_elements
+          (folder_element
+            (folder_element_properties
               (label_assignment (string) (identifier))
               (parameter_assignment
                 (parameter (identifier))
                 (identifier))
               (identifier))
-            (tuple (identifier))))))))
+            (folder_subitems (identifier))))))))
+
+====================
+folder declaration 2
+====================
+
+UI_MANAGER
+  FOLDER my_folder { LEFT, VERTICAL, STRETCH } (
+      ["A":baz, FUNC = myfunc4, FRAME] (
+        (
+          ( foo_fg ),
+          ( bar_fg )
+        ) [FRAME, "C"]
+      ),
+      ["B":baz, FUNC = myfunc4, FRAME] (my_group_fg)
+    );
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (folder_declarations
+      (folder_declaration
+        (identifier)
+        (parameter_block
+          (parameter (identifier))
+          (parameter (identifier))
+          (parameter (identifier)))
+        (folder_elements
+          (folder_element
+            (folder_element_properties
+              (label_assignment
+                (string)
+                (identifier))
+              (parameter_assignment
+                (parameter (identifier))
+                (identifier))
+              (identifier))
+            (folder_subitems
+              (folder_element
+                (folder_subitems
+                  (folder_element
+                    (folder_subitems
+                      (identifier)))
+                  (folder_element
+                    (folder_subitems
+                      (identifier))))
+                (folder_element_options
+                  (identifier)
+                  (string)))))
+          (folder_element
+            (folder_element_properties
+              (label_assignment
+                (string)
+                (identifier))
+              (parameter_assignment
+                (parameter (identifier))
+                (identifier))
+              (identifier))
+            (folder_subitems
+              (identifier))))))))
 
 =====================
 2d plot declaration 1
