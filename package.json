@@ -3,7 +3,7 @@
   "displayName": "INTENS Language",
   "description": "Unofficial syntax definition for the INTENS language",
   "license": "ISC",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "anticultist",
   "icon": "images/icon.png",
   "repository": {
