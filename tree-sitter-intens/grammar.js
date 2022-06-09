@@ -257,11 +257,11 @@ module.exports = grammar({
     _datapool_block_expression: ($) =>
       choice(
         $._expression,
+        $.colors_declaration,
+        $.custom_variable_type_declaration,
         $.sets_declaration,
         $.structure_declaration,
-        $.colors_declaration,
         $.variables_declaration,
-        $.custom_variable_type_declaration,
       ),
 
     variables_declaration: ($) =>
@@ -402,7 +402,7 @@ module.exports = grammar({
     // NOTE: this is a generalized superset
     operator_declaration: ($) =>
       seq(
-        field('name', $.identifier),
+        field('name', alias($.identifier, $.operator_identifier)),
         optional(seq(':', alias($.identifier, $.parent))),
         optional(seq('=', alias($.identifier, $.reference))),
         optional($.parameter_block),
@@ -506,7 +506,11 @@ module.exports = grammar({
       ),
 
     ui_declaration: ($) =>
-      seq(field('name', $.identifier), optional($.parameter_block), optional($.ui_subitems)),
+      seq(
+        field('name', alias($.identifier, $.ui_identifier)),
+        optional($.parameter_block),
+        optional($.ui_subitems),
+      ),
 
     ui_subitems: ($) => seq('(', optional(commaSep($.ui_subitem)), ')'),
 
@@ -520,7 +524,11 @@ module.exports = grammar({
     field_group_declarations: ($) => seq('FIELDGROUP', commaSep($.field_group_declaration), ';'),
 
     field_group_declaration: ($) =>
-      seq(field('name', $.identifier), optional($.parameter_block), $.field_group_lines),
+      seq(
+        field('name', alias($.identifier, $.ui_identifier)),
+        optional($.parameter_block),
+        $.field_group_lines,
+      ),
 
     field_group_lines: ($) => seq('(', optionalCommaSep($.field_group_line), ')'),
 
@@ -539,7 +547,11 @@ module.exports = grammar({
     folder_declarations: ($) => seq('FOLDER', commaSep($.folder_declaration), ';'),
 
     folder_declaration: ($) =>
-      seq(field('name', $.identifier), optional($.parameter_block), optional($.folder_elements)),
+      seq(
+        field('name', alias($.identifier, $.ui_identifier)),
+        optional($.parameter_block),
+        optional($.folder_elements),
+      ),
 
     folder_elements: ($) => seq('(', commaSep($.folder_element), ')'),
 
@@ -555,7 +567,11 @@ module.exports = grammar({
     form_declarations: ($) => seq('FORM', commaSep($.form_declaration), ';'),
 
     form_declaration: ($) =>
-      seq(field('name', $.identifier), optional($.parameter_block), $.form_element_list),
+      seq(
+        field('name', alias($.identifier, $.ui_identifier)),
+        optional($.parameter_block),
+        $.form_element_list,
+      ),
 
     form_element_list: ($) =>
       seq(
@@ -607,7 +623,7 @@ module.exports = grammar({
 
     plot_declaration: ($) =>
       seq(
-        field('name', $.identifier),
+        field('name', alias($.identifier, $.ui_identifier)),
         optional($.parameter_block),
         '(',
         optional($.plot_items),
@@ -624,7 +640,11 @@ module.exports = grammar({
     table_declarations: ($) => seq('TABLE', commaSep($.table_declaration), ';'),
 
     table_declaration: ($) =>
-      seq(field('name', $.identifier), optional($.parameter_block), $.table_configuration),
+      seq(
+        field('name', alias($.identifier, $.ui_identifier)),
+        optional($.parameter_block),
+        $.table_configuration,
+      ),
 
     table_configuration: ($) => seq('(', optional(repeat(seq($.function_call, ';'))), ')'),
 

@@ -22,7 +22,7 @@ END UI_MANAGER;
   (ui_manager_block
     (ui_declarations
       (ui_declaration
-        (identifier)))))
+        (ui_identifier)))))
 
 ================================================
 empty field group with space separated parameter
@@ -39,7 +39,7 @@ END UI_MANAGER;
   (ui_manager_block
     (field_group_declarations
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (parameter_assignment (parameter (identifier) (identifier)) (identifier)))
         (field_group_lines)))))
@@ -63,7 +63,7 @@ END UI_MANAGER;
   (ui_manager_block
     (field_group_declarations
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (function_call
             (function_name)
@@ -75,7 +75,7 @@ END UI_MANAGER;
           (field_group_line
             (string))))
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (parameter_assignment
             (parameter (identifier) (identifier))
@@ -98,7 +98,7 @@ END UI_MANAGER;
   (ui_manager_block
     (field_group_declarations
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (field_group_lines
           (field_group_line
             (function_call
@@ -130,7 +130,7 @@ END UI_MANAGER;
   (ui_manager_block
     (field_group_declarations
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (field_group_lines
           (field_group_line
             (function_call
@@ -172,7 +172,7 @@ END UI_MANAGER;
   (ui_manager_block
     (field_group_declarations
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (field_group_lines
           (field_group_line
             (binary_expression
@@ -182,7 +182,7 @@ END UI_MANAGER;
               (number)
               (number)))))
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (field_group_lines
           (field_group_line
             (identifier)
@@ -190,7 +190,7 @@ END UI_MANAGER;
               (number)
               (number)))))
       (field_group_declaration
-        (identifier)
+        (ui_identifier)
         (field_group_lines
           (field_group_line
             (field_expression
@@ -226,7 +226,7 @@ END UI_MANAGER;
   (ui_manager_block
     (folder_declarations
       (folder_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (parameter (identifier))
           (parameter (identifier))
@@ -262,7 +262,7 @@ END UI_MANAGER;
   (ui_manager_block
     (folder_declarations
       (folder_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (parameter (identifier))
           (parameter (identifier))
@@ -319,7 +319,7 @@ END UI_MANAGER;
   (ui_manager_block
     (plot_declarations
       (plot_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (string))
         (plot_items
@@ -367,7 +367,7 @@ END UI_MANAGER;
   (ui_manager_block
     (plot_declarations
       (plot_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block (string))
         (plot_items
           (identifier)
@@ -453,7 +453,7 @@ END UI_MANAGER;
   (ui_manager_block
     (table_declarations
       (table_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (function_call
             (function_name)
@@ -494,7 +494,7 @@ END UI_MANAGER;
   (ui_manager_block
     (ui_declarations
       (ui_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (function_call
             (function_name)
@@ -543,7 +543,7 @@ END UI_MANAGER;
   (ui_manager_block
     (form_declarations
       (form_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (string)
           (parameter (identifier))
@@ -555,7 +555,7 @@ END UI_MANAGER;
             (identifier)))
         (form_element_list))
       (form_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (string))
         (form_element_list
@@ -566,7 +566,7 @@ END UI_MANAGER;
                 (parameter (identifier))
                 (number))))))
       (form_declaration
-        (identifier)
+        (ui_identifier)
         (parameter_block
           (string))
         (form_element_list

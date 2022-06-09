@@ -70,7 +70,7 @@ END OPERATOR;
   (operator_block
     (operators_declaration
       (operator_declaration
-        (identifier)
+        (operator_identifier)
         (parent)
         (parameter_block (string))))))
 
@@ -88,7 +88,7 @@ END OPERATOR;
   (operator_block
     (operators_declaration
       (operator_declaration
-        (identifier)
+        (operator_identifier)
         (reference)
         (parameter_block
           (string)
@@ -113,7 +113,7 @@ END OPERATOR;
   (operator_block
     (operators_declaration
       (operator_declaration
-        (identifier)
+        (operator_identifier)
         (parameter_block
           (parameter (identifier))
           (parameter_assignment (parameter (identifier)) (number))
@@ -146,7 +146,7 @@ END OPERATOR;
   (operator_block
     (operators_declaration
       (operator_declaration
-        (identifier)
+        (operator_identifier)
         (parameter_block
           (string)
           (parameter_assignment (parameter (identifier)) (none))
