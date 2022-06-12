@@ -159,9 +159,9 @@ END FUNCTIONS;
             (condition
               (binary_expression (true) (true)))))))))
 
-=================
-if-else statement
-=================
+===================
+if-else statement 1
+===================
 
 FUNCTIONS
   FUNC my_func {
@@ -180,6 +180,21 @@ END FUNCTIONS;
           (if_statement
             (condition (false))
             (else_part)))))))
+
+===================
+if-else statement 2
+===================
+
+FUNCTIONS
+  FUNC my_func {
+    IF (is_name_given)
+      MESSAGEBOX(COMPOSE("Hello %1!", name));
+    ELSE
+      MESSAGEBOX("Hello World!");
+  };
+END FUNCTIONS;
+
+---
 
 ==============================
 ambiguous if-if-else statement
@@ -237,7 +252,6 @@ FUNCTIONS
 END FUNCTIONS;
 
 ---
-
 (source_file
   (functions_block
     (functions_declaration
@@ -316,6 +330,50 @@ END FUNCTIONS;
         (function_identifier)
         (function_body
           (exit))))))
+
+=================
+abort statement 1
+=================
+
+FUNCTIONS
+  FUNC my_func {
+    ABORT;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (abort))))))
+
+=================
+abort statement 2
+=================
+
+FUNCTIONS
+  FUNC my_func {
+    ABORT("Lorem ipsum" + EOLN + "Foo bar!");
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (abort
+            (function_arguments
+              (binary_expression
+                (binary_expression
+                  (string)
+                  (eoln))
+                (string)))))))))
 
 ===================
 increment statement
@@ -453,3 +511,15 @@ END FUNCTIONS;
                 (function_arguments
                   (string)
                   (string))))))))))
+
+=========================================================
+function call with a string containing escaped characters
+=========================================================
+
+FUNCTIONS
+  FUNC my_func {
+    MESSAGEBOX("\"" + "Lorem" + EOLN + "ipsum" + "\"");
+  };
+END FUNCTIONS;
+
+---

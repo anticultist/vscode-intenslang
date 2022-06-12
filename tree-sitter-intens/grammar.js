@@ -58,7 +58,18 @@ module.exports = grammar({
 
     // preprocessor_directive: ($) => seq('#', $.number, $.string),
 
-    string: ($) => seq('"', repeat(choice(/[^"\\\n]+|\\\r?\n/, '#')), '"'),
+    string: ($) => seq('"', repeat(choice(/[^"\\\n]+|\\\r?\n/, '#', $.escape_sequence)), '"'),
+
+    escape_sequence: ($) =>
+      token(
+        prec(
+          1,
+          seq(
+            '\\',
+            choice(/[^xuU]/, /\d{2,3}/, /x[0-9a-fA-F]{2,}/, /u[0-9a-fA-F]{4}/, /U[0-9a-fA-F]{8}/),
+          ),
+        ),
+      ),
 
     number: ($) =>
       token(
@@ -190,8 +201,12 @@ module.exports = grammar({
       prec(
         PREC.FIELD,
         choice(
-          seq(choice($.identifier, $.var_usage), $.list),
-          dotSep(seq(choice($.identifier, $.var_usage), prec(30, optional($.list)))),
+          seq(choice($.identifier, $.var_usage), $.field_conversion),
+          seq(choice($.identifier, $.var_usage), $.list, optional($.field_conversion)),
+          seq(
+            dotSep(seq(choice($.identifier, $.var_usage), optional($.list))),
+            optional($.field_conversion),
+          ),
         ),
       ),
 
@@ -382,7 +397,7 @@ module.exports = grammar({
         field('name', alias($.identifier, $.stream_identifier)),
         optional($.parameter_block),
         '(',
-        commaSep(seq($._assignment_right_expression, optional($.field_conversion))),
+        commaSep($._assignment_right_expression),
         ')',
         ';',
       ),
@@ -449,6 +464,7 @@ module.exports = grammar({
         $.while_loop,
         $.block,
         $.return,
+        $.abort,
         $.exit,
         $.function_call,
         $.update_expression,
@@ -459,6 +475,8 @@ module.exports = grammar({
     block: ($) => seq('{', repeat($._function_expression), '}'),
 
     return: ($) => seq('RETURN', ';'),
+
+    abort: ($) => seq('ABORT', optional(seq('(', optional($.function_arguments), ')')), ';'),
 
     exit: ($) => seq('EXIT', ';'),
 
@@ -547,7 +565,6 @@ module.exports = grammar({
       repeat1(
         seq(
           $._assignment_right_expression,
-          optional($.field_conversion),
           optional($.field_alignment),
           optional($.parameter_block),
         ),

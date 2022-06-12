@@ -211,6 +211,8 @@ UI_MANAGER
     );
 END UI_MANAGER;
 
+---
+
 ====================
 folder declaration 1
 ====================

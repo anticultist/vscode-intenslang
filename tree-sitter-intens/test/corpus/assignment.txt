@@ -54,7 +54,6 @@ number addition 2
 foo = 1 + 2 + 3;
 
 ---
-
 (source_file
   (assignment
     (identifier)
@@ -204,7 +203,6 @@ boolean comparison
 foo = 1 < 2;
 
 ---
-
 (source_file
   (assignment
     (identifier)
@@ -321,6 +319,25 @@ field expression 5
 ==================
 
 foo = COMPARE(foo.bar_baz[*]:19, THIS.object[m,n]);
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (function_call
+      (function_name)
+      (function_arguments
+        (field_expression
+          (identifier)
+          (identifier)
+          (list (wildcard))
+          (field_conversion (number)))
+        (field_expression
+          (identifier)
+          (identifier)
+          (list
+            (identifier)
+            (identifier)))))))
 
 ==================
 unary expression 1

@@ -184,6 +184,20 @@ DATAPOOL
   SET my_set1 {GLOBAL, INVALID=NONE} ("");
 END DATAPOOL;
 
+---
+(source_file
+  (datapool_block
+    (sets_declaration
+      (set_declaration
+        (set_identifier)
+        (parameter_block
+          (parameter (identifier))
+          (parameter_assignment
+            (parameter (identifier))
+            (none)))
+        (set_item
+          (string))))))
+
 =======================
 structure declaration 1
 =======================
@@ -381,7 +395,6 @@ DATAPOOL
 END DATAPOOL;
 
 ---
-
 (source_file
   (datapool_block
     (custom_variable_type_declaration

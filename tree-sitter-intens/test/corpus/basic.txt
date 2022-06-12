@@ -29,6 +29,17 @@ hash string
 (source_file
   (string))
 
+===============================
+string with an escape character
+===============================
+
+"\""
+
+---
+(source_file
+  (string
+    (escape_sequence)))
+
 ==============
 integer number
 ==============
