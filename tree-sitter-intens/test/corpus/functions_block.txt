@@ -317,6 +317,50 @@ END FUNCTIONS;
         (function_body
           (exit))))))
 
+===================
+increment statement
+===================
+
+FUNCTIONS
+  FUNC my_func {
+    i++;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (update_expression
+            (identifier)))))))
+
+===================
+decrement statement
+===================
+
+FUNCTIONS
+  FUNC my_func {
+    foo.bar[i]--;
+  };
+END FUNCTIONS;
+
+---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (update_expression
+            (field_expression
+              (identifier)
+              (identifier)
+              (list
+                (identifier)))))))))
+
 ====================
 variable declaration
 ====================

@@ -132,9 +132,9 @@ END OPERATOR;
               (number)
               (number))))))))
 
-==========================
-progress group declaration
-==========================
+============================
+progress group declaration 1
+============================
 
 OPERATOR
   PROCESSGROUP my_process_group_pg {"My name2", FORM=NONE, HIDDEN}
@@ -155,3 +155,22 @@ END OPERATOR;
           (assignment
             (list (field_expression (identifier) (identifier)))
             (function_call (function_name))))))))
+
+============================
+progress group declaration 2
+============================
+
+OPERATOR
+  PROCESSGROUP my_process_group_pg
+    ( my_process_pr(); );
+END OPERATOR;
+
+---
+(source_file
+  (operator_block
+    (operators_declaration
+      (operator_declaration
+        (operator_identifier)
+        (operator_statements
+          (function_call
+            (function_name)))))))

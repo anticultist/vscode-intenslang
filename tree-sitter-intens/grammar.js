@@ -9,9 +9,11 @@ const PREC = {
   RELATIONAL: 7,
   ADD: 10,
   MULTIPLY: 11,
-  CALL: 12,
-  FIELD: 13,
-  FIELD_ALIGNMENT: 14,
+  POWER: 12,
+  CALL: 13,
+  UNARY: 14,
+  FIELD: 15,
+  FIELD_ALIGNMENT: 16,
 };
 
 module.exports = grammar({
@@ -127,9 +129,9 @@ module.exports = grammar({
         $.none,
         $.reason,
         $.binary_expression,
+        $.unary_expression,
         $.tuple,
         $.list,
-        $.negation,
         $.function_call,
         // $.special_function_call,
       ),
@@ -149,6 +151,7 @@ module.exports = grammar({
         ['&&', PREC.LOGICAL_AND],
         ['||', PREC.LOGICAL_OR],
         ['&', PREC.BITWISE_AND],
+        ['^', PREC.POWER],
       ];
 
       return choice(
@@ -165,7 +168,8 @@ module.exports = grammar({
       );
     },
 
-    negation: ($) => seq('!', $._assignment_right_expression),
+    unary_expression: ($) =>
+      prec.left(PREC.UNARY, seq(choice('!', '~', '-', '+'), $._assignment_right_expression)),
 
     function_call: ($) =>
       prec(
@@ -410,7 +414,11 @@ module.exports = grammar({
       ),
 
     operator_statements: ($) =>
-      seq('(', optionalCommaSep(choice($._assignment_right_expression, $.assignment)), ')'),
+      seq(
+        '(',
+        optionalCommaSep(choice(seq($._assignment_right_expression, ';'), $.assignment)),
+        ')',
+      ),
 
     tasks_declaration: ($) => seq('TASK', commaSep($.task_declaration), ';'),
 
@@ -443,6 +451,7 @@ module.exports = grammar({
         $.return,
         $.exit,
         $.function_call,
+        $.update_expression,
         $._expression,
         ';', // null statement
       ),
@@ -452,6 +461,8 @@ module.exports = grammar({
     return: ($) => seq('RETURN', ';'),
 
     exit: ($) => seq('EXIT', ';'),
+
+    update_expression: ($) => seq(choice($.identifier, $.field_expression), choice('++', '--')),
 
     if_statement: ($) =>
       prec.right(seq('IF', '(', $.condition, ')', $._function_expression, optional($.else_part))),

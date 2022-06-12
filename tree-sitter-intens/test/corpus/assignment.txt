@@ -321,3 +321,37 @@ field expression 5
 ==================
 
 foo = COMPARE(foo.bar_baz[*]:19, THIS.object[m,n]);
+
+==================
+unary expression 1
+==================
+
+foo = !bar;
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (unary_expression
+      (identifier))))
+
+==================
+unary expression 2
+==================
+
+foo = (-(2^31) - offset) / factor;
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (binary_expression
+      (tuple
+        (binary_expression
+          (unary_expression
+            (tuple
+              (binary_expression
+                (number)
+                (number))))
+          (identifier)))
+      (identifier))))

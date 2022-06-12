@@ -22,7 +22,7 @@ END STREAMER;
   (streamer_block
     (stream_definition
       (stream_identifier)
-      (negation (identifier))
+      (unary_expression (identifier))
       (identifier))))
 
 =============================
