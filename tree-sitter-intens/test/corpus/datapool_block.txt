@@ -72,7 +72,7 @@ variable declarations with parameters and assignments
 
 DATAPOOL
   INTEGER {EDITABLE}
-    foo { LABEL="my label", TOGGLE, FUNC=myfunc };
+    foo { LABEL="my label", TOGGLE, FUNC=my_func };
 END DATAPOOL;
 
 ---

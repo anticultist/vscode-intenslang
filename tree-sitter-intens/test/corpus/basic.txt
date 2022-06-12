@@ -145,7 +145,7 @@ INCLUDE ../etc/other.inc
 simple help file
 ================
 
-HELPFILE "myhelpfile.hlp";
+HELPFILE "my_help_file.hlp";
 
 ---
 (source_file
@@ -156,8 +156,8 @@ HELPFILE "myhelpfile.hlp";
 complex help file
 =================
 
-HELPFILE "myhelpfile.hlp",
-  OPEN_FILE "my_help.html" HELPKEY("mykey"),
+HELPFILE "my_help_file.hlp",
+  OPEN_FILE "my_help.html" HELPKEY("my_key"),
   OPEN_URL "https://www.example.com/";
 
 ---

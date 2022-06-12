@@ -14,7 +14,7 @@ single function forward declaration
 ===================================
 
 FUNCTIONS
-  FUNC myfunc;
+  FUNC my_func;
 END FUNCTIONS;
 
 ---
@@ -29,7 +29,7 @@ multiple function forward declarations
 ======================================
 
 FUNCTIONS
-  FUNC myfunc, myfunc2, myfunc3;
+  FUNC my_func, my_func2, my_func3;
 END FUNCTIONS;
 
 ---
@@ -48,7 +48,7 @@ single function declaration with an empty body
 ==============================================
 
 FUNCTIONS
-  FUNC myfunc {};
+  FUNC my_func {};
 END FUNCTIONS;
 
 ---
@@ -63,7 +63,7 @@ functions with forward declarations or empty bodies
 ===================================================
 
 FUNCTIONS
-  FUNC myfunc{}, myfunc2, myfunc3{}, myfunc4;
+  FUNC my_func{}, my_func2, my_func3{}, my_func4;
 END FUNCTIONS;
 
 ---
@@ -84,7 +84,7 @@ single function with empty options and body
 ===========================================
 
 FUNCTIONS
-  FUNC {} myfunc{};
+  FUNC {} my_func{};
 END FUNCTIONS;
 
 ---
@@ -101,7 +101,7 @@ simple if statement
 ===================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     IF (TRUE) ;
   };
 END FUNCTIONS;
@@ -121,7 +121,7 @@ if statement with complex condition
 ===================================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     IF (foo < 42) ;
   };
 END FUNCTIONS;
@@ -143,7 +143,7 @@ combined if statement
 =====================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     IF (TRUE && TRUE) ;
   };
 END FUNCTIONS;
@@ -164,7 +164,7 @@ if-else statement
 =================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     IF (FALSE) ;
     ELSE ;
   };
@@ -186,7 +186,7 @@ ambiguous if-if-else statement
 ==============================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     IF (TRUE)
       IF (FALSE) ;
       ELSE ;
@@ -211,7 +211,7 @@ simple while loop
 =================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     WHILE (FALSE) ;
   };
 END FUNCTIONS;
@@ -231,7 +231,7 @@ complex while loop
 ==================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     WHILE (foo < 4) ;
   };
 END FUNCTIONS;
@@ -254,7 +254,7 @@ function blocks
 ===============
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     WHILE (FALSE) {
       IF (TRUE) {
       } ELSE {
@@ -284,7 +284,7 @@ return statement
 ================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     RETURN;
   };
 END FUNCTIONS;
@@ -303,7 +303,7 @@ exit statement
 ==============
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     EXIT;
   };
 END FUNCTIONS;
@@ -322,7 +322,7 @@ variable declaration
 ====================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     INTEGER a;
   };
 END FUNCTIONS;
@@ -344,7 +344,7 @@ variables declarations
 ======================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     INTEGER a, b, c;
   };
 END FUNCTIONS;
@@ -367,8 +367,8 @@ function call
 =============
 
 FUNCTIONS
-  FUNC myfunc {
-    RUN( myfunc2 );
+  FUNC my_func {
+    RUN( my_func2 );
   };
 END FUNCTIONS;
 
@@ -389,7 +389,7 @@ nested function call
 ====================
 
 FUNCTIONS
-  FUNC myfunc {
+  FUNC my_func {
     MESSAGEBOX(COMPOSE("Finished %1!", "function"));
   };
 END FUNCTIONS;

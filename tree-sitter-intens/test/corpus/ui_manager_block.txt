@@ -217,7 +217,7 @@ folder declaration 1
 
 UI_MANAGER
   FOLDER my_folder { LEFT, VERTICAL, STRETCH } (
-      ["":baz, FUNC = myfunc4, FRAME] (my_group_fg)
+      ["":baz, FUNC = my_func4, FRAME] (my_group_fg)
     );
 END UI_MANAGER;
 
@@ -247,13 +247,13 @@ folder declaration 2
 
 UI_MANAGER
   FOLDER my_folder { LEFT, VERTICAL, STRETCH } (
-      ["A":baz, FUNC = myfunc4, FRAME] (
+      ["A":baz, FUNC = my_func4, FRAME] (
         (
           ( foo_fg ),
           ( bar_fg )
         ) [FRAME, "C"]
       ),
-      ["B":baz, FUNC = myfunc4, FRAME] (my_group_fg)
+      ["B":baz, FUNC = my_func4, FRAME] (my_group_fg)
     );
 END UI_MANAGER;
 
@@ -516,7 +516,7 @@ UI_MANAGER
         "fancy name 1",
         HIDDEN,
         CLOSE_BUTTON=NONE,
-        FUNC=myfunc4
+        FUNC=my_func4
       }
       ( ),
     log_win_form {
@@ -593,7 +593,7 @@ menu declaration
 UI_MANAGER
   MENU PRINT {EXPLICIT} (SEPARATOR),
      "&Tools" (FUNC hello_func="Show Hello World Message",
-               MENU "submenu" (FUNC myfunc4="Test"),
+               MENU "submenu" (FUNC my_func4="Test"),
                FORM fancy_form,
                FUNC bye_func="Quit");
 END UI_MANAGER;
