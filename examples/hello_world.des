@@ -1,0 +1,44 @@
+DESCRIPTION "Hello World";
+
+INCLUDE hello_world_ui.inc  // fancy UI
+
+DATAPOOL
+  STRING {EDITABLE} hello_button {LABEL="Hello", BUTTON, FUNC=hello_func, HELPTEXT="Say Hello!"};
+  STRING name;
+  INTEGER is_name_given;
+END DATAPOOL;
+
+STREAMER
+  hello_stream(is_name_given, EOLN, name);
+END STREAMER;
+
+OPERATOR
+  SOCKET hello_socket {PORT=1234, STREAM=hello_stream, FUNC=hello_func};
+END OPERATOR;
+
+FUNCTIONS
+  FUNC hello_func {
+    IF (is_name_given)
+      MESSAGEBOX(COMPOSE("Hello %1!", name));
+    ELSE
+      MESSAGEBOX("Hello World!");
+  },
+  bye_func {
+    MESSAGEBOX("Good bye!");  // TODO: use name if available
+    EXIT;
+  };
+
+  FUNC INIT {
+    IF (CONFIRM("Do you want to be <i>greeted</i>?")) {
+      RUN(hello_func);
+    }
+  };
+END FUNCTIONS;
+
+UI_MANAGER
+  MENU "&Tools" (FUNC hello_func="Show Hello World Message",
+                 // FORM fancy_form,
+                 FUNC bye_func="Quit");
+END UI_MANAGER;
+
+END.
