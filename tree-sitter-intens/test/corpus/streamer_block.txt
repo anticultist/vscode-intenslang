@@ -88,12 +88,16 @@ END STREAMER;
     (stream_definition
       (stream_identifier)
       (tuple
-        (field_expression
-          (identifier)
-          (identifier)
-          (list (wildcard))
-          (identifier)
+        (attribute
+          (attribute
+            (attribute
+              (identifier)
+              (field_expression
+                (identifier)
+                (list (wildcard))))
+            (identifier))
           (identifier))))))
+
 
 =========================================
 stream definition with a field conversion
@@ -115,10 +119,10 @@ END STREAMER;
           (parameter (identifier))
           (string)))
       (identifier)
-      (field_expression
-        (identifier)
-        (identifier)
-        (field_conversion
-          (number)
-          (number)
-          (thousand_separator))))))
+      (field_conversion
+        (attribute
+          (identifier)
+          (identifier))
+        (number)
+        (number)
+        (thousand_separator)))))

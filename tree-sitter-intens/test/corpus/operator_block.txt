@@ -118,16 +118,18 @@ END OPERATOR;
           (parameter (identifier))
           (parameter_assignment (parameter (identifier)) (number))
           (parameter_assignment (parameter (identifier)) (identifier))
-          (field_expression
-            (identifier)
-            (list (wildcard))
+          (attribute
+            (field_expression
+              (identifier)
+              (list (wildcard)))
             (identifier))
           (function_call
             (function_name)
             (function_arguments
-              (field_expression
-                (identifier)
-                (list (wildcard))
+              (attribute
+                (field_expression
+                  (identifier)
+                  (list (wildcard)))
                 (identifier))
               (number)
               (number))))))))
@@ -153,7 +155,8 @@ END OPERATOR;
           (parameter (identifier)))
         (operator_statements
           (assignment
-            (list (field_expression (identifier) (identifier)))
+            (list
+              (attribute (identifier) (identifier)))
             (function_call (function_name))))))))
 
 ============================
@@ -194,17 +197,21 @@ END OPERATOR;
           (assignment
             (list
               (tuple
-                (field_expression
-                  (identifier)
-                  (identifier)
-                  (list (wildcard))
-                  (field_conversion (number)))
+                (field_conversion
+                  (attribute
+                    (identifier)
+                    (field_expression
+                      (identifier)
+                      (list (wildcard))))
+                  (number))
                 (eoln)
-                (field_expression
-                  (identifier)
-                  (identifier)
-                  (list (wildcard))
-                  (field_conversion (number)))
+                (field_conversion
+                  (attribute
+                    (identifier)
+                    (field_expression
+                      (identifier)
+                      (list (wildcard))))
+                  (number))
                 (eoln)))
             (function_call
               (function_name))))))))

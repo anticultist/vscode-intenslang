@@ -114,7 +114,10 @@ END FUNCTIONS;
         (function_identifier)
         (function_body
           (if_statement
-            (condition (true))))))))
+            (condition
+              (true))
+            (consequence
+              (null_statement))))))))
 
 ===================================
 if statement with complex condition
@@ -136,7 +139,10 @@ END FUNCTIONS;
           (if_statement
             (condition
               (binary_expression
-                (identifier) (number)))))))))
+                (identifier)
+                (number)))
+            (consequence
+              (null_statement))))))))
 
 =====================
 combined if statement
@@ -157,7 +163,11 @@ END FUNCTIONS;
         (function_body
           (if_statement
             (condition
-              (binary_expression (true) (true)))))))))
+              (binary_expression
+                (true)
+                (true)))
+            (consequence
+              (null_statement))))))))
 
 ===================
 if-else statement 1
@@ -179,7 +189,10 @@ END FUNCTIONS;
         (function_body
           (if_statement
             (condition (false))
-            (else_part)))))))
+            (consequence
+              (null_statement))
+            (else_part
+              (null_statement))))))))
 
 ===================
 if-else statement 2
@@ -195,6 +208,29 @@ FUNCTIONS
 END FUNCTIONS;
 
 ---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (if_statement
+            (condition
+              (identifier))
+            (consequence
+              (function_call
+                (function_name)
+                (function_arguments
+                  (function_call
+                    (function_name)
+                    (function_arguments
+                      (string)
+                      (identifier))))))
+            (else_part
+              (function_call
+                (function_name)
+                (function_arguments
+                  (string))))))))))
 
 ==============================
 ambiguous if-if-else statement
@@ -217,9 +253,13 @@ END FUNCTIONS;
         (function_body
           (if_statement
             (condition (true))
-            (if_statement
-              (condition (false))
-              (else_part))))))))
+            (consequence
+              (if_statement
+                (condition (false))
+                (consequence
+                  (null_statement))
+                (else_part
+                  (null_statement))))))))))
 
 =================
 simple while loop
@@ -239,7 +279,8 @@ END FUNCTIONS;
         (function_identifier)
         (function_body
           (while_loop
-            (condition (false))))))))
+            (condition (false))
+            (null_statement)))))))
 
 ==================
 complex while loop
@@ -261,7 +302,8 @@ END FUNCTIONS;
           (while_loop
             (condition
               (binary_expression
-                (identifier) (number)))))))))
+                (identifier) (number)))
+            (null_statement)))))))
 
 ===============
 function blocks
@@ -289,7 +331,7 @@ END FUNCTIONS;
             (block
               (if_statement
                 (condition (true))
-                (block)
+                (consequence (block))
                 (else_part
                   (block))))))))))
 
@@ -413,11 +455,11 @@ END FUNCTIONS;
         (function_identifier)
         (function_body
           (update_expression
-            (field_expression
+            (attribute
               (identifier)
-              (identifier)
-              (list
-                (identifier)))))))))
+              (field_expression
+                (identifier)
+                (list (identifier))))))))))
 
 ====================
 variable declaration
@@ -523,3 +565,21 @@ FUNCTIONS
 END FUNCTIONS;
 
 ---
+(source_file
+  (functions_block
+    (functions_declaration
+      (function_declaration
+        (function_identifier)
+        (function_body
+          (function_call
+            (function_name)
+            (function_arguments
+              (binary_expression
+                (binary_expression
+                  (binary_expression
+                    (binary_expression
+                      (string (escape_sequence))
+                      (string))
+                    (eoln))
+                  (string))
+                (string (escape_sequence))))))))))

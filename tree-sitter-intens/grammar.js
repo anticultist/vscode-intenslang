@@ -10,10 +10,13 @@ const PREC = {
   ADD: 10,
   MULTIPLY: 11,
   POWER: 12,
-  CALL: 13,
-  UNARY: 14,
-  FIELD: 15,
-  FIELD_ALIGNMENT: 16,
+  ATTRIBUTE: 13,
+  CALL: 14,
+  UNARY: 15,
+  FIELD: 16,
+  FIELD_ALIGNMENT: 17,
+  FIELD_CONVERSION: 18,
+  PREPROCESSOR: 33,
 };
 
 module.exports = grammar({
@@ -54,7 +57,7 @@ module.exports = grammar({
     // comment: $ => token(seq('//', /(\\(.|\r?\n)|[^\\\n])*/)),
 
     preprocessor_directive: ($) =>
-      prec.right(33, seq('#', $.number, $.string, optional($.number), /\r?\n/)),
+      prec.right(PREC.PREPROCESSOR, seq('#', $.number, $.string, optional($.number), /\r?\n/)),
 
     // preprocessor_directive: ($) => seq('#', $.number, $.string),
 
@@ -123,27 +126,29 @@ module.exports = grammar({
       ),
 
     _assignment_left_expression: ($) =>
-      choice($.identifier, $.var_usage, $.field_expression, $.list),
+      choice($.attribute, $.identifier, $.var_usage, $.field_expression, $.list),
 
     // TODO: improve name
     _assignment_right_expression: ($) =>
       choice(
-        $.identifier,
-        $.var_usage,
-        $.field_expression,
-        $.string,
-        $.number,
-        $.true,
-        $.false,
-        $.eoln,
-        $.invalid,
-        $.none,
-        $.reason,
+        $.attribute,
+        $.field_conversion,
         $.binary_expression,
-        $.unary_expression,
-        $.tuple,
-        $.list,
+        $.eoln,
+        $.false,
+        $.field_expression,
         $.function_call,
+        $.identifier,
+        $.invalid,
+        $.list,
+        $.none,
+        $.number,
+        $.reason,
+        $.string,
+        $.true,
+        $.tuple,
+        $.unary_expression,
+        $.var_usage,
         // $.special_function_call,
       ),
 
@@ -195,27 +200,36 @@ module.exports = grammar({
       ),
 
     function_arguments: ($) =>
-      commaSep(choice($._assignment_right_expression, $.parameter_assignment)),
+      prec(PREC.CALL, commaSep(choice($._assignment_right_expression, $.parameter_assignment))),
 
-    field_expression: ($) =>
-      prec(
-        PREC.FIELD,
-        choice(
-          seq(choice($.identifier, $.var_usage), $.field_conversion),
-          seq(choice($.identifier, $.var_usage), $.list, optional($.field_conversion)),
-          seq(
-            dotSep(seq(choice($.identifier, $.var_usage), optional($.list))),
-            optional($.field_conversion),
-          ),
+    attribute: ($) =>
+      prec.left(
+        PREC.ATTRIBUTE,
+        seq(
+          choice($.attribute, $.field_expression, $.identifier, $.var_usage),
+          '.',
+          choice($.field_expression, $.identifier, $.var_usage),
         ),
       ),
 
+    field_expression: ($) =>
+      prec(PREC.FIELD, seq(choice($.attribute, $.identifier, $.var_usage), $.list)),
+
     field_conversion: ($) =>
-      seq(':', $.number, optional(seq(':', $.number)), optional(seq(':', $.thousand_separator))),
+      prec.left(
+        PREC.FIELD_CONVERSION,
+        seq(
+          choice($.attribute, $.binary_expression, $.field_expression, $.identifier, $.var_usage),
+          ':',
+          $.number,
+          optional(seq(':', $.number)),
+          optional(seq(':', $.thousand_separator)),
+        ),
+      ),
 
     thousand_separator: ($) => 'TSEP',
 
-    var_usage: ($) => seq('VAR', '(', $._assignment_right_expression, ')'),
+    var_usage: ($) => prec(PREC.CALL, seq('VAR', '(', $._assignment_right_expression, ')')),
 
     include: ($) => seq('INCLUDE', alias(/[A-Za-z_0-9\./]+/, $.file_name)),
 
@@ -245,6 +259,7 @@ module.exports = grammar({
         optionalCommaSep(
           choice(
             seq($.parameter, optional($.parameter_block)),
+            $.attribute,
             $.field_expression,
             $.parameter_assignment,
             $.string,
@@ -256,12 +271,19 @@ module.exports = grammar({
       ),
 
     parameter_assignment: ($) =>
-      prec(PREC.ASSIGNMENT, seq($.parameter, '=', $._assignment_right_expression)),
+      prec(
+        40,
+        seq(
+          choice($.parameter, alias('INVALID', $.parameter)),
+          '=',
+          $._assignment_right_expression,
+        ),
+      ),
 
     label_assignment: ($) => seq($.string, ':', $._assignment_right_expression),
 
     // TODO: get rid of subtree of identifiers here
-    parameter: ($) => prec(1, repeat1($.identifier)),
+    parameter: ($) => repeat1($.identifier),
 
     end_statement: ($) => seq('END', '.'),
 
@@ -314,6 +336,7 @@ module.exports = grammar({
       seq(
         optional(choice('<', '>')),
         choice(
+          $.attribute,
           $.identifier,
           $.number,
           $.string,
@@ -466,11 +489,13 @@ module.exports = grammar({
         $.return,
         $.abort,
         $.exit,
-        $.function_call,
+        seq($.function_call, ';'),
         $.update_expression,
         $._expression,
-        ';', // null statement
+        $.null_statement,
       ),
+
+    null_statement: ($) => ';',
 
     block: ($) => seq('{', repeat($._function_expression), '}'),
 
@@ -480,14 +505,17 @@ module.exports = grammar({
 
     exit: ($) => seq('EXIT', ';'),
 
-    update_expression: ($) => seq(choice($.identifier, $.field_expression), choice('++', '--')),
+    update_expression: ($) =>
+      seq(choice($.attribute, $.identifier, $.field_expression), choice('++', '--'), ';'),
 
     if_statement: ($) =>
-      prec.right(seq('IF', '(', $.condition, ')', $._function_expression, optional($.else_part))),
+      prec.right(seq('IF', '(', $.condition, ')', $.consequence, optional($.else_part))),
 
-    condition: ($) => choice($._assignment_right_expression),
+    consequence: ($) => $._function_expression,
 
-    else_part: ($) => seq('ELSE', $._function_expression),
+    condition: ($) => $._assignment_right_expression,
+
+    else_part: ($) => prec(17, seq('ELSE', $._function_expression)),
 
     while_loop: ($) => seq('WHILE', '(', $.condition, ')', $._function_expression),
 
@@ -518,6 +546,7 @@ module.exports = grammar({
           choice(
             'IMAGE',
             'INDEX',
+            'LINEPLOT',
             'LIST',
             'LOG_WINDOW',
             'NAVIGATOR',
@@ -590,7 +619,8 @@ module.exports = grammar({
         optional(alias($.list, $.folder_element_options)),
       ),
 
-    folder_subitems: ($) => seq('(', commaSep(choice($.identifier, $.folder_element)), ')'),
+    folder_subitems: ($) =>
+      seq('(', commaSep(choice($.identifier, $.folder_element, $.function_call)), ')'),
 
     form_declarations: ($) => seq('FORM', commaSep($.form_declaration), ';'),
 
@@ -644,7 +674,7 @@ module.exports = grammar({
 
     plot_declarations: ($) =>
       seq(
-        field('type', choice('LINEPLOT', 'LISTPLOT', 'PLOT2D', 'XRT3DPLOT', 'XRTGRAPH')),
+        field('type', choice('LISTPLOT', 'PLOT2D', 'XRT3DPLOT', 'XRTGRAPH')),
         commaSep($.plot_declaration),
         ';',
       ),

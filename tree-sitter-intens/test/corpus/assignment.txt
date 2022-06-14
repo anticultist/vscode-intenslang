@@ -254,21 +254,67 @@ foo = COMPOSE_STRING("It is %1!", foo=="text");
           (identifier)
           (string))))))
 
-==================
-field expression 1
-==================
+===========
+attribute 1
+===========
 
 foo.bar = bar.foo;
 
 ---
 (source_file
   (assignment
-    (field_expression
+    (attribute
       (identifier)
       (identifier))
-    (field_expression
+    (attribute
       (identifier)
       (identifier))))
+
+===========
+attribute 2
+===========
+
+foo.VAR("bar").baz = 5;
+
+---
+(source_file
+  (assignment
+    (attribute
+      (attribute
+        (identifier)
+        (var_usage (string)))
+      (identifier))
+    (number)))
+
+===========
+attribute 3
+===========
+
+foo = VAR("foo").bar.VAR("baz");
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (attribute
+      (attribute
+        (var_usage (string))
+        (identifier))
+      (var_usage (string)))))
+
+==================
+field expression 1
+==================
+
+foo = bar[#A];
+
+---
+(source_file
+  (assignment
+    (identifier)
+    (field_expression
+      (identifier)
+      (list (wildcard)))))
 
 ==================
 field expression 2
@@ -280,28 +326,14 @@ foo = bar[#A].baz;
 (source_file
   (assignment
     (identifier)
-    (field_expression
-      (identifier)
-      (list (wildcard))
+    (attribute
+      (field_expression
+        (identifier)
+        (list (wildcard)))
       (identifier))))
 
 ==================
 field expression 3
-==================
-
-foo.VAR("bar").baz = 5;
-
----
-(source_file
-  (assignment
-    (field_expression
-      (identifier)
-      (var_usage (string))
-      (identifier))
-    (number)))
-
-==================
-field expression 4
 ==================
 
 foo[INDEX] = "lorem ipsum";
@@ -315,7 +347,7 @@ foo[INDEX] = "lorem ipsum";
     (string)))
 
 ==================
-field expression 5
+field expression 4
 ==================
 
 foo = COMPARE(foo.bar_baz[*]:19, THIS.object[m,n]);
@@ -327,17 +359,20 @@ foo = COMPARE(foo.bar_baz[*]:19, THIS.object[m,n]);
     (function_call
       (function_name)
       (function_arguments
-        (field_expression
-          (identifier)
-          (identifier)
-          (list (wildcard))
-          (field_conversion (number)))
-        (field_expression
-          (identifier)
-          (identifier)
-          (list
+        (field_conversion
+          (attribute
             (identifier)
-            (identifier)))))))
+            (field_expression
+              (identifier)
+              (list (wildcard))))
+          (number))
+        (attribute
+          (identifier)
+          (field_expression
+            (identifier)
+            (list
+              (identifier)
+              (identifier))))))))
 
 ==================
 unary expression 1

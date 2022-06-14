@@ -71,7 +71,7 @@ END UI_MANAGER;
               (number))))
         (field_group_lines
           (field_group_line
-            (field_expression (identifier) (identifier)))
+            (attribute (identifier) (identifier)))
           (field_group_line
             (string))))
       (field_group_declaration
@@ -104,9 +104,7 @@ END UI_MANAGER;
             (function_call
               (function_name)
               (function_arguments
-                (field_expression
-                  (identifier)
-                  (identifier))))
+                (attribute (identifier) (identifier))))
             (string)
             (identifier)
             (parameter_block
@@ -136,16 +134,12 @@ END UI_MANAGER;
             (function_call
               (function_name)
               (function_arguments
-                (field_expression
-                  (identifier)
-                  (identifier))))
+                (attribute (identifier) (identifier))))
             (parameter_block
               (parameter_assignment
                 (parameter (identifier))
                 (number)))
-            (field_expression
-              (identifier)
-              (identifier))
+            (attribute (identifier) (identifier))
             (field_alignment)
             (identifier)))))))
 
@@ -175,28 +169,28 @@ END UI_MANAGER;
         (ui_identifier)
         (field_group_lines
           (field_group_line
-            (binary_expression
-              (identifier)
-              (number))
             (field_conversion
+              (binary_expression
+                (identifier)
+                (number))
               (number)
               (number)))))
       (field_group_declaration
         (ui_identifier)
         (field_group_lines
           (field_group_line
-            (identifier)
             (field_conversion
+              (identifier)
               (number)
               (number)))))
       (field_group_declaration
         (ui_identifier)
         (field_group_lines
           (field_group_line
-            (field_expression
-              (identifier)
-              (list (number)))
             (field_conversion
+              (field_expression
+                (identifier)
+                (list (number)))
               (number)
               (number))))))))
 
@@ -207,11 +201,29 @@ field group declaration with field access
 UI_MANAGER
   FIELDGROUP
     foo1_fg (
-      foo.bar[0].baz
+      foo[1].bar[0].baz:40
     );
 END UI_MANAGER;
 
 ---
+(source_file
+  (ui_manager_block
+    (field_group_declarations
+      (field_group_declaration
+        (ui_identifier)
+        (field_group_lines
+          (field_group_line
+            (field_conversion
+              (attribute
+                (attribute
+                  (field_expression
+                    (identifier)
+                    (list (number)))
+                  (field_expression
+                    (identifier)
+                    (list (number))))
+                (identifier))
+              (number))))))))
 
 ====================
 folder declaration 1
@@ -303,6 +315,42 @@ END UI_MANAGER;
             (folder_subitems
               (identifier))))))))
 
+====================
+folder declaration 3
+====================
+
+UI_MANAGER
+  FOLDER
+    my_folder {EXPAND} (
+      ["A": baz] (
+        foo_fg, STRETCH(1)
+      )
+    )
+  ;
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (folder_declarations
+      (folder_declaration
+        (ui_identifier)
+        (parameter_block
+          (parameter
+            (identifier)))
+        (folder_elements
+          (folder_element
+            (folder_element_properties
+              (label_assignment
+                (string)
+                (identifier)))
+            (folder_subitems
+              (identifier)
+              (function_call
+                (function_name)
+                (function_arguments
+                  (number))))))))))
+
 =====================
 2d plot declaration 1
 =====================
@@ -389,26 +437,20 @@ END UI_MANAGER;
                 (string))))
           (plot_items
             (binary_expression
-              (field_expression
-                (identifier)
-                (identifier))
+              (attribute (identifier) (identifier))
               (number))
             (plot_items
-              (field_expression
-                (identifier)
-                (identifier))
+              (attribute (identifier) (identifier))
               (parameter_block
                 (parameter_assignment
                   (parameter (identifier))
                   (function_call
                     (function_name)
                     (function_arguments
-                      (field_expression (identifier) (identifier)))))
+                      (attribute (identifier) (identifier)))))
                 (parameter (identifier))))
             (plot_items
-              (field_expression
-                (identifier)
-                (identifier))
+              (attribute (identifier) (identifier))
               (parameter_block
                 (parameter_assignment
                   (parameter
@@ -416,23 +458,70 @@ END UI_MANAGER;
                   (function_call
                     (function_name)
                     (function_arguments
-                      (field_expression (identifier) (identifier)))))
+                      (attribute (identifier) (identifier)))))
                 (parameter (identifier)))))
           (plot_items
             (binary_expression
-              (field_expression (identifier) (identifier))
+              (attribute (identifier) (identifier))
               (number))
             (plot_items
-              (field_expression (identifier) (identifier))
+              (attribute (identifier) (identifier))
               (parameter_block
                 (parameter (identifier))
                 (function_call
                   (function_name)
                   (function_arguments
-                    (field_expression
+                    (attribute
                       (identifier)
-                      (identifier)
-                      (list (wildcard)))))))))))))
+                      (field_expression
+                        (identifier)
+                        (list (wildcard))))))))))))))
+
+=========
+line plot
+=========
+
+UI_MANAGER
+  LINEPLOT
+    line_plot1 {
+      SOCKET=scan_control_result_socket,
+      SETTINGS=scan_control.img_settings[7] },
+    line_plot2 {
+      SOCKET=scan_control_result_socket,
+      SETTINGS=scan_control.img_settings[8] }
+  ;
+END UI_MANAGER;
+
+---
+(source_file
+  (ui_manager_block
+    (ui_declarations
+      (ui_declaration
+        (ui_identifier)
+        (parameter_block
+          (parameter_assignment
+            (parameter (identifier))
+            (identifier))
+          (parameter_assignment
+            (parameter (identifier))
+            (attribute
+              (identifier)
+              (field_expression
+                (identifier)
+                (list (number)))))))
+      (ui_declaration
+        (ui_identifier)
+        (parameter_block
+          (parameter_assignment
+            (parameter (identifier))
+            (identifier))
+          (parameter_assignment
+            (parameter (identifier))
+            (attribute
+              (identifier)
+              (field_expression
+                (identifier)
+                (list (number))))))))))
 
 =================
 table declaration
@@ -506,7 +595,7 @@ END UI_MANAGER;
             (identifier))
           (parameter_assignment
             (parameter (identifier))
-            (field_expression (identifier) (identifier))))))))
+            (attribute (identifier) (identifier))))))))
 
 ================
 form declaration

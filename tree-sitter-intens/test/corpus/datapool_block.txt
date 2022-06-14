@@ -193,7 +193,7 @@ END DATAPOOL;
         (parameter_block
           (parameter (identifier))
           (parameter_assignment
-            (parameter (identifier))
+            (parameter)
             (none)))
         (set_item
           (string))))))
@@ -311,7 +311,11 @@ END DATAPOOL;
             (tuple (string) (string)))
           (color_set_item
             (color_set_value
-              (field_expression (identifier) (identifier) (identifier)))
+              (attribute
+                (attribute
+                  (identifier)
+                  (identifier))
+                (identifier)))
             (tuple (string) (string)))
           (color_set_item
             (color_set_range
@@ -349,14 +353,14 @@ END DATAPOOL;
           (color_set_item
             (color_set_value
               (binary_expression
-                (field_expression (identifier) (identifier))
-                (field_expression (identifier) (identifier))))
+                (attribute (identifier) (identifier))
+                (attribute (identifier) (identifier))))
             (tuple (string) (string)))
           (color_set_item
             (color_set_value
               (binary_expression
-                (field_expression (identifier) (identifier))
-                (field_expression (identifier) (identifier))))
+                (attribute (identifier) (identifier))
+                (attribute (identifier) (identifier))))
             (tuple (string) (string)))
           (color_set_item
             (tuple (string) (string))))))))
