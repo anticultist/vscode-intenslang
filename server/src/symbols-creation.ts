@@ -137,6 +137,8 @@ function scanDatapoolBlock(uri: string, node: Parser.SyntaxNode, symbols: Symbol
           ),
         });
 
+        scanVariableDeclarations(uri, child_node, symbols);
+
         break;
       }
     } else if (
@@ -170,6 +172,52 @@ function scanDatapoolBlock(uri: string, node: Parser.SyntaxNode, symbols: Symbol
 
           break;
         }
+      }
+    }
+  }
+}
+
+function scanVariableDeclarations(
+  uri: string,
+  node: Parser.SyntaxNode,
+  symbols: SymbolInformation[],
+) {
+  for (const child_node of node.namedChildren) {
+    if (
+      !(
+        child_node.type === 'variables_declaration' ||
+        child_node.type === 'custom_variable_type_declaration'
+      )
+    ) {
+      continue;
+    }
+
+    for (const child_node_lv2 of child_node.namedChildren) {
+      if (child_node_lv2.type !== 'variable_declaration') {
+        continue;
+      }
+
+      for (const child_node_lv3 of child_node_lv2.namedChildren) {
+        if (child_node_lv3.type !== 'variable_identifier') {
+          continue;
+        }
+
+        symbols.push({
+          name: child_node_lv3.text,
+          kind: SymbolKind.Variable,
+          location: Location.create(
+            uri,
+            Range.create(
+              Position.create(
+                child_node_lv3.startPosition.row,
+                child_node_lv3.startPosition.column,
+              ),
+              Position.create(child_node_lv2.endPosition.row, child_node_lv2.endPosition.column),
+            ),
+          ),
+        });
+
+        break;
       }
     }
   }
@@ -229,44 +277,7 @@ function scanFunctionsBlock(uri: string, node: Parser.SyntaxNode, symbols: Symbo
             ),
           });
         } else if (child_node_lv3.type === 'function_body') {
-          for (const child_node_lv4 of child_node_lv3.namedChildren) {
-            if (
-              child_node_lv4.type === 'variables_declaration' ||
-              child_node_lv4.type === 'custom_variable_type_declaration'
-            ) {
-              for (const child_node_lv5 of child_node_lv4.namedChildren) {
-                if (child_node_lv5.type !== 'variable_declaration') {
-                  continue;
-                }
-
-                for (const child_node_lv6 of child_node_lv5.namedChildren) {
-                  if (child_node_lv6.type !== 'variable_identifier') {
-                    continue;
-                  }
-
-                  symbols.push({
-                    name: child_node_lv6.text,
-                    kind: SymbolKind.Variable,
-                    location: Location.create(
-                      uri,
-                      Range.create(
-                        Position.create(
-                          child_node_lv6.startPosition.row,
-                          child_node_lv6.startPosition.column,
-                        ),
-                        Position.create(
-                          child_node_lv5.endPosition.row,
-                          child_node_lv5.endPosition.column,
-                        ),
-                      ),
-                    ),
-                  });
-
-                  break;
-                }
-              }
-            }
-          }
+          scanVariableDeclarations(uri, child_node_lv3, symbols);
         }
       }
     }
