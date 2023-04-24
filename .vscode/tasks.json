@@ -6,17 +6,14 @@
         {
             "label": "Run TextMate syntax tests",
             "type": "shell",
-            "command": "npx vscode-tmgrammar-test -c -s source.intens -g syntaxes/intens.tmLanguage.json -t \"tests/**/*.des\"",
+            "command": "npx vscode-tmgrammar-test -c source.intens -g syntaxes/intens.tmLanguage.json \"tests/**/*.des\"",
             "group": "test",
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
             },
             "problemMatcher": {
-                "fileLocation": [
-                    "relative",
-                    "${workspaceFolder}"
-                ],
+                "fileLocation": ["relative", "${workspaceFolder}"],
                 "pattern": [
                     {
                         "regexp": "^(ERROR)\\s([^:]+):(\\d+):(\\d+):(\\d+)\\s(.*)$",
@@ -26,7 +23,6 @@
                         "column": 4,
                         "endColumn": 5,
                         "message": 6
-
                     }
                 ]
             }
@@ -39,9 +35,7 @@
                 "panel": "dedicated",
                 "reveal": "never"
             },
-            "problemMatcher": [
-                "$tsc"
-            ]
+            "problemMatcher": ["$tsc"]
         },
         {
             "type": "npm",
@@ -55,9 +49,7 @@
                 "panel": "dedicated",
                 "reveal": "never"
             },
-            "problemMatcher": [
-                "$tsc-watch"
-            ]
+            "problemMatcher": ["$tsc-watch"]
         }
     ]
 }
