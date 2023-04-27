@@ -22,6 +22,7 @@ tests/**
 
 .eslintignore
 .gitignore
+.markdownlint.json
 .prettierignore
 DEVELOPMENT.md
 shared.webpack.config.js
