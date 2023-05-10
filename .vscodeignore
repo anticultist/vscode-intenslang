@@ -24,6 +24,6 @@ tests/**
 .gitignore
 .markdownlint.json
 .prettierignore
-DEVELOPMENT.md
+CONTRIBUTING.md
 shared.webpack.config.js
 vsc-extension-quickstart.md
