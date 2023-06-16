@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-extension-samples/tree/main/lsp-sample
 
 import * as path from 'path';
-import { workspace, ExtensionContext } from 'vscode';
+import * as vscode from 'vscode';
 
 import {
   LanguageClient,
@@ -15,7 +15,7 @@ let client: LanguageClient;
 
 process.traceDeprecation = true;
 
-export function activate(context: ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
   // The server is implemented in node
   let serverModule = context.asAbsolutePath(path.join('server', 'out', 'server.js'));
   // The debug options for the server
@@ -39,7 +39,16 @@ export function activate(context: ExtensionContext) {
     documentSelector: [{ scheme: 'file', language: 'intens' }],
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
-      fileEvents: workspace.createFileSystemWatcher('**/.clientrc'),
+      fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc'),
+    },
+    middleware: {
+      executeCommand: (command: string, args: any[], next) => {
+        if (command === 'intensLanguageServer.addDebugPrintsToFunctions') {
+          args.push(vscode.window.activeTextEditor.document.uri.path);
+          args.push(vscode.window.activeTextEditor.document.version);
+        }
+        return next(command, args);
+      },
     },
   };
 

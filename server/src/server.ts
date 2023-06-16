@@ -7,14 +7,17 @@ import {
   DiagnosticSeverity,
   DidChangeConfigurationNotification,
   DocumentSymbolParams,
+  ExecuteCommandParams,
   InitializeParams,
   InitializeResult,
   Position,
   ProposedFeatures,
   Range,
   SymbolInformation,
+  TextDocumentEdit,
   TextDocuments,
   TextDocumentSyncKind,
+  TextEdit,
 } from 'vscode-languageserver/node';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -46,6 +49,8 @@ let hasConfigurationCapability: boolean = false;
 let hasWorkspaceFolderCapability: boolean = false;
 let hasDiagnosticRelatedInformationCapability: boolean = false;
 
+const ADD_DEBUG_PRINTS_TO_FUNCTIONS = 'intensLanguageServer.addDebugPrintsToFunctions';
+
 connection.onInitialize(async (params: InitializeParams) => {
   let capabilities = params.capabilities;
 
@@ -65,6 +70,9 @@ connection.onInitialize(async (params: InitializeParams) => {
     capabilities: {
       textDocumentSync: TextDocumentSyncKind.Incremental,
       documentSymbolProvider: true,
+      executeCommandProvider: {
+        commands: [ADD_DEBUG_PRINTS_TO_FUNCTIONS],
+      },
     },
   };
   if (hasWorkspaceFolderCapability) {
@@ -201,6 +209,27 @@ connection.onDocumentSymbol((params: DocumentSymbolParams): SymbolInformation[] 
 
   const tree = parser.parse(document_text);
   return symbolsFromAST(params.textDocument.uri, tree);
+});
+
+connection.onExecuteCommand(async (params: ExecuteCommandParams) => {
+  if (params.command === ADD_DEBUG_PRINTS_TO_FUNCTIONS) {
+    if (!params.arguments || params.arguments.length < 2) {
+      return;
+    }
+
+    const uri: string = params.arguments[0];
+    const version: number = params.arguments[1];
+
+    // console.log(`Hello World: ${uri}; ${version}!!!`);
+
+    await connection.workspace.applyEdit({
+      documentChanges: [
+        TextDocumentEdit.create({ uri: uri, version: version }, [
+          TextEdit.insert(Position.create(0, 0), '// Hello World!\n'),
+        ]),
+      ],
+    });
+  }
 });
 
 // Make the text document manager listen on the connection
