@@ -5,12 +5,23 @@ This is an unofficial package to provide syntax highlighting for the so called [
 ## Features
 
 - Syntax highlighting
-- Language server which enables bread crumbs and resource symbol listing
+- Language server features
 
-## Screenshot
+  - bread crumbs and resource symbol listing
+  - Highlighting of syntax errors (experimental)
+
+## Showcase
 
 ![Screenshot](./images/screenshot.png)
 
+## Configuration
+
+To activate the experimental error checking go to the settings and search for `intensLanguageServer.showProblems`.
+
+![Screenshot](./images/show_problems.png)
+
 ## Known issues
 
-- The DB_MANAGER block is not good supported
+- unsupported or bad supported features
+  - `DB_MANAGER` block
+  - C/C++ preprocessor directives
