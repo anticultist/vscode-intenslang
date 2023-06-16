@@ -11,13 +11,10 @@
     "url": "https://github.com/anticultist/vscode-intenslang"
   },
   "engines": {
-    "vscode": "^1.45.0"
+    "vscode": "^1.79.0"
   },
   "categories": [
     "Programming Languages"
-  ],
-  "activationEvents": [
-    "onLanguage:intens"
   ],
   "main": "./client/out/extension",
   "contributes": {
@@ -68,10 +65,24 @@
             "messages",
             "verbose"
           ],
-          "default": "verbose",
+          "default": "messages",
           "description": "Traces the communication between VS Code and the language server."
         }
       }
+    },
+    "commands": [
+      {
+        "command": "intensLanguageServer.addDebugPrintsToFunctions",
+        "title": "INTENS: Add Debug-Prints To Functions"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "intensLanguageServer.addDebugPrintsToFunctions",
+          "when": "editorLangId == intens"
+        }
+      ]
     }
   },
   "scripts": {
@@ -89,18 +100,18 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/mocha": "9.1.1",
+    "@types/mocha": "10.0.1",
     "@types/node": "17.0.42",
-    "@typescript-eslint/parser": "5.28.0",
+    "@typescript-eslint/parser": "5.59.11",
     "copyfiles": "2.4.1",
-    "eslint": "8.17.0",
+    "eslint": "8.42.0",
     "merge-options": "3.0.4",
-    "mocha": "10.0.0",
-    "rimraf": "3.0.2",
-    "ts-loader": "9.3.0",
-    "typescript": "4.7.3",
+    "mocha": "10.2.0",
+    "rimraf": "5.0.1",
+    "ts-loader": "9.4.3",
+    "typescript": "5.1.3",
     "vscode-tmgrammar-test": "0.1.1",
-    "webpack": "5.76.0",
-    "webpack-cli": "4.10.0"
+    "webpack": "5.87.0",
+    "webpack-cli": "5.1.4"
   }
 }
