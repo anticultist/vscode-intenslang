@@ -11,7 +11,9 @@
             "request": "launch",
             "runtimeExecutable": "${execPath}",
             "args": [
-                "--extensionDevelopmentPath=${workspaceFolder}"
+                "--disable-extensions",
+                "--extensionDevelopmentPath=${workspaceFolder}",
+                "--folder-uri=${workspaceFolder}/examples/"
             ],
             "outFiles": ["${workspaceRoot}/client/out/**/*.js"],
             "preLaunchTask": {
@@ -33,6 +35,7 @@
             "request": "launch",
             "runtimeExecutable": "${execPath}",
             "args": [
+                "--disable-extensions",
                 "--extensionDevelopmentPath=${workspaceRoot}",
                 "--extensionTestsPath=${workspaceRoot}/client/out/test/index",
                 "${workspaceRoot}/tree-sitter-ms-access-dump/examples"
