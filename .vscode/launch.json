@@ -13,7 +13,8 @@
             "args": [
                 "--disable-extensions",
                 "--extensionDevelopmentPath=${workspaceFolder}",
-                "--folder-uri=${workspaceFolder}/examples/"
+                "--folder-uri=${workspaceFolder}/examples/",
+                "${workspaceFolder}/examples/hello_world.des"
             ],
             "outFiles": ["${workspaceRoot}/client/out/**/*.js"],
             "preLaunchTask": {
