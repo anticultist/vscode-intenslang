@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
     middleware: {
       executeCommand: (command: string, args: any[], next) => {
         if (command === 'intensLanguageServer.addDebugPrintsToFunctions') {
-          args.push(vscode.window.activeTextEditor.document.uri.path);
+          args.push(vscode.window.activeTextEditor.document.uri);
           args.push(vscode.window.activeTextEditor.document.version);
         }
         return next(command, args);

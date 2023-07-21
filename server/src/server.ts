@@ -23,6 +23,7 @@ import {
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
 import { symbolsFromAST } from './symbols-creation';
+import { addDebugPrintsToFunctions } from './debug-prints-adder';
 
 import * as Parser from 'web-tree-sitter';
 import * as path from 'path';
@@ -217,17 +218,18 @@ connection.onExecuteCommand(async (params: ExecuteCommandParams) => {
       return;
     }
 
-    const uri: string = params.arguments[0];
+    const uri: string = params.arguments[0].external;
     const version: number = params.arguments[1];
 
-    // console.log(`Hello World: ${uri}; ${version}!!!`);
+    const document_text = documents.get(uri)?.getText();
+    if (document_text === undefined) {
+      return;
+    }
+    const tree = parser.parse(document_text);
+    const edits = addDebugPrintsToFunctions(tree);
 
     await connection.workspace.applyEdit({
-      documentChanges: [
-        TextDocumentEdit.create({ uri: uri, version: version }, [
-          TextEdit.insert(Position.create(0, 0), '// Hello World!\n'),
-        ]),
-      ],
+      documentChanges: [TextDocumentEdit.create({ uri: uri, version: version }, edits)],
     });
   }
 });
