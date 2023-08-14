@@ -1,5 +1,7 @@
 # INTENS syntax highlighting
 
+## About
+
 This is an unofficial package to provide syntax highlighting for the so called [INTENS](https://www.semafor.ch/en/products/intens/)&reg; language of the company Semafor AG.
 
 ## Features
@@ -25,3 +27,6 @@ To activate the experimental error checking go to the settings and search for `i
 - unsupported or bad supported features
   - `DB_MANAGER` block
   - C/C++ preprocessor directives
+
+This suboptimal support is due to lack of real world examples.
+Therefore feel free to [create an issue](https://github.com/anticultist/vscode-intenslang/issues/new) to provide a minimal code example with a brief description to close this knowledge gap.
