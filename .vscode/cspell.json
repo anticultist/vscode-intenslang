@@ -1,0 +1,13 @@
+{
+    "version": "0.2",
+    "ignorePaths": ["node_modules"],
+    "language": "en",
+    "dictionaries": ["Custom General (English)"],
+    "dictionaryDefinitions": [
+        {
+            "name": "Custom General (English)",
+            "path": "./custom-words.en.txt",
+            "addWords": true
+        }
+    ]
+}
