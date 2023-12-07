@@ -1,0 +1,22 @@
+{
+	"scopeName": "markdown.intens.codeblock",
+	"fileTypes": [],
+	"injectionSelector": "L:markup.fenced_code.block.markdown",
+	"patterns": [
+		{
+			"include": "#intens-code-block"
+		}
+	],
+	"repository": {
+		"intens-code-block": {
+			"begin": "\\b(intens)\\b",
+			"end": "(^|\\G)(?=\\s*[`~]{3,}\\s*$)",
+			"contentName": "meta.embedded.block.intens",
+			"patterns": [
+				{
+					"include": "source.intens"
+				}
+			]
+		}
+	}
+}

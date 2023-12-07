@@ -42,7 +42,7 @@
       },
       {
         "scopeName": "markdown.intens.codeblock",
-        "path": "./syntaxes/injection.json",
+        "path": "./syntaxes/intens-markdown-injection.json",
         "injectTo": [
           "text.html.markdown"
         ],
