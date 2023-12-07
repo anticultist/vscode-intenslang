@@ -13,14 +13,14 @@
   },
   "dependencies": {
     "copyfiles": "2.4.1",
-    "vscode-languageserver": "8.1.0",
-    "vscode-languageserver-textdocument": "1.0.8",
-    "web-tree-sitter": "0.20.5"
+    "vscode-languageserver": "9.0.1",
+    "vscode-languageserver-textdocument": "1.0.11",
+    "web-tree-sitter": "0.20.8"
   },
   "devDependencies": {
-    "@types/node": "17.0.42",
-    "@types/vscode": "1.79.1",
-    "@vscode/test-electron": "2.3.3"
+    "@types/node": "20.10.4",
+    "@types/vscode": "1.84.2",
+    "@vscode/test-electron": "2.3.8"
   },
   "scripts": {
     "postinstall": "copyfiles -f ./node_modules/web-tree-sitter/*.wasm ./out"
