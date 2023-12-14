@@ -22,20 +22,11 @@ import {
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
+import { loadParser } from './parser';
 import { symbolsFromAST } from './symbols-creation';
 import { addDebugPrintsToFunctions } from './debug-prints-adder';
 
 import * as Parser from 'web-tree-sitter';
-import * as path from 'path';
-
-async function loadParser() {
-  await Parser.init();
-  parser = new Parser();
-  const MyLang = await Parser.Language.load(
-    path.resolve(__dirname, '..', 'tree-sitter-intens.wasm'),
-  );
-  parser.setLanguage(MyLang);
-}
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -84,7 +75,7 @@ connection.onInitialize(async (params: InitializeParams) => {
     };
   }
 
-  await loadParser();
+  parser = await loadParser();
 
   return result;
 });
