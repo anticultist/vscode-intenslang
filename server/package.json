@@ -20,9 +20,11 @@
   "devDependencies": {
     "@types/node": "20.10.4",
     "@types/vscode": "1.84.2",
-    "@vscode/test-electron": "2.3.8"
+    "@vscode/test-electron": "2.3.8",
+    "ts-jest": "^29.1.1"
   },
   "scripts": {
-    "postinstall": "copyfiles -f ./node_modules/web-tree-sitter/*.wasm ./out"
+    "postinstall": "copyfiles -f ./node_modules/web-tree-sitter/*.wasm ./out",
+    "test": "jest"
   }
 }
