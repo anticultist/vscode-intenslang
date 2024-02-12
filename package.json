@@ -3,6 +3,9 @@
   "displayName": "INTENS Language",
   "description": "Unofficial syntax definition for the INTENS language",
   "license": "ISC",
+  "sponsor": {
+    "url": "https://ko-fi.com/anticultist"
+  },
   "version": "0.3.0",
   "publisher": "anticultist",
   "icon": "images/icon.png",
