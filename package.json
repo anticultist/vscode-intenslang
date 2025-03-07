@@ -56,13 +56,13 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "INTENS",
+      "title": "Language Support for INTENS",
       "properties": {
         "intensLanguageServer.showProblems": {
           "scope": "resource",
           "type": "boolean",
           "default": false,
-          "description": "Show problems detected by the INTENS language server. (experimental - at the moment more a debugging feature for the LSP itself)"
+          "description": "Show problems detected by the INTENS language server. (experimental)"
         },
         "intensLanguageServer.maxNumberOfProblems": {
           "scope": "resource",

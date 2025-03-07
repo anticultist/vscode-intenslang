@@ -1,4 +1,4 @@
-# INTENS syntax highlighting
+# Language Support for INTENS
 
 ## About
 
