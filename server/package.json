@@ -18,11 +18,11 @@
   "dependencies": {
     "copyfiles": "2.4.1",
     "vscode-languageserver": "9.0.1",
-    "vscode-languageserver-textdocument": "1.0.11",
+    "vscode-languageserver-textdocument": "1.0.12",
     "web-tree-sitter": "0.20.8"
   },
   "devDependencies": {
-    "@types/node": "20.14.2",
+    "@types/node": "20.14.15",
     "@types/vscode": "1.90.0",
     "@vscode/test-electron": "2.4.0",
     "ts-jest": "^29.1.4"
