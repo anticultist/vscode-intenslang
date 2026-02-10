@@ -2,7 +2,7 @@
 
 ## About
 
-This is an unofficial extension to provide syntax highlighting for the so called [INTENS](https://www.semafor.ch/en/products/intens/)&reg; language of the company Semafor AG.
+This is an unofficial extension to provide syntax highlighting for the so called [INTENS](https://www.semafor.ch/products/intens/)&reg; language of the company Semafor AG.
 
 ## Call for Sponsorship
 
