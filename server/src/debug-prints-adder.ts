@@ -50,6 +50,7 @@ function addDebugPrintAfterVariableDeclarations(
 ) {
   let insertAfterPosition = node.startPosition;
   insertAfterPosition.column += 1;
+  let contentAfterInsertPosition = false;
 
   for (const child_node of node.namedChildren) {
     if (
@@ -63,13 +64,17 @@ function addDebugPrintAfterVariableDeclarations(
     }
 
     insertAfterPosition = child_node.endPosition;
+    contentAfterInsertPosition = true;
   }
 
+  const spacesBefore = 4;
+  const spacesAfter = contentAfterInsertPosition ? 4 : 2;
   textEdits.push(
     TextEdit.insert(
       Position.create(insertAfterPosition.row, insertAfterPosition.column),
-      // TODO: add dynamic indentation
-      `\n    PRINT("FUNC ${functionName}", EOLN);\n`,
+      `\n${' '.repeat(spacesBefore)}PRINT("FUNC ${functionName}", EOLN);\n${' '.repeat(
+        spacesAfter,
+      )}`,
     ),
   );
 }

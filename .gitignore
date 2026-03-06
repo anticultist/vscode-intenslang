@@ -12,3 +12,5 @@ node_modules
 /tree-sitter-intens/parser.lib
 /tree-sitter-intens/parser.obj
 /tree-sitter-intens/parser.exp
+
+tsconfig.tsbuildinfo

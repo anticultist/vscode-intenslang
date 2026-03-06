@@ -3,7 +3,12 @@ DESCRIPTION "Hello World";
 INCLUDE hello_world_ui.inc  // fancy UI
 
 DATAPOOL
-  STRING {EDITABLE} hello_button {LABEL="Hello", BUTTON, FUNC=hello_func, HELPTEXT="Say Hello!"};
+  STRING {EDITABLE} hello_button {
+    LABEL="Hello",
+    BUTTON,
+    FUNC=hello_func,
+    HELPTEXT="Say Hello!"
+  };
   STRING name;
   INTEGER is_name_given;
 END DATAPOOL;
@@ -24,11 +29,16 @@ FUNCTIONS
       MESSAGEBOX("Hello World!");
   },
   bye_func {
+    // cool
+    INTEGER foo, bar;
+    INTEGER baz;
     MESSAGEBOX("Good bye!");  // TODO: use name if available
     EXIT;
   };
 
   FUNC INIT {
+    INTEGER foo, bar;
+    INTEGER baz;
     IF (CONFIRM("Do you want to be <i>greeted</i>?")) {
       RUN(hello_func);
     }
